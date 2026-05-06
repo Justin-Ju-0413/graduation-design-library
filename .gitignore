@@ -50,4 +50,5 @@ thesis_latex/media/
 
 # Gen scripts
 *_copy*.sqlite
+*_tmp.sqlite
 *.synctex*

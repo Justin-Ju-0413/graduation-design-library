@@ -41,6 +41,13 @@ install/
 *.run.xml
 main.pdf
 
+# AI-generated images (large, keep prompts only)
+thesis_latex/ai_figures/chatgpt/
+thesis_latex/ai_figures/gemini/
+
+# Generated media
+thesis_latex/media/
+
 # Gen scripts
 *_copy*.sqlite
 *.synctex*

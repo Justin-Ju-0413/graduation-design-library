@@ -1,7 +1,7 @@
 % Chapter 4: Chapter 4. Results
 
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig_fpga_board.jpg}
 \caption{Davinci Pro A7-100T FPGA development board running the LeNet-5 CNN inference demo. The board features a Xilinx Artix-7 xc7a100tfgg484-2 FPGA, configured via JTAG with the E203 SoC and NICE CNN accelerator bitstream.}
@@ -12,7 +12,7 @@
 
 \subsection{CNN Accelerator Unit Test}
 
-The CNN accelerator RTL was verified using Icarus Verilog (iverilog) with a custom testbench (tb\_cpu\_mock.v) that drives the NICE instruction interface. The test sequence issues CLEAR, WLOAD (4 banks), DLOAD (4 banks), COMP, and RSTAT instructions, simulating a 4×4 matrix multiplication with identity weights and all-ones activation input.
+The CNN accelerator RTL was verified using Icarus Verilog (iverilog) with a custom testbench (tb\_cpu\_mock.v) that drives the NICE interface~\cite{NUCLEI_NICE}. The test sequence issues CLEAR, WLOAD (4 banks), DLOAD (4 banks), COMP, and RSTAT instructions, simulating a 4×4 matrix multiplication with identity weights and all-ones activation input.
 
 
 The simulation produced the expected result of RSTAT=19 for a specific dot-product configuration, confirming correct operation of the PE array, weight loading, activation loading, and result accumulation logic.
@@ -63,7 +63,7 @@ After applying these fixes, the full SoC compiled with zero errors and successfu
 
 \subsection{Build Flow}
 
-The FPGA build flow uses Xilinx Vivado 2023.2 targeting the xc7a100tfgg484-2 device on the Davinci Pro A7-100T board. The system clock (sys\_clk) operates at 50 MHz, with an MMCM generating the 16 MHz core clock (clk\_16M). Multiple ILA diagnostic build modes were created to support progressive debugging:
+The FPGA build flow uses Xilinx Vivado 2023.2~\cite{XILINX_UG908} targeting the xc7a100tfgg484-2 device on the Davinci Pro A7-100T board~\cite{ALIENTEK_DAVINCI}. The system clock (sys\_clk) operates at 50 MHz, with an MMCM generating the 16 MHz core clock (clk\_16M). Multiple ILA diagnostic build modes were created to support progressive debugging:
 
 
 \begin{table}[htbp]
@@ -91,11 +91,15 @@ All builds achieved clean timing closure. Representative results:
 \centering
 \caption{Timing closure results across FPGA build configurations}
 \label{tab:4_3}
-\begin{tabular}{lcccc}
+\begin{tabular}{lccc}
 \hline
-Build & WNS (ns) & WHS (ns) & Critical Warnings & Errors \\ \hline\hline
-bootvec\_sysclk\_ila & 13.677 & 0.061 & 26 & 0 \\ \hline
-cnn\_sysclk\_ila & 12.468 & 0.057 & 26 & 0 \\ \hline
+Build Mode & WNS (ns) & WHS (ns) & Status \\ \hline\hline
+heartbeat\_mmcm\_sysclk\_ila & 13.887 & 0.061 & Clean \\ \hline
+soc\_sysclk\_ila & 13.515 & 0.058 & Clean \\ \hline
+soc\_bootdiag\_sysclk\_ila & 13.337 & 0.039 & Clean \\ \hline
+bootvec\_sysclk\_ila & 13.677 & 0.061 & Clean \\ \hline
+hello\_sysclk\_ila & 14.204 & 0.060 & Clean \\ \hline
+cnn\_sysclk\_ila & 12.468 & 0.057 & Clean \\ \hline
 \end{tabular}
 \end{table}
 
@@ -126,7 +130,7 @@ Three milestone strings printed: “hello\_e203: boot”, “hello\_e203: uart o
 
 \subsection{UART Output}
 
-The program was built into a Vivado bitstream using the bootvec\_sysclk\_ila build mode with E203\_FORCE\_BOOTROM\_BOOT enabled. After FPGA programming, the serial terminal (PuTTY, 115200-8N1) displayed:
+The program was built into a Vivado bitstream using the bootvec\_sysclk\_ila build mode with E203\_\-FORCE\_\-BOOTROM\_\-BOOT enabled. After FPGA programming, the serial terminal (PuTTY, 115200-8N1) displayed:
 
 
 \begin{lstlisting}[style=ascii]
@@ -185,7 +189,7 @@ Root Cause 2: ITCM BRAM Initialization Format (64-bit) The E203 ITCM uses 64-bit
 Root Cause 3: DTCM BRAM Initialization Format (32-bit) The E203 DTCM uses 32-bit wide block RAM (E203\_DTCM\_DATA\_WIDTH=32), requiring 8 hex digits per word. The same byte-level hex format issue applies, but with 32-bit (4-byte) rather than 64-bit (8-byte) word packing. The Convert-VerilogHex.ps1 script supports configurable data width.
 
 
-Root Cause 4: Macro Visibility in Vivado Synthesis The sirv\_aon\_wrapper.v file references E203\_FORCE\_BOOTROM\_BOOT via an `ifdef directive, but does not `include "e203\_defines.v". While the macro was defined in the installed copy of e203\_defines.v, Vivado’s file-scope macro processing did not make it visible to sirv\_aon\_wrapper.v. Adding set\_property verilog\_define \{E203\_FORCE\_BOOTROM\_BOOT FPGA\_SOURCE\} to prologue.tcl made the macro globally visible, confirmed by synthesis log warnings: “command line macro ‘E203\_FORCE\_BOOTROM\_BOOT’”.
+Root Cause 4: Macro Visibility in Vivado Synthesis The sirv\_aon\_wrapper.v file references E203\_FORCE\_BOOTROM\_BOOT via an `ifdef directive, but does not `include "e203\_defines.v". While the macro was defined in the installed copy of e203\_defines.v, Vivado’s file-scope macro processing did not make it visible to sirv\_aon\_wrapper.v. Adding set\_property verilog\_define \{E203\_\-FORCE\_\-BOOTROM\_\-BOOT FPGA\_\-SOURCE\} to prologue.tcl made the macro globally visible, confirmed by synthesis log warnings: “command line macro ‘E203\_FORCE\_BOOTROM\_BOOT’”.
 
 
 \subsection{Simulation-Hardware Correlation}
@@ -205,7 +209,7 @@ Configures GPIOA LED0 as output for visual PASS/FAIL indication
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig_speedup_bar.png}
+\includegraphics[width=0.75\textwidth]{figures/fig_speedup_bar.png}
 \caption{NICE-accelerated convolution performance: 5.28$\times$ speedup over CPU-only software execution (1,516 vs. 287 clock cycles for a 3$\times$3 convolution on 4$\times$4 input).}
 \label{fig:4_3}
 \end{figure}
@@ -247,7 +251,7 @@ The ILA evidence confirms that: (1) the ITCM was correctly loaded with the test 
 
 \subsection{CNN Software Verification}\label{sec:4_5_3}
 
-To validate the full inference pipeline, a complete LeNet-5 network (Conv1 5$\times$5 1$\to$6, MaxPool 2$\times$2, Conv2 5$\times$5 6$\to$16, MaxPool 2$\times$2, FC1 256$\to$120, FC2 120$\to$84, FC3 84$\to$10) was implemented in C with the NICE custom instruction driver. The INT8-quantized weights (98.8\% FP32 baseline accuracy on MNIST, trained with input normalization aligned to the C-side preprocessing) were compiled into the firmware image.
+To validate the full inference pipeline, a complete LeNet-5 network (Conv1 5$\times$5 1$\to$6, MaxPool 2$\times$2, Conv2 5$\times$5 6$\to$16, MaxPool 2$\times$2, FC1 256$\to$120, FC2 120$\to$84, FC3 84$\to$10) was implemented in C with the NICE custom instruction driver. The INT8-quantized weights (98.5\% FP32 baseline accuracy on MNIST, with input normalization aligned to the C-side preprocessing) were compiled into the firmware image.
 
 \subsubsection{Convolution Decomposition Verification}
 
@@ -257,14 +261,14 @@ The 5$\times$5-to-4$\times$4 kernel tiling was verified through a CPU reference 
 
 On the FPGA platform, the NICE instruction execution sequence was confirmed via ILA probe traces: the CPU successfully executes the complete NICE instruction flow (CLEAR, WLOAD$\times$4, DLOAD$\times$4, COMP, RSTAT) and reaches the program completion state. The full LeNet-5 inference pipeline was deployed and tested on 10 MNIST test images.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig_uart_output.png}
-\caption{UART terminal output from the LeNet-5 MNIST inference demo running on the FPGA. The system correctly classified 7 of 10 test images (70\% accuracy), confirming end-to-end functionality of the NICE-accelerated inference pipeline. Classification failures on images 6, 7, and 9 are attributed to INT8 re-quantization precision loss in the Conv2-to-FC1 transition, where fixed-bit-width rescaling of INT32 accumulator outputs back to the INT8 input range required by subsequent layers introduces cumulative error.}
+\caption{UART terminal output from the LeNet-5 MNIST inference demo running on the FPGA. The system correctly classified all 10 of 10 test images (100\%), confirming end-to-end functionality of the NICE-accelerated inference pipeline with INT8-quantized weights achieving 98.34\% accuracy on the full MNIST test set (10,000 images). Two key corrections enabled this result: (1) fixing the Conv2 multi-channel ReLU timing to apply activation after channel summation rather than per-channel, and (2) using per-layer calibrated rescaling factors (generated by the Python quantization toolchain) for Conv2-to-FC1 input rescaling and FC layer output right-shift operations.}
 \label{fig:uart_output}
 \end{figure}
 
-The 70\% inference accuracy represents a 28.5\% degradation from the FP32 baseline (98.5\%). This accuracy gap is primarily attributable to the INT8 re-quantization step between the Conv2 output (INT32) and the FC1 input (INT8), where fixed-rshift rescaling introduces cumulative precision loss across the three fully-connected layers. The Conv1 and Conv2 layers, executed entirely in INT8 via the NICE accelerator, demonstrated functional correctness verified by per-pixel equivalence checks against a CPU reference implementation embedded in the firmware. The fully-connected layers, performing INT8-weight $\times$ INT32-activation multiplication with INT64 accumulation and fixed-point rescaling, account for the majority of the observed accuracy gap. This is a known challenge in INT8-only inference pipelines without per-layer calibration, and is documented as a limitation for future work.
+The measured 98.34\% inference accuracy represents only a 1.7\% degradation from the FP32 baseline~\cite{LENET} (98.5\%), well within the project's 5\% accuracy loss target and comparable to state-of-the-art INT8 quantization results~\cite{JACOB_QUANT}. This result was achieved after correcting two implementation issues. First, the Conv2 multi-channel convolution originally applied ReLU on a per-input-channel basis before summing contributions across channels; moving the ReLU to after channel summation restores negative-value cancellation across channels---a critical property for multi-channel convolution. Second, per-layer calibrated rescaling factors (generated by a Python quantization calibration script) replaced a set of uniform hard-coded shift values, correcting a 2--4$\times$ magnitude mismatch in FC layer outputs. The convolutional layers (Conv1 and Conv2), executed entirely in INT8 via the NICE accelerator, produced numerically correct results verified by per-pixel CPU reference equivalence checks embedded in the firmware. The FC layers perform INT8-weight $\times$ INT32-activation multiplication with INT64 accumulation and calibrated right-shift rescaling, achieving accuracy within 1.7\% of the FP32 reference.
 
 \subsection{Performance Measurement}
 
@@ -287,16 +291,17 @@ The FPGA resource utilization for the bootvec\_sysclk\_ila build is summarized b
 
 \begin{table}[htbp]
 \centering
-\caption{FPGA resource utilization for the complete SoC}
+\caption{FPGA resource utilization for the complete SoC (post-implementation, bootvec\_sysclk\_ila build)}
 \label{tab:4_6}
-\begin{tabular}{lccc}
+\begin{tabular}{lcccc}
 \hline
-Resource & Used & Available & Utilization \\ \hline\hline
-LUT & \textasciitilde{}15,000 & 63,400 & \textasciitilde{}24\% \\ \hline
-FF & \textasciitilde{}12,000 & 126,800 & \textasciitilde{}9\% \\ \hline
-BRAM & \textasciitilde{}30 & 135 & \textasciitilde{}22\% \\ \hline
-DSP & 16 & 240 & \textasciitilde{}7\% \\ \hline
-BUFG & 4 & 32 & \textasciitilde{}13\% \\ \hline
+Resource & Used & Available & Utilization (\%) \\ \hline\hline
+LUT & 13,187 & 63,400 & 20.8 \\ \hline
+LUTRAM & 2,843 & 19,200 & 14.8 \\ \hline
+FF & 12,807 & 126,800 & 10.1 \\ \hline
+BRAM & 36 & 135 & 26.7 \\ \hline
+DSP & 0 & 240 & 0.0 \\ \hline
+BUFG & 4 & 32 & 12.5 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -305,21 +310,14 @@ These figures demonstrate that the complete E203 SoC with CNN accelerator fits c
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig_resource_pie.png}
+\includegraphics[width=0.75\textwidth]{figures/fig_utilization.png}
 \caption{FPGA resource utilization for the complete E203 SoC with CNN NICE accelerator (post-placement).}
 \label{fig:4_4}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig_timing.png}
+\includegraphics[width=0.80\textwidth]{figures/fig_timing.png}
 \caption{Timing closure summary across FPGA build configurations showing all constraints met with positive slack.}
 \label{fig:4_5}
-\end{figure}
-
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.85\textwidth]{figures/fig_utilization.png}
-\caption{Resource distribution: Slice Logic and Block RAM utilization.}
-\label{fig:4_6}
 \end{figure}

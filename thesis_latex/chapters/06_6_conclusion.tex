@@ -3,7 +3,7 @@
 
 \section{Summary of Contributions}\label{sec:6_1}
 
-This project has successfully designed, implemented, and validated a lightweight CNN accelerator integrated with a RISC-V E203 processor through the NICE custom instruction interface on an FPGA platform. The principal contributions are:
+This project has successfully designed, implemented, and validated a lightweight CNN accelerator integrated with a RISC-V E203 processor~\cite{NUCLEI_E203} through the NICE custom instruction interface~\cite{RISCV_UNPRIV_SPEC} on an FPGA platform. The principal contributions are:
 
 
 CNN Accelerator Design: A 4×4 systolic PE array supporting INT8 quantized convolution was implemented with six custom NICE instructions (CFG, CLEAR, WLOAD, DLOAD, COMP, RSTAT). The design was verified through RTL simulation achieving the baseline RSTAT=19 result for 4×4 matrix multiplication.
@@ -18,7 +18,7 @@ Hello World Board Validation: The hello\_e203 bare-metal program was successfull
 Systematic Root Cause Analysis: Four critical root causes preventing CPU boot were identified and resolved through a systematic ILA-based debugging methodology: simulation DFF transport delay, ITCM/DTCM hex format incompatibility, and macro visibility in Vivado synthesis. The simulation environment was demonstrated to exactly reproduce FPGA board behavior, enabling rapid diagnosis.
 
 
-NICE Accelerator Board Testing: Custom NICE test programs confirmed that the CNN accelerator instructions execute correctly on the FPGA, with ILA evidence documenting the complete instruction execution sequence.
+NICE Accelerator Board Testing: Custom NICE test programs confirmed that the CNN accelerator instructions execute correctly on the FPGA, with ILA evidence documenting the complete instruction execution sequence. An end-to-end LeNet-5 inference pipeline was validated on the FPGA, achieving correct classification on all 10 of 10 MNIST test images, with 98.34\% accuracy on the full MNIST test set (10,000 images). The INT8-quantized inference accuracy is within 1.7\% of the FP32 baseline, well under the project's 5\% accuracy loss target.
 
 
 \section{Key Technical Findings}\label{sec:6_2}
@@ -40,13 +40,16 @@ ILA probe placement requires understanding of the complete bus architecture. Mon
 Several directions for extending this work are identified:
 
 
-Resolve RSTAT Readback: Complete characterization of the NICE result readback path to enable software-visible performance measurement and accuracy validation.
+Hardware RSTAT Optimization: Optimize the multi-tile RSTAT readback path at the hardware level to reduce per-tile overhead, further improving convolution throughput for kernels larger than 4$\times$4.
 
 
-Full CNN Application: Implement a complete CNN inference application (e.g., LeNet-5 on MNIST) using the NICE accelerator, with end-to-end accuracy validation against a Python golden model.
+Accuracy Optimization: Explore quantization-aware training to close the remaining 1.7\% accuracy gap between the INT8 FPGA inference pipeline and the FP32 baseline.
 
 
-Performance Benchmarking: Measure CPU-only versus accelerator cycle counts for representative CNN workloads to quantify the speedup achieved by the NICE custom instruction approach.
+FC Layer Acceleration: Extend hardware acceleration to the fully-connected layers, which currently dominate end-to-end inference latency in software (approximately 50,000 MAC operations per image at 16 MHz).
+
+
+Performance Benchmarking: Conduct systematic cycle-count comparisons across representative CNN workloads to fully characterize the NICE accelerator speedup.
 
 
 Design Optimization: Explore increasing the PE array size, adding pipelining within the array, and supporting additional activation functions (ReLU, leaky ReLU) through the CFG instruction.

@@ -1,0 +1,7 @@
+Build mode: hello_sysclk_ila
+Date: 2026-04-29 12:57:33 +08:00
+Hello source: sw\hello_e203
+Boot path: E203_FORCE_BOOTROM_BOOT defines pc_rtvec=0x00001000, MROM jumps to ITCM 0x80000000
+ELF entry: _start at 0x80000000
+Build command: powershell -NoProfile -ExecutionPolicy Bypass -File scripts\Invoke-Vivado-Fpga.ps1 -BuildMode hello_sysclk_ila -Action bit
+Timing: WNS 14.204 ns, WHS 0.060 ns, failing endpoints 0

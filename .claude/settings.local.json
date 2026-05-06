@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(base64 -d)",
+      "Bash(echo \"Done: $?\")",
+      "Bash(echo '# Debug Plan: E203 CPU Stuck at PC=0x00000000 on Boot')",
+      "Bash(echo '')",
+      "Bash(echo '## Executive Summary')",
+      "Bash(echo 'The E203 Hummingbird v2 RISC-V CPU on the Davinci A7-100T FPGA')",
+      "Bash(echo 'boots to PC=0x00000000 and stays there. The expected first instruction')",
+      "Bash(cat)",
+      "Bash(echo \"Exit: $?\")"
+    ]
+  }
+}

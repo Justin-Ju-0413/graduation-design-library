@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>毕业设计管理仪表盘</title>
+<style>
+  :root {
+    --bg-primary: #0d1117;
+    --bg-secondary: #161b22;
+    --bg-card: #1c2333;
+    --border: #30363d;
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-yellow: #d29922;
+    --accent-red: #f85149;
+    --accent-purple: #bc8cff;
+    --accent-cyan: #39d2c0;
+    --progress-bg: #21262d;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans SC', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 20px;
+  }
+
+  .container { max-width: 1400px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 30px 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header .subtitle {
+    color: var(--text-secondary);
+    margin-top: 8px;
+    font-size: 14px;
+  }
+  .header .update-info {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .last-updated {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  /* Controls */
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    padding: 8px 20px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+  }
+  .btn:hover {
+    background: var(--bg-card);
+    border-color: var(--accent-blue);
+  }
+  .btn-primary {
+    background: #1f6feb;
+    border-color: #1f6feb;
+    color: #fff;
+  }
+  .btn-primary:hover {
+    background: #388bfd;
+    border-color: #388bfd;
+  }
+  .btn-success {
+    background: #238636;
+    border-color: #238636;
+    color: #fff;
+  }
+  .btn-success:hover {
+    background: #2ea043;
+    border-color: #2ea043;
+  }
+
+  /* Grid Layout */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .card-full { grid-column: 1 / -1; }
+  .card h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    color: var(--accent-blue);
+  }
+  .card h2 .badge {
+    float: right;
+    font-size: 11px;
+    font-weight: 400;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+  }
+
+  /* Status Items */
+  .status-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(48,54,61,0.5);
+  }
+  .status-item:last-child { border-bottom: none; }
+  .status-label { font-size: 13px; color: var(--text-secondary); }
+  .status-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 10px;
+    text-transform: uppercase;
+  }
+  .status-done { background: rgba(63,185,80,0.15); color: var(--accent-green); }
+  .status-debugging { background: rgba(210,153,34,0.15); color: var(--accent-yellow); }
+  .status-pending { background: rgba(139,148,158,0.15); color: var(--text-secondary); }
+
+  /* Progress Bars */
+  .progress-section { margin-bottom: 16px; }
+  .progress-section:last-child { margin-bottom: 0; }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+  .progress-header .label { color: var(--text-secondary); }
+  .progress-header .value { color: var(--text-primary); font-weight: 600; }
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--progress-bg);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+  }
+  .fill-blue { background: var(--accent-blue); }
+  .fill-green { background: var(--accent-green); }
+  .fill-yellow { background: var(--accent-yellow); }
+  .fill-purple { background: var(--accent-purple); }
+  .fill-cyan { background: var(--accent-cyan); }
+
+  /* Countdown Timers */
+  .countdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .countdown-item {
+    text-align: center;
+    padding: 16px 12px;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    border: 1px solid var(--border);
+  }
+  .countdown-item .days {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .countdown-item .days.urgent { color: var(--accent-red); }
+  .countdown-item .days.warning { color: var(--accent-yellow); }
+  .countdown-item .days.safe { color: var(--accent-green); }
+  .countdown-item .label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+  .countdown-item .date {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  /* File Inventory */
+  .file-inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .file-item .dir-name { color: var(--text-primary); }
+  .file-item .file-count {
+    background: var(--bg-card);
+    padding: 1px 8px;
+    border-radius: 8px;
+    font-size: 11px;
+    color: var(--accent-blue);
+  }
+  .file-total {
+    text-align: right;
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .file-total strong { color: var(--text-primary); }
+
+  /* Quick Links */
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 8px;
+  }
+  .quick-link {
+    display: block;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .quick-link:hover {
+    border-color: var(--accent-blue);
+    background: rgba(88,166,255,0.08);
+    transform: translateY(-1px);
+  }
+  .quick-link .link-path {
+    display: block;
+    font-size: 10px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    word-break: break-all;
+  }
+
+  /* Loading overlay */
+  .loading-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13,17,23,0.8);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  .loading-overlay.active { display: flex; }
+  .loading-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
+    .countdown-grid { grid-template-columns: 1fr; }
+    .file-inventory-grid { grid-template-columns: repeat(2, 1fr); }
+    .links-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+</div>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <h1>毕业设计管理仪表盘</h1>
+    <div class="subtitle">基于RISC-V自定义指令的轻量级CNN加速器 &mdash; 项目管理中心</div>
+    <div class="update-info">最后更新: <span id="lastUpdated">加载中...</span></div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+    <button class="btn btn-primary" onclick="refreshDashboard()">重新扫描</button>
+    <button class="btn" onclick="window.location.reload()">刷新页面</button>
+  </div>
+
+  <!-- Progress Summary -->
+  <div class="card card-full" style="margin-bottom:16px;">
+    <h2>总体进度 <span class="badge" id="totalProgressBadge">--</span></h2>
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="label">论文完成度</span>
+        <span class="value" id="thesisProgressText">--</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-blue" id="thesisProgressBar" style="width:0%"></div></div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="label">FPGA 调试进度</span>
+        <span class="value" id="fpgaProgressText">--</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill fill-purple" id="fpgaProgressBar" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <!-- Main Grid -->
+  <div class="dashboard-grid">
+    <!-- Thesis Status -->
+    <div class="card">
+      <h2>论文状态</h2>
+      <div id="thesisStatus"></div>
+      <div style="margin-top:12px; padding-top:12px; border-top:1px solid var(--border);">
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="label">参考文献</span>
+            <span class="value" id="refCount">--</span>
+          </div>
+        </div>
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="label">图表</span>
+            <span class="value" id="figCount">--</span>
+          </div>
+        </div>
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="label">预估页数</span>
+            <span class="value" id="pageCount">--</span>
+          </div>
+        </div>
+        <div class="progress-section">
+          <div class="progress-header">
+            <span class="label">字数</span>
+            <span class="value" id="wordCount">--</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FPGA Debug -->
+    <div class="card">
+      <h2>FPGA 调试</h2>
+      <div id="fpgaStatus"></div>
+    </div>
+
+    <!-- Deadlines (full width) -->
+    <div class="card card-full">
+      <h2>截止日期</h2>
+      <div class="countdown-grid" id="countdownGrid"></div>
+    </div>
+
+    <!-- File Inventory (full width) -->
+    <div class="card card-full">
+      <h2>文件清单</h2>
+      <div class="file-inventory-grid" id="fileInventory"></div>
+      <div class="file-total">总计: <strong id="totalFiles">--</strong> 个文件</div>
+    </div>
+
+    <!-- Quick Links (full width) -->
+    <div class="card card-full">
+      <h2>快捷操作</h2>
+      <div class="links-grid" id="quickLinks"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// Status helpers
+// ============================================================
+const STATUS_MAP = {
+  done:       { label: '完成',     class: 'status-done' },
+  debugging:  { label: '调试中',   class: 'status-debugging' },
+  pending:    { label: '待处理',   class: 'status-pending' }
+};
+
+const CHAPTER_LABELS = {
+  Abstract: '摘要',
+  Ch1_Introduction: '第一章 引言',
+  Ch2_Background: '第二章 背景',
+  Ch3_Methodology: '第三章 方法',
+  Ch4_Results: '第四章 结果',
+  Ch5_Discussion: '第五章 讨论',
+  Ch6_Conclusion: '第六章 结论'
+};
+
+const FPGA_LABELS = {
+  hello_e203_board: 'Hello E203 板级验证',
+  cpu_boot_debug: 'CPU 启动调试',
+  nice_ila_confirm: 'NICE ILA 确认',
+  rstat_result: 'RSTAT 结果',
+  performance_data: '性能数据收集',
+  accuracy_verify: '精度验证'
+};
+
+const QUICK_LINKS = [
+  { label: '论文 (最新版)', path: '09_Thesis_Writing/FYP_Thesis_Final_v2.docx' },
+  { label: '论文 (最终版)', path: 'FYP_Thesis_Final.docx' },
+  { label: '论文草稿', path: '09_Thesis_Writing/draft/00_Full_Thesis.md' },
+  { label: '任务书 (十天闭环)', path: '03_Documents/Thesis_Materials/01_Task_Book/毕业设计任务书_十天闭环版_2026_04_29.docx' },
+  { label: '实验总进度', path: '04_Experiments/Board_BringUp/2026-04-28_board_connection_check/STATUS.md' },
+  { label: '整体路线图', path: '08_Todo_And_Notes/2026-04-28_To_Final_Defense_Plan/MASTER_PLAN.md' },
+  { label: '答辩任务板', path: '10_Final_Defense/DEFENSE_TASK_BOARD.md' },
+  { label: '参考文献', path: '09_Thesis_Writing/References/references.bib' },
+  { label: '演示文稿 (最终)', path: '05_Presentation/Final/Tuesday_4Week_Report_Final_CN_Fixed.pptx' },
+  { label: '演示文稿 (FYP)', path: '05_Presentation/Final/FYP.pptx' },
+  { label: '验证流程', path: '04_Experiments/VERIFICATION_FLOW_v2.0.md' },
+  { label: '索引主页', path: '00_Index/README.md' }
+];
+
+// ============================================================
+// Countdown timer
+// ============================================================
+function getCountdown(dateStr, label) {
+  const now = new Date();
+  const target = new Date(dateStr + 'T23:59:59');
+  const diff = target - now;
+  const days = Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+  let cls = 'safe';
+  if (days <= 1) cls = 'urgent';
+  else if (days <= 3) cls = 'warning';
+  return { days, cls, label, date: dateStr };
+}
+
+// ============================================================
+// Render functions
+// ============================================================
+function renderThesisStatus(data) {
+  const container = document.getElementById('thesisStatus');
+  const chapters = data.thesis.chapters;
+  let html = '';
+  for (const [key, status] of Object.entries(chapters)) {
+    const info = STATUS_MAP[status] || STATUS_MAP.pending;
+    const displayLabel = CHAPTER_LABELS[key] || key;
+    html += `<div class="status-item">
+      <span class="status-label">${displayLabel}</span>
+      <span class="status-badge ${info.class}">${info.label}</span>
+    </div>`;
+  }
+  // Extra items
+  const extras = [
+    { key: 'declaration', label: '声明签署' },
+    { key: 'toc', label: '目录生成' },
+    { key: 'plagiarism_check', label: '查重' }
+  ];
+  for (const ext of extras) {
+    const s = data.thesis[ext.key] || 'pending';
+    const info = STATUS_MAP[s] || STATUS_MAP.pending;
+    html += `<div class="status-item">
+      <span class="status-label">${ext.label}</span>
+      <span class="status-badge ${info.class}">${info.label}</span>
+    </div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderFpgaStatus(data) {
+  const container = document.getElementById('fpgaStatus');
+  const items = data.fpga;
+  let html = '';
+  for (const [key, status] of Object.entries(items)) {
+    const info = STATUS_MAP[status] || STATUS_MAP.pending;
+    const displayLabel = FPGA_LABELS[key] || key;
+    html += `<div class="status-item">
+      <span class="status-label">${displayLabel}</span>
+      <span class="status-badge ${info.class}">${info.label}</span>
+    </div>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderCountdowns(data) {
+  const grid = document.getElementById('countdownGrid');
+  const deadlines = data.deadlines;
+  const labels = {
+    thesis_submission: '论文提交',
+    oral_presentation: '口头答辩',
+    final_pdf: '最终 PDF 提交'
+  };
+  let html = '';
+  for (const [key, dateStr] of Object.entries(deadlines)) {
+    const cd = getCountdown(dateStr, labels[key] || key);
+    html += `<div class="countdown-item">
+      <div class="days ${cd.cls}">${cd.days}</div>
+      <div class="label">${cd.label}</div>
+      <div class="date">${cd.date}</div>
+    </div>`;
+  }
+  grid.innerHTML = html;
+}
+
+function renderFileInventory(data) {
+  const grid = document.getElementById('fileInventory');
+  const counts = data.file_counts || {};
+  let html = '';
+  const order = [
+    '01_Project_Overview', '02_Source_Repos', '03_Documents',
+    '04_Experiments', '05_Presentation', '06_References',
+    '07_Backups', '08_Todo_And_Notes', '09_Thesis_Writing',
+    '10_Final_Defense', '11_FYP_requirement', 'scripts'
+  ];
+  for (const key of order) {
+    const count = counts[key] || 0;
+    html += `<div class="file-item">
+      <span class="dir-name">${key}</span>
+      <span class="file-count">${count}</span>
+    </div>`;
+  }
+  // Show _archive too if present
+  if (counts['_archive']) {
+    html += `<div class="file-item">
+      <span class="dir-name">_archive</span>
+      <span class="file-count">${counts['_archive']}</span>
+    </div>`;
+  }
+  grid.innerHTML = html;
+  document.getElementById('totalFiles').textContent = data.library_total_files || '--';
+}
+
+function renderQuickLinks() {
+  const container = document.getElementById('quickLinks');
+  let html = '';
+  for (const link of QUICK_LINKS) {
+    html += `<a href="#" class="quick-link" onclick="openFile('${link.path.replace(/'/g, "\\'")}'); return false;">
+      ${link.label}
+      <span class="link-path">${link.path}</span>
+    </a>`;
+  }
+  container.innerHTML = html;
+}
+
+function renderProgress(data) {
+  // Thesis progress: done chapters out of total
+  const chapters = data.thesis.chapters;
+  const chCount = Object.keys(chapters).length;
+  const chDone = Object.values(chapters).filter(v => v === 'done').length;
+  const extraDone = ['declaration'].filter(k => data.thesis[k] === 'done').length;
+  const totalChItems = chCount + 3; // chapters + declaration + toc + plagiarism
+  const doneChItems = chDone + extraDone;
+  const thesisPct = Math.round((doneChItems / totalChItems) * 100);
+  document.getElementById('thesisProgressText').textContent = `${doneChItems}/${totalChItems} (${thesisPct}%)`;
+  document.getElementById('thesisProgressBar').style.width = thesisPct + '%';
+
+  // FPGA progress
+  const fpgaItems = data.fpga;
+  const fpgaTotal = Object.keys(fpgaItems).length;
+  const fpgaDone = Object.values(fpgaItems).filter(v => v === 'done').length;
+  const fpgaPct = Math.round((fpgaDone / fpgaTotal) * 100);
+  document.getElementById('fpgaProgressText').textContent = `${fpgaDone}/${fpgaTotal} (${fpgaPct}%)`;
+  document.getElementById('fpgaProgressBar').style.width = fpgaPct + '%';
+
+  // Overall badge
+  const overallPct = Math.round((thesisPct + fpgaPct) / 2);
+  document.getElementById('totalProgressBadge').textContent = `${overallPct}%`;
+
+  // Thesis metadata
+  document.getElementById('refCount').textContent = `${data.thesis.references} 篇`;
+  document.getElementById('figCount').textContent = `${data.thesis.figures} 张`;
+  document.getElementById('pageCount').textContent = `${data.thesis.estimated_pages} 页`;
+  document.getElementById('wordCount').textContent = `${data.thesis.words.toLocaleString()} 字`;
+  document.getElementById('lastUpdated').textContent = data.last_updated || '未知';
+}
+
+// ============================================================
+// File opener (platform-aware)
+// ============================================================
+function openFile(relPath) {
+  const base = 'C:\\Users\\16084\\Documents\\Graduation_Design_Library\\';
+  const fullPath = base + relPath.replace(/\//g, '\\');
+  try {
+    // Use Shell-based approach
+    const shell = new ActiveXObject('WScript.Shell');
+    shell.Run('"' + fullPath + '"', 1, false);
+  } catch(e) {
+    // Fallback: show the path
+    alert('请在文件管理器中打开:\n' + fullPath);
+  }
+}
+
+// ============================================================
+// Load & Refresh
+// ============================================================
+function loadDashboard(data) {
+  renderThesisStatus(data);
+  renderFpgaStatus(data);
+  renderCountdowns(data);
+  renderFileInventory(data);
+  renderQuickLinks();
+  renderProgress(data);
+  // Update countdown every 60s
+  setInterval(() => renderCountdowns(data), 60000);
+}
+
+function refreshDashboard() {
+  document.getElementById('loadingOverlay').classList.add('active');
+  fetch('dashboard_status.json?' + Date.now())
+    .then(r => r.json())
+    .then(data => {
+      loadDashboard(data);
+      document.getElementById('loadingOverlay').classList.remove('active');
+    })
+    .catch(err => {
+      console.error('Failed to load dashboard data:', err);
+      document.getElementById('loadingOverlay').classList.remove('active');
+      alert('加载仪表盘数据失败。确保 dashboard_status.json 文件存在。');
+    });
+}
+
+// ============================================================
+// Init
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  refreshDashboard();
+});
+</script>
+
+</body>
+</html>

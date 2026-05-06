@@ -1,0 +1,20 @@
+HW_TARGETS=localhost:3121/xilinx_tcf/Digilent/210512180081
+PROGRAM_PASS=C:\Users\16084\Documents\New project\e203_hbirdv2\fpga\davinci_a7_100t\obj\system.bit
+PROBES_FILE=C:\Users\16084\Documents\New project\e203_hbirdv2\fpga\davinci_a7_100t\obj\davinci_a7_100t.runs\impl_1\system.ltx
+HW_ILAS=hw_ila_1
+ILA=hw_ila_1
+ILA_PROPERTY.NAME=hw_ila_1
+ILA_PROPERTY.CORE_UUID=140BA85DC7DA5EB9AE77EF27AE29B195
+ILA_PROPERTY.CONTROL.DATA_DEPTH=1024
+ILA_PROPERTY.CONTROL.TRIGGER_POSITION=512
+HW_PROBES=probe_csr_flags probe_mem_bus probe_nice_csr_addr probe_nice_csr_wdata probe_nice_hs probe_pc probe_status
+PROBE=probe_csr_flags WIDTH=3
+PROBE=probe_mem_bus WIDTH=4
+PROBE=probe_nice_csr_addr WIDTH=32
+PROBE=probe_nice_csr_wdata WIDTH=32
+PROBE=probe_nice_hs WIDTH=4
+PROBE=probe_pc WIDTH=32
+PROBE=probe_status WIDTH=3
+ILA_UPLOAD_FAILED=ERROR: [Labtools 27-3312] Data read from hw_ila [hw_ila_1] is corrupted. Unable to upload waveform.
+
+ILA_CAPTURE_STATUS=UPLOAD_FAILED

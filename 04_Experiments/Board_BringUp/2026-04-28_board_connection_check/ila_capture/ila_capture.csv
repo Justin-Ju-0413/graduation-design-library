@@ -1,0 +1,2 @@
+Sample in Buffer,Sample in Window,TRIGGER,probe_pc[31:0],probe_mem_bus[3:0],probe_csr_flags[2:0],probe_nice_csr_addr[31:0],probe_nice_csr_wdata[31:0],probe_nice_hs[3:0],probe_status[2:0]
+Radix - UNSIGNED,UNSIGNED,UNSIGNED,HEX,HEX,HEX,HEX,HEX,HEX,HEX

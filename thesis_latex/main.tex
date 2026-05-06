@@ -1,0 +1,137 @@
+%===============================================================================
+% RISC-V Custom Instruction Based Lightweight CNN Accelerator
+% FPGA Prototype Validation - Main LaTeX File
+% XeLaTeX + Biber
+%===============================================================================
+
+\documentclass[12pt,a4paper,twoside]{report}
+
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in, headheight=15pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+
+\usepackage{booktabs,tabularx,array,longtable,multirow}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\usepackage[titles]{tocloft}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+\usepackage{listings,xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{verilog}{
+    language=Verilog, basicstyle=\footnotesize\ttfamily, numbers=left,
+    numberstyle=\tiny\color{codegray}, stepnumber=1, numbersep=5pt,
+    backgroundcolor=\color{backcolour}, frame=single, breaklines=true,
+    tabsize=2, captionpos=b,
+}
+\lstdefinestyle{cstyle}{
+    language=C, basicstyle=\footnotesize\ttfamily, numbers=left,
+    numberstyle=\tiny\color{codegray}, stepnumber=1, numbersep=5pt,
+    backgroundcolor=\color{backcolour}, frame=single, breaklines=true,
+    tabsize=2, captionpos=b,
+}
+\lstdefinestyle{ascii}{
+    basicstyle=\footnotesize\ttfamily, frame=single, breaklines=true,
+}
+\lstset{style=verilog}
+
+\usepackage{bytefield}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit,shadows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage[backend=biber,style=ieee,sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\reg}[1]{\texttt{#1}}
+
+\author{JU JIAXING}
+
+%------------------------------------------------------------------------------
+\title{
+    \vspace*{2cm}
+    \Huge\textbf{RISC-V Custom Instruction Based \\[0.3cm]
+    Lightweight CNN Accelerator \\[0.3cm]
+    FPGA Prototype Validation}\\[2cm]
+    \Large A Thesis Submitted in Partial Fulfillment \\[0.3cm]
+    \Large of the Requirements for the Degree of \\[0.3cm]
+    \Large Bachelor of Science in Computer Engineering \\[2cm]
+    \large\textit{by}\\[1cm]
+    \large\textbf{JU JIAXING}\\[0.3cm]
+    \large Student ID: [Please fill in]\\[1.5cm]
+    \large Supervisor: [Supervisor Name]\\[0.3cm]
+    \large Department of Computer Science\\[0.3cm]
+    \large City University of Hong Kong\\[2cm]
+    \large\today
+}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+\newpage
+
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+\input{chapters/00_declaration.tex}
+\newpage
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\input{chapters/00_abstract.tex}
+\newpage
+
+\tableofcontents
+\newpage
+
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\newpage
+
+\chapter{Introduction}
+\input{chapters/01_1_introduction.tex}
+
+\chapter{Background and Related Work}
+\input{chapters/02_2_background.tex}
+
+\chapter{System Architecture and Methodology}
+\input{chapters/03_3_methodology.tex}
+
+\chapter{Implementation and Results}
+\input{chapters/04_4_results.tex}
+
+\chapter{Discussion}
+\input{chapters/05_5_discussion.tex}
+
+\chapter{Conclusion and Future Work}
+\input{chapters/06_6_conclusion.tex}
+
+\printbibliography[heading=bibintoc, title=References]
+\end{document}

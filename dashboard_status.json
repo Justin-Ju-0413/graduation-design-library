@@ -1,0 +1,50 @@
+{
+  "thesis": {
+    "chapters": {
+      "Abstract": "done",
+      "Ch1_Introduction": "done",
+      "Ch2_Background": "done",
+      "Ch3_Methodology": "done",
+      "Ch4_Results": "done",
+      "Ch5_Discussion": "done",
+      "Ch6_Conclusion": "done"
+    },
+    "references": 27,
+    "figures": 14,
+    "estimated_pages": 47,
+    "words": 10384,
+    "declaration": "done",
+    "toc": "pending",
+    "plagiarism_check": "pending"
+  },
+  "fpga": {
+    "hello_e203_board": "done",
+    "cpu_boot_debug": "done",
+    "nice_ila_confirm": "done",
+    "rstat_result": "debugging",
+    "performance_data": "pending",
+    "accuracy_verify": "pending"
+  },
+  "deadlines": {
+    "thesis_submission": "2026-05-06",
+    "oral_presentation": "2026-05-13",
+    "final_pdf": "2026-05-20"
+  },
+  "file_counts": {
+    "01_Project_Overview": 1,
+    "02_Source_Repos": 3,
+    "03_Documents": 6,
+    "04_Experiments": 115,
+    "05_Presentation": 51,
+    "06_References": 1,
+    "07_Backups": 3,
+    "08_Todo_And_Notes": 18,
+    "09_Thesis_Writing": 32,
+    "10_Final_Defense": 2,
+    "11_FYP_requirement": 8,
+    "scripts": 4,
+    "_archive": 1
+  },
+  "library_total_files": 245,
+  "last_updated": "2026-05-06T00:02:08"
+}

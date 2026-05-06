@@ -1,369 +1,407 @@
-%==============================================================================
-% Thesis: RISC-V Custom Instruction Based Lightweight CNN Accelerator
-%         FPGA Prototype Validation
-% Reference list compiled 2026-05-04
-% Total: 27 entries
-%==============================================================================
+% Thesis References - RISC-V CNN Accelerator FPGA Prototype
+% Generated 2026-05-06 from Zotero + verified sources
 
-%%=============================================================================
-%% TOPIC 1: RISC-V ISA and Custom Instruction Extensions
-%% Supports: Chapter 1 (Introduction), Chapter 2 (Background)
-%%=============================================================================
+@article{diannao2016,
+  title = {DianNao family: energy-efficient hardware accelerators for machine learning},
+  author = {Yunji Chen and Tianshi Chen and Zhiwei Xu and Ninghui Sun and Olivier Temam},
+  journal = {Commun. ACM},
+  volume = {59},
+  number = {11},
+  pages = {105–112},
+  year = {2016},
+  doi = {10.1145/2996864},
+  url = {https://dl.acm.org/doi/10.1145/2996864},
+}
 
-% The definitive specification for the RISC-V unprivileged ISA, including the
-% custom instruction encoding spaces (custom-1/2/3) that this thesis leverages.
+@article{zhou2017cnn,
+  title = {卷积神经网络研究综述},
+  author = {周飞燕 and 金林鹏 and 董军},
+  journal = {计算机学报},
+  volume = {40},
+  number = {6},
+  pages = {1229-1251},
+  year = {2017},
+  url = {https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2017&filename=JSJX201706001},
+}
+
+@article{liu2021riscv,
+  title = {RISC-V指令集架构研究综述},
+  author = {刘畅 and 武延军 and 吴敬征 and 赵琛},
+  journal = {软件学报},
+  volume = {32},
+  number = {12},
+  pages = {3992-4024},
+  year = {2021},
+  doi = {10.13328/j.cnki.jos.006490},
+  url = {https://link.cnki.net/doi/10.13328/j.cnki.jos.006490},
+}
+
+@article{wang2023xiangshan,
+  title = {香山开源高性能RISC-V处理器设计与实现},
+  author = {王凯帆 and 徐易难 and 余子濠 and 唐丹 and 陈国凯 and 陈熙 and 勾凌睿 and 胡轩 and 金越 and 李乾若 and 李昕 and 蔺嘉炜 and 刘彤 and 刘志刚 and 王华强 and 王诲喆 and 张传奇 and 张发旺 and 张林隽 and 张紫飞 and 张梓悦 and 赵阳洋 and 周耀阳 and 邹江瑞 and 蔡晔 and 郇丹丹 and 李祖松 and 赵继业 and 何伟 and 孙凝晖 and 包云岗},
+  journal = {计算机研究与发展},
+  volume = {60},
+  number = {3},
+  pages = {476-493},
+  year = {2023},
+  url = {https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2023&filename=JFYZ202303014},
+}
+
+@article{cao2024cnn,
+  title = {基于RISC-Ⅴ的深度可分离卷积神经网络加速器},
+  author = {曹希彧 and 陈鑫 and 魏同权},
+  journal = {计算机学报},
+  volume = {47},
+  number = {11},
+  pages = {2536-2551},
+  year = {2024},
+  url = {https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2024&filename=JSJX202411003},
+}
+
+@article{wang2024riscvcnn,
+  title = {Optimizing CNN Computation Using RISC-V Custom Instruction Sets for Edge Platforms},
+  author = {Shihang Wang and Xingbo Wang and Zhiyuan Xu and Bingzhen Chen and Chenxi Feng and Qi Wang and Terry Tao Ye},
+  journal = {IEEE Transactions on Computers},
+  volume = {73},
+  number = {5},
+  pages = {1371-1384},
+  year = {2024},
+  doi = {10.1109/TC.2024.3362060},
+  url = {https://ieeexplore.ieee.org/document/10420491/},
+}
+
+@article{zhang2021soc,
+  title = {基于RISC-V处理器的卷积加速SoC系统设计},
+  author = {张坤宁 and 赵烁 and 何虎 and 邓宁 and 杨旭},
+  journal = {计算机工程},
+  volume = {47},
+  number = {4},
+  pages = {153-157},
+  year = {2021},
+  doi = {10.19678/j.issn.1000-3428.0057835},
+  url = {https://doi.org/10.19678/j.issn.1000-3428.0057835},
+}
+
+@article{liao2021isa,
+  title = {基于RISC-V的卷积神经网络专用指令集处理器},
+  author = {廖汉松 and 吴朝晖 and 李斌},
+  journal = {计算机工程},
+  volume = {47},
+  number = {7},
+  pages = {196-204},
+  year = {2021},
+  doi = {10.19678/j.issn.1000-3428.0058371},
+  url = {https://doi.org/10.19678/j.issn.1000-3428.0058371},
+}
+
+@article{jin2026fpga,
+  title = {基于FPGA的灵活量化卷积器},
+  author = {金华 and 蔡新颖 and 刘玖金 and 宋雪桦 and 王昌达},
+  journal = {微电子学与计算机},
+  volume = {43},
+  number = {2},
+  pages = {57-71},
+  year = {2026},
+  doi = {10.19304/J.ISSN1000-7180.2024.0889},
+  url = {https://mc.spacejournal.cn/cn/article/doi/10.19304/J.ISSN1000-7180.2024.0889},
+}
+
+@inproceedings{feng2019lenet5,
+  title = {The Implementation of LeNet-5 with NVDLA on RISC-V SoC},
+  author = {Shanggong Feng and Junning Wu and Shengang Zhou and Renwei Li},
+  pages = {39-42},
+  year = {2019},
+  doi = {10.1109/ICSESS47205.2019.9040769},
+  url = {https://ieeexplore.ieee.org/document/9040769/},
+}
+
+@inproceedings{wu2022domestic,
+  title = {Implementation of CNN Heterogeneous Scheme Based on Domestic FPGA with RISC-V Soft Core CPU},
+  author = {Hailong Wu and Jindong Li and Xiang Chen},
+  pages = {158-159},
+  year = {2022},
+  doi = {10.1109/ICTA56932.2022.9963056},
+  url = {https://ieeexplore.ieee.org/document/9963056/},
+}
+
+@inproceedings{chen2024fnt,
+  title = {RISCV-FNT: A Fast FNT-based RISC-V Processor for CNN Acceleration},
+  author = {Bingzhen Chen and Xingbo Wang and Yucong Huang and Zhiyuan Xu},
+  pages = {292-296},
+  year = {2024},
+  doi = {10.1109/AICAS59952.2024.10595907},
+  url = {https://ieeexplore.ieee.org/document/10595907/},
+}
+
+@inproceedings{wang2021winograd,
+  title = {Customized Instruction on RISC-V for Winograd-Based Convolution Acceleration},
+  author = {Shihang Wang and Jianghan Zhu and Qi Wang and Can He and Terry Tao Ye},
+  pages = {65-68},
+  year = {2021},
+  doi = {10.1109/ASAP52443.2021.00018},
+  url = {https://ieeexplore.ieee.org/document/9516614/},
+}
+
+@article{jigalur2025sparse,
+  title = {A RISC-V-Based High-Throughput Accelerator for Sparse Winograd CNN Inference on FPGA},
+  author = {Shabirahmed Badashasab Jigalur and Chang-Ling Tsai and Yu-Chi Shih and Yen-Cheng Kuan},
+  journal = {IEEE Embedded Systems Letters},
+  volume = {17},
+  number = {4},
+  pages = {256-259},
+  year = {2025},
+  doi = {10.1109/LES.2025.3531251},
+  url = {https://ieeexplore.ieee.org/document/10845145/},
+}
+
+@article{fu2020processor,
+  title = {基于RISC-V的卷积神经网络处理器设计与实现},
+  author = {傅思扬 and 陈华 and 郁发新},
+  journal = {微电子学与计算机},
+  volume = {37},
+  number = {4},
+  pages = {49-54},
+  year = {2020},
+  doi = {10.19304/j.cnki.issn1000-7180.2020.04.009},
+  url = {https://link.cnki.net/doi/10.19304/j.cnki.issn1000-7180.2020.04.009},
+}
+
+@inproceedings{gong2023multimode,
+  title = {A Multi-mode Convolution Coprocessor Based on RISC-V Instruction Set Architecture},
+  author = {Wenqiang Gong and Fang Zhou and Fen Ge},
+  pages = {1-5},
+  year = {2023},
+  doi = {10.1109/ASICON58565.2023.10396531},
+  url = {https://ieeexplore.ieee.org/document/10396531/},
+}
+
+
 @techreport{RISCV_UNPRIV_SPEC,
-  author      = {Andrew Waterman and Krste Asanovi{\'c}},
-  title       = {The {RISC-V} Instruction Set Manual, Volume {I}: Unprivileged Architecture},
+  title = {The {RISC-V} Instruction Set Manual, Volume {I}: Unprivileged Architecture},
+  author = {Andrew Waterman and Krste Asanovi{\'c}},
   institution = {RISC-V Foundation},
-  year        = {2019},
-  number      = {Document Version 20191213},
-  url         = {https://riscv.org/technical/specifications/},
-  note        = {Document Version 20191213}
+  year = {2019},
+  number = {Document Version 20191213},
+  url = {https://riscv.org/technical/specifications/}
 }
 
-% The RISC-V privileged architecture specification, covering supervisor-level
-% CSRs, traps, and physical memory attributes relevant to the SoC integration.
 @techreport{RISCV_PRIV_SPEC,
-  author      = {Andrew Waterman and Krste Asanovi{\'c}},
-  title       = {The {RISC-V} Instruction Set Manual, Volume {II}: Privileged Architecture},
+  title = {The {RISC-V} Instruction Set Manual, Volume {II}: Privileged Architecture},
+  author = {Andrew Waterman and Krste Asanovi{\'c}},
   institution = {RISC-V Foundation},
-  year        = {2021},
-  number      = {Document Version 20211203},
-  url         = {https://riscv.org/technical/specifications/},
-  note        = {Document Version 20211203}
+  year = {2021},
+  url = {https://riscv.org/technical/specifications/}
 }
 
-% Waterman's Ph.D. dissertation documents the design rationale behind the RISC-V
-% ISA, including opcode space allocation for custom instruction extensions.
-@phdthesis{WATERMAN_PHD,
-  author  = {Andrew Waterman},
-  title   = {Design of the {RISC-V} Instruction Set Architecture},
-  school  = {University of California, Berkeley},
-  year    = {2016},
-  url         = {https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-1.html}
-}
-
-% The original public presentation of the RISC-V ISA; establishes the philosophy
-% of a modular, extensible ISA suitable for domain-specific accelerators.
-@inproceedings{ASANOVIC_HOTCHIPS,
-  author    = {Krste Asanovi{\'c} and David A. Patterson},
-  title     = {The {RISC-V} Instruction Set Architecture},
-  booktitle = {2014 {IEEE} Hot Chips 26 Symposium ({HCS})},
-  year      = {2014},
-  pages     = {1--60},
-  note        = {Presentation at Hot Chips 26. Slides available at hotchips.org}
-}
-
-% A concise book introducing the RISC-V ecosystem, the modular ISA design, and
-% the open-source hardware movement that motivates this work.
-@book{RISCV_READER,
-  author    = {David Patterson and Andrew Waterman},
-  title     = {The {RISC-V} Reader: An Open Architecture Atlas},
-  publisher   = {Strawberry Canyon},
-  year        = {2017}
-}
-
-%%=============================================================================
-%% TOPIC 2: E203 Hummingbird v2 Processor (Nuclei System Technology)
-%% Supports: Chapter 3 (System Architecture), Chapter 4 (Accelerator Design)
-%%=============================================================================
-
-% Official user manual for the open-source Hummingbird E203 RISC-V processor
-% core; documents the microarchitecture, pipeline stages, and bus interfaces.
-@manual{NUCLEI_E203,
-  author  = {{Nuclei System Technology}},
-  title   = {Nuclei Hummingbird {E203} Processor User Manual},
-  year    = {2020},
-  url         = {https://github.com/riscv-mcu/e203_hbirdv2}
-}
-
-% The Nuclei SDK provides the software development environment, BSP, and driver
-% libraries for the E203 processor used in this thesis.
-@manual{NUCLEI_SDK,
-  author  = {{Nuclei System Technology}},
-  title   = {Nuclei {SDK} Documentation},
-  year    = {2020},
-  url         = {https://github.com/riscv-mcu/nuclei-sdk}
-}
-
-% Technical report documenting the E203 core's debug module, which implements
-% the RISC-V debug specification and connects to OpenOCD/GDB for JTAG debugging.
-@techreport{NUCLEI_E203_DEBUG,
-  author  = {{Nuclei System Technology}},
-  title   = {Nuclei {E203} Debug Subsystem Technical Report},
-  year    = {2021},
-  url         = {https://doc.nucleisys.com/hbirdv2/}
-}
-
-%%=============================================================================
-%% TOPIC 3: CNN Acceleration with Systolic Arrays
-%% Supports: Chapter 2 (Background and Related Work), Chapter 4 (Accelerator Design)
-%%=============================================================================
-
-% The seminal paper that introduced systolic arrays as a high-throughput,
-% regular computational fabric ideally suited for convolution and matrix ops.
 @article{KUNG_SYSTOLIC,
-  author  = {H. T. Kung},
-  title   = {Why Systolic Architectures?},
-  journal = {Computer},
-  year    = {1982},
-  volume  = {15},
-  number  = {1},
-  pages   = {37--46},
-  doi         = {10.1109/MC.1982.1653825},
+  title = {Why Systolic Architectures?},
+  author = {H. T. Kung},
+  journal = {IEEE Computer},
+  volume = {15},
+  number = {1},
+  pages = {37--46},
+  year = {1982},
+  doi = {10.1109/MC.1982.1653825}
 }
 
-% Comprehensive survey of DNN accelerator architectures, dataflows, and
-% energy-efficiency metrics; provides the analytical framework for this thesis.
 @article{SZE_SURVEY,
-  author  = {Vivienne Sze and Yu-Hsin Chen and Tien-Ju Yang and Joel S. Emer},
-  title   = {Efficient Processing of Deep Neural Networks: A Tutorial and Survey},
-  journal = {Proceedings of the {IEEE}},
-  year    = {2017},
-  volume  = {105},
-  number  = {12},
-  pages   = {2295--2329},
-  doi         = {10.1109/JPROC.2017.2761740},
+  title = {Efficient Processing of Deep Neural Networks: A Tutorial and Survey},
+  author = {Vivienne Sze and Yu-Hsin Chen and Tien-Ju Yang and Joel S. Emer},
+  journal = {Proceedings of the IEEE},
+  volume = {105},
+  number = {12},
+  pages = {2295--2329},
+  year = {2017},
+  doi = {10.1109/JPROC.2017.2761740}
 }
 
-% DianNao is a small-footprint, high-throughput ML accelerator that demonstrated
-% the viability of custom hardware for neural network inference at low power.
-@inproceedings{DIANNAO,
-  author    = {Tianshi Chen and Zidong Du and Ninghui Sun and Jia Wang and
-               Chengyong Wu and Yunji Chen and Olivier Temam},
-  title     = {{DianNao}: A Small-Footprint High-Throughput Accelerator for Ubiquitous Machine-Learning},
-  booktitle = {Proceedings of the 19th International Conference on Architectural
-               Support for Programming Languages and Operating Systems ({ASPLOS})},
-  year      = {2014},
-  pages     = {269--284},
-  doi         = {10.1145/2541940.2541967},
-}
-
-% Eyeriss introduces the row-stationary dataflow for CNN accelerators, which
-% minimizes data movement energy and directly informs the PE array design.
 @article{EYERISS,
-  author  = {Yu-Hsin Chen and Tushar Krishna and Joel S. Emer and Vivienne Sze},
-  title   = {{Eyeriss}: An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks},
-  journal = {{IEEE} Journal of Solid-State Circuits},
-  year    = {2017},
-  volume  = {52},
-  number  = {1},
-  pages   = {127--138},
-  doi         = {10.1109/JSSC.2016.2616357},
+  title = {{Eyeriss}: An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks},
+  author = {Yu-Hsin Chen and Tushar Krishna and Joel S. Emer and Vivienne Sze},
+  journal = {IEEE Journal of Solid-State Circuits},
+  volume = {52},
+  number = {1},
+  pages = {127--138},
+  year = {2017},
+  doi = {10.1109/JSSC.2016.2616357}
 }
 
-% Google's TPU paper demonstrates a production-scale systolic array for DNN
-% inference, validating the systolic approach at datacenter scale.
-@inproceedings{TPU,
-  author    = {Norman P. Jouppi and others},
-  title     = {In-Datacenter Performance Analysis of a Tensor Processing Unit},
-  booktitle = {Proceedings of the 44th Annual International Symposium on Computer Architecture ({ISCA})},
-  year      = {2017},
-  pages     = {1--12},
-  doi         = {10.1145/3079856.3080246},
-  note        = {arXiv:1704.04760}
-}
-
-% Gemmini is an open-source, agile systolic array generator for RISC-V SoCs;
-% its architecture and design methodology directly parallel this thesis.
-@misc{GEMMINI,
-  author = {Hasan Genc and others},
-  title  = {Gemmini: An Agile Systolic Array Generator Enabling Systematic Evaluations of Deep-Learning Accelerators},
-  year   = {2020},
-  note   = {arXiv:1911.09925},
-  doi         = {10.1109/DAC18072.2020.9218590},
-  booktitle   = {ACM/IEEE Design Automation Conference (DAC)}
-}
-
-%%===== CNN Foundation Papers (support both Chapter 1 and Chapter 2) =====%
-
-% The foundational CNN paper; LeNet-5 established the convolution-pooling-
-% fully-connected paradigm that this thesis accelerates.
 @article{LENET,
-  author  = {Yann LeCun and L{\'e}on Bottou and Yoshua Bengio and Patrick Haffner},
-  title   = {Gradient-Based Learning Applied to Document Recognition},
-  journal = {Proceedings of the {IEEE}},
-  year    = {1998},
-  volume  = {86},
-  number  = {11},
-  pages   = {2278--2324},
-  doi         = {10.1109/5.726791},
+  title = {Gradient-Based Learning Applied to Document Recognition},
+  author = {Yann LeCun and L{\'e}on Bottou and Yoshua Bengio and Patrick Haffner},
+  journal = {Proceedings of the IEEE},
+  volume = {86},
+  number = {11},
+  pages = {2278--2324},
+  year = {1998},
+  doi = {10.1109/5.726791}
 }
 
-% AlexNet demonstrated the power of deep CNNs on large-scale image
-% classification, motivating the need for hardware acceleration.
-@inproceedings{ALEXNET,
-  author    = {Alex Krizhevsky and Ilya Sutskever and Geoffrey E. Hinton},
-  title     = {{ImageNet} Classification with Deep Convolutional Neural Networks},
-  booktitle = {Advances in Neural Information Processing Systems ({NIPS})},
-  year      = {2012},
-  volume    = {25},
-  pages     = {1097--1105},
-  doi         = {10.1145/3065386},
+@inproceedings{DIANNAO,
+  title = {{DianNao}: A Small-Footprint High-Throughput Accelerator for Ubiquitous Machine-Learning},
+  author = {Tianshi Chen and Zidong Du and Ninghui Sun and Jia Wang and Chengyong Wu and Yunji Chen and Olivier Temam},
+  booktitle = {Proceedings of the 19th International Conference on Architectural Support for Programming Languages and Operating Systems ({ASPLOS})},
+  pages = {269--284},
+  year = {2014},
+  doi = {10.1145/2541940.2541967}
 }
 
-%%=============================================================================
-%% TOPIC 4: INT8 Quantization for Neural Networks
-%% Supports: Chapter 2 (Background), Chapter 4 (Accelerator Design)
-%%=============================================================================
-
-% The standard reference for integer-only quantization; describes how to
-% train and deploy quantized NNs that achieve FP32-equivalent accuracy.
-@inproceedings{JACOB_QUANT,
-  author    = {Benoit Jacob and Skirmantas Kligys and Bo Chen and Menglong Zhu and
-               Matthew Tang and Andrew Howard and Hartwig Adam and Dmitry Kalenichenko},
-  title     = {Quantization and Training of Neural Networks for Efficient
-               Integer-Arithmetic-Only Inference},
-  booktitle = {Proceedings of the {IEEE} Conference on Computer Vision and
-               Pattern Recognition ({CVPR})},
-  year      = {2018},
-  pages     = {2704--2713},
-  doi         = {10.1109/CVPR.2018.00286},
+@inproceedings{TPU,
+  title = {In-Datacenter Performance Analysis of a Tensor Processing Unit},
+  author = {Norman P. Jouppi and Cliff Young and Nishant Patil and David A. Patterson},
+  booktitle = {Proceedings of the 44th Annual International Symposium on Computer Architecture ({ISCA})},
+  pages = {1--12},
+  year = {2017},
+  doi = {10.1145/3079856.3080246}
 }
 
-% A comprehensive tutorial and survey on quantization methods for DNNs,
-% covering post-training quantization and quantization-aware training.
-@misc{KRISHNAMOORTHI_QUANT,
-  author = {Raghuraman Krishnamoorthi},
-  title  = {Quantizing Deep Convolutional Neural Networks: A Tutorial and Survey},
-  year   = {2018},
-  note   = {arXiv:1804.08741},
-  eprint      = {1806.08342},
+@article{JACOB_QUANT,
+  title = {Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference},
+  author = {Benoit Jacob and Skirmantas Kligys and Bo Chen and Menglong Zhu and Matthew Tang and Andrew Howard and Hartwig Adam and Dmitry Kalenichenko},
+  booktitle = {IEEE/CVF Conference on Computer Vision and Pattern Recognition ({CVPR})},
+  pages = {2704--2713},
+  year = {2018},
+  doi = {10.1109/CVPR.2018.00286}
 }
 
-% Deep Compression combines pruning, trained quantization, and Huffman coding
-% to reduce NN storage by 35-49x without accuracy loss; motivates the need
-% for lightweight quantized models.
-@inproceedings{HAN_DEEPCOMPRESS,
-  author    = {Song Han and Huizi Mao and William J. Dally},
-  title     = {Deep Compression: Compressing Deep Neural Networks with Pruning,
-               Trained Quantization and {Huffman} Coding},
-  booktitle = {Proceedings of the International Conference on Learning Representations ({ICLR})},
-  year      = {2016},
+@manual{NUCLEI_E203,
+  title = {{Nuclei} Hummingbird {E203} Processor User Manual},
+  author = {{Nuclei System Technology}},
+  year = {2020},
+  url = {https://github.com/riscv-mcu/e203_hbirdv2}
 }
 
-%%=============================================================================
-%% TOPIC 5: FPGA Prototyping Methodology (Vivado, ILA, JTAG)
-%% Supports: Chapter 5 (Implementation), Chapter 6 (Validation and Results)
-%%=============================================================================
-
-% Vivado Programming and Debugging guide documents ILA core configuration,
-% JTAG programming, and bitstream generation -- the primary debug flow.
-@manual{XILINX_UG908,
-  author  = {{Xilinx Inc.}},
-  title   = {Vivado Design Suite User Guide: Programming and Debugging},
-  year    = {2023},
-  number  = {UG908 (v2023.2)},
-  url         = {https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging}
-}
-
-% Vivado Synthesis guide covers RTL synthesis, constraints, and timing
-% closure for the A7-100T FPGA used in this thesis.
-@manual{XILINX_UG901,
-  author  = {{Xilinx Inc.}},
-  title   = {Vivado Design Suite User Guide: Synthesis},
-  year    = {2023},
-  number  = {UG901 (v2023.2)},
-  url         = {https://docs.amd.com/r/en-US/ug901-vivado-synthesis}
-}
-
-% Vivado Implementation guide documents place-and-route, physical
-% optimization, and timing analysis for the target device.
-@manual{XILINX_UG904,
-  author  = {{Xilinx Inc.}},
-  title   = {Vivado Design Suite User Guide: Implementation},
-  year    = {2023},
-  number  = {UG904 (v2023.2)},
-  url         = {https://docs.amd.com/r/en-US/ug904-vivado-implementation}
-}
-
-% The classic study quantifying the area, power, and performance gap between
-
-%%=============================================================================
-%% TOPIC 6: NICE (Nuclei Instruction Co-extension) Interface
-%% Supports: Chapter 3 (System Architecture), Chapter 4 (Accelerator Design)
-%%=============================================================================
-
-% The official NICE interface specification from Nuclei, defining the
-% coprocessor handshake protocol (request/hold/grant) used to integrate
-% the CNN accelerator with the E203 pipeline.
 @manual{NUCLEI_NICE,
-  author  = {{Nuclei System Technology}},
-  title   = {Nuclei Instruction Co-extension ({NICE}) Specification},
-  year    = {2020},
-  url         = {https://doc.nucleisys.com/hbirdv2/17_nice.html}
+  title = {{Nuclei} Instruction Co-extension ({NICE}) Interface Specification},
+  author = {{Nuclei System Technology}},
+  year = {2020},
+  url = {https://doc.nucleisys.com/hbirdv2/}
 }
 
-% The Rocket Chip generator enables agile RTL generation of RISC-V SoCs
-% with custom accelerator tiles; its TileLink-based integration approach
-% parallels the NICE-based accelerator integration in this thesis.
-@techreport{ROCKETCHIP,
-  author      = {Krste Asanovi{\'c} and others},
-  title       = {The Rocket Chip Generator},
-  institution = {University of California, Berkeley},
-  year        = {2016},
-  number      = {UCB/EECS-2016-17},
-  url         = {https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-17.html}
-}
-
-% The GNU GDB manual documents the remote debugging protocol and RISC-V
-% target support used for software debugging of the E203 SoC.
-@manual{GDB_MANUAL,
-  author  = {{Free Software Foundation}},
-  title   = {Debugging with {GDB}: The {GNU} Source-Level Debugger},
-  year    = {2023},
-  url         = {https://sourceware.org/gdb/documentation/}
-}
-
-% OpenOCD provides the JTAG-to-GDB bridge for the E203's RISC-V debug
-% module, enabling on-chip debugging during board bring-up.
-@manual{OPENOCD_MANUAL,
-  author  = {{OpenOCD Project}},
-  title   = {{OpenOCD}: Open {On}-Chip Debugger User's Guide},
-  year    = {2023},
-  url         = {https://openocd.org/doc/html/index.html}
-}
-
-%%=============================================================================
-%% TOPIC: Development Board Documentation
-%%=============================================================================
-
-% Official documentation for the ALIENTEK Davinci Pro FPGA development board
-% used as the hardware prototyping platform for this thesis.
 @manual{ALIENTEK_DAVINCI,
-  author       = {{ALIENTEK (正点原子)}},
-  title        = {Davinci {Pro} {FPGA} Development Board User Manual (达芬奇 {Pro} {FPGA} 开发板用户手册)},
-  year         = {2022},
-  url          = {http://www.openedv.com/docs/boards/fpga/zdyz_dafenqi.html},
-  note         = {XC7A100T-FGG484-2 configuration}
+  title = {Davinci {Pro} {FPGA} Development Board User Manual},
+  author = {{ALIENTEK}},
+  year = {2022},
+  url = {http://www.openedv.com/docs/boards/fpga/}
 }
 
-% AMD/Xilinx 7 Series FPGA datasheet
-@manual{XILINX_7SERIES,
-  author       = {{Xilinx Inc.}},
-  title        = {7 {Series} {FPGAs} Data Sheet: Overview (DS180)},
-  year         = {2023},
-  url          = {https://docs.amd.com/v/u/en-US/ds180_7Series_Overview}
+@manual{XILINX_UG908,
+  title = {Vivado Design Suite User Guide: Programming and Debugging ({UG908})},
+  author = {{AMD Xilinx}},
+  year = {2023},
+  url = {https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging}
 }
 
-%%=============================================================================
-%% TOPIC: Recent Related Work (2022-2024)
-%%=============================================================================
+@techreport{NUCLEI_E203_DEBUG,
+  title = {{Nuclei} {E203} Debug Subsystem Technical Report},
+  author = {{Nuclei System Technology}},
+  year = {2021},
+  url = {https://doc.nucleisys.com/hbirdv2/}
+}
 
+@manual{NUCLEI_SDK,
+  title = {{Nuclei} {SDK} Documentation},
+  author = {{Nuclei System Technology}},
+  year = {2020},
+  url = {https://github.com/riscv-mcu/nuclei-sdk}
+}
 
+@inproceedings{ASANOVIC_HOTCHIPS,
+  title = {The {RISC-V} Instruction Set Architecture},
+  author = {Krste Asanovi{\'c} and David A. Patterson},
+  booktitle = {2014 {IEEE} Hot Chips 26 Symposium ({HCS})},
+  year = {2014},
+  note = {Presentation at Hot Chips 26}
+}
 
+@manual{GDB_MANUAL,
+  title = {Debugging with {GDB}},
+  author = {{GDB Contributors}},
+  year = {2023},
+  url = {https://sourceware.org/gdb/documentation/}
+}
 
-%%=============================================================================
-%% IMPORTANT: References marked with "To be verified" or "VERIFY" need the
-%% user to confirm via IEEE Xplore, ACM DL, or CNKI before final submission.
-%% I could NOT independently verify these DOIs through web search.
-%%=============================================================================
+@manual{OPENOCD_MANUAL,
+  title = {{OpenOCD} User's Guide},
+  author = {{OpenOCD Contributors}},
+  year = {2023},
+  url = {https://openocd.org/doc/html/index.html}
+}
 
-% Comprehensive survey on CNN/DNN hardware accelerators covering design,
+@manual{XILINX_UG904,
+  title = {Vivado Design Suite User Guide: Implementation ({UG904})},
+  author = {{AMD Xilinx}},
+  year = {2023},
+  url = {https://docs.amd.com/r/en-US/ug904-vivado-implementation}
+}
 
-% Proposes RISC-V SIMD custom instructions for CNN acceleration on FPGA.
+@misc{GEMMINI,
+  title = {Gemmini: An Agile Systolic Array Generator Enabling Systematic Evaluations of Deep-Learning Accelerators},
+  author = {Hasan Genc and others},
+  year = {2020},
+  doi = {10.1109/DAC18072.2020.9218590}
+}
 
-% RISC-V processor with custom ISE for AI acceleration on FPGA.
+@techreport{ROCKETCHIP,
+  title = {The Rocket Chip Generator},
+  author = {Krste Asanovi{\'c} and others},
+  institution = {University of California, Berkeley},
+  year = {2016},
+  url = {https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-17.html}
+}
 
-% Comprehensive survey of 120+ FPGA-based neural network accelerator designs.
+@article{KUON_FPGA_GAP,
+  title = {Measuring the Gap Between {FPGAs} and {ASICs}},
+  author = {Ian Kuon and Jonathan Rose},
+  journal = {IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},
+  volume = {26},
+  number = {2},
+  pages = {203--215},
+  year = {2007},
+  doi = {10.1109/TCAD.2007.891375}
+}
+
+@phdthesis{WATERMAN_PHD,
+  title = {Design of the {RISC-V} Instruction Set Architecture},
+  author = {Andrew Waterman},
+  school = {University of California, Berkeley},
+  year = {2016},
+  url = {https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-1.html}
+}
+
+@book{RISCV_READER,
+  title = {The {RISC-V} Reader: An Open Architecture Atlas},
+  author = {David Patterson and Andrew Waterman},
+  publisher = {Strawberry Canyon},
+  year = {2017}
+}
+
+@inproceedings{ALEXNET,
+  title = {{ImageNet} Classification with Deep Convolutional Neural Networks},
+  author = {Alex Krizhevsky and Ilya Sutskever and Geoffrey E. Hinton},
+  booktitle = {Advances in Neural Information Processing Systems 25 ({NIPS})},
+  year = {2012},
+  doi = {10.1145/3065386}
+}
+
+@misc{KRISHNAMOORTHI_QUANT,
+  title = {Quantizing Deep Convolutional Neural Networks: A Tutorial and Survey},
+  author = {Raghuraman Krishnamoorthi},
+  year = {2018},
+  eprint = {1806.08342},
+  note = {arXiv:1806.08342}
+}
+
+@inproceedings{HAN_DEEPCOMPRESS,
+  title = {Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and {Huffman} Coding},
+  author = {Song Han and Huizi Mao and William J. Dally},
+  booktitle = {International Conference on Learning Representations ({ICLR})},
+  year = {2016}
+}
+
+@manual{XILINX_UG901,
+  title = {Vivado Design Suite User Guide: Synthesis ({UG901})},
+  author = {{AMD Xilinx}},
+  year = {2023},
+  url = {https://docs.amd.com/r/en-US/ug901-vivado-synthesis}
+}

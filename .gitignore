@@ -43,3 +43,4 @@ main.pdf
 
 # Gen scripts
 *_copy*.sqlite
+*.synctex*

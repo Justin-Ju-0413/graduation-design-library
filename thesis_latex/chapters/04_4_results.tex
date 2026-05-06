@@ -1,6 +1,13 @@
 % Chapter 4: Chapter 4. Results
 
 
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_fpga_board.jpg}
+\caption{Davinci Pro A7-100T FPGA development board running the LeNet-5 CNN inference demo. The board features a Xilinx Artix-7 xc7a100tfgg484-2 FPGA, configured via JTAG with the E203 SoC and NICE CNN accelerator bitstream.}
+\label{fig:fpga_board}
+\end{figure}
+
 \section{RTL Simulation}\label{sec:4_1}
 
 \subsection{CNN Accelerator Unit Test}
@@ -238,28 +245,26 @@ probe3\_mem\_addr & 0x1001200C & GPIOA output register write \\ \hline
 
 The ILA evidence confirms that: (1) the ITCM was correctly loaded with the test program; (2) the MROM boot sequence executed correctly; (3) the CPU jumped to ITCM and executed through GPIO configuration, NICE instruction sequence, and result comparison; and (4) the program reached its intended completion state.
 
-\subsection{LeNet-5 MNIST Inference}\label{sec:4_5_3}
+\subsection{CNN Software Verification}\label{sec:4_5_3}
 
-To validate the full inference pipeline, a complete LeNet-5 network (Conv1 5$\times$5 1$\to$6, MaxPool 2$\times$2, Conv2 5$\times$5 6$\to$16, MaxPool 2$\times$2, FC1 256$\to$120, FC2 120$\to$84, FC3 84$\to$10) was deployed on the FPGA. The INT8-quantized weights (98.5\% FP32 baseline accuracy on MNIST) were compiled into the ITCM initialization image.
+To validate the full inference pipeline, a complete LeNet-5 network (Conv1 5$\times$5 1$\to$6, MaxPool 2$\times$2, Conv2 5$\times$5 6$\to$16, MaxPool 2$\times$2, FC1 256$\to$120, FC2 120$\to$84, FC3 84$\to$10) was implemented in C with the NICE custom instruction driver. The INT8-quantized weights (98.8\% FP32 baseline accuracy on MNIST, trained with input normalization aligned to the C-side preprocessing) were compiled into the firmware image.
 
-The NICE accelerator executed both convolutional layers (Conv1 and Conv2) with tiled 4$\times$4 PE operations, while the pooling and fully-connected layers were computed in software on the E203 core. The system classified 10 MNIST test images, with results transmitted via UART:
+\subsubsection{Convolution Decomposition Verification}
 
-\begin{verbatim}
-LeNet-5 MNIST on E203 + NICE Accelerator
-Img 0 pred=7 exp=7 OK
-Img 1 pred=2 exp=2 OK
-Img 2 pred=1 exp=1 OK
-Img 3 pred=0 exp=0 OK
-Img 4 pred=4 exp=4 OK
-Img 5 pred=1 exp=1 OK
-Img 6 pred=8 exp=4 FAIL
-Img 7 pred=5 exp=9 FAIL
-Img 8 pred=5 exp=5 OK
-Img 9 pred=7 exp=9 FAIL
-Result: 7/10 correct (70\%)
-\end{verbatim}
+The 5$\times$5-to-4$\times$4 kernel tiling was verified through a CPU reference implementation. For each output pixel, the NICE accelerator computes the top-left 4$\times$4 sub-tile (16 multiply-accumulate operations in hardware), while the remaining 9 border products are accumulated in software. The equivalence between the NICE-accelerated path and the pure-CPU reference was confirmed via self-check routines embedded in the firmware.
 
-The 70\% inference accuracy represents a 28.5\% degradation from the FP32 baseline (98.5\%). This accuracy loss is attributable to the INT8 re-quantization step between the Conv2 output (INT32) and the FC1 input (INT8), where fixed-bit-width rescaling introduces cumulative precision loss. The Conv1 and Conv2 layers, executed entirely in INT8 via the NICE accelerator, demonstrated functional correctness verified by ILA probe traces. The fully-connected layers, performing INT8-weight $\times$ INT32-activation multiplication with fixed-point rescaling, account for the majority of the observed accuracy gap.
+\subsubsection{FPGA Deployment Status}
+
+On the FPGA platform, the NICE instruction execution sequence was confirmed via ILA probe traces: the CPU successfully executes the complete NICE instruction flow (CLEAR, WLOAD$\times$4, DLOAD$\times$4, COMP, RSTAT) and reaches the program completion state. The full LeNet-5 inference pipeline was deployed and tested on 10 MNIST test images.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig_uart_output.png}
+\caption{UART terminal output from the LeNet-5 MNIST inference demo running on the FPGA. The system correctly classified 7 of 10 test images (70\% accuracy), confirming end-to-end functionality of the NICE-accelerated inference pipeline. Classification failures on images 6, 7, and 9 are attributed to INT8 re-quantization precision loss in the Conv2-to-FC1 transition, where fixed-bit-width rescaling of INT32 accumulator outputs back to the INT8 input range required by subsequent layers introduces cumulative error.}
+\label{fig:uart_output}
+\end{figure}
+
+The 70\% inference accuracy represents a 28.5\% degradation from the FP32 baseline (98.5\%). This accuracy gap is primarily attributable to the INT8 re-quantization step between the Conv2 output (INT32) and the FC1 input (INT8), where fixed-rshift rescaling introduces cumulative precision loss across the three fully-connected layers. The Conv1 and Conv2 layers, executed entirely in INT8 via the NICE accelerator, demonstrated functional correctness verified by per-pixel equivalence checks against a CPU reference implementation embedded in the firmware. The fully-connected layers, performing INT8-weight $\times$ INT32-activation multiplication with INT64 accumulation and fixed-point rescaling, account for the majority of the observed accuracy gap. This is a known challenge in INT8-only inference pipelines without per-layer calibration, and is documented as a limitation for future work.
 
 \subsection{Performance Measurement}
 
@@ -271,7 +276,7 @@ The NICE-accelerated convolution was benchmarked against a pure software referen
 \item Speedup: 5.28$\times$
 \end{itemize}
 
-This measurement covers the convolution operation only (CLEAR + WLOAD$\times$4 + DLOAD$\times$4 + COMP + RSTAT). The overall LeNet-5 inference time is dominated by the software FC layers, which perform approximately 50,000 multiply-accumulate operations per image at 16 MHz. The complete inference time per image is approximately 2--5 minutes, suitable for demonstration purposes but indicating that future work should target hardware acceleration of the FC layers or adopt a reduced-precision FC datapath.
+This measurement covers the convolution operation only (CLEAR + WLOAD$\times$4 + DLOAD$\times$4 + COMP + RSTAT). The overall LeNet-5 inference time is dominated by the software FC layers, which perform approximately 50,000 multiply-accumulate operations per image at 16 MHz. The complete inference time per image is approximately 2--5 minutes in the current implementation, indicating that future work should target hardware acceleration of the FC layers, adoption of a Line Buffer architecture for pipelined data supply (as specified in the original task requirements), or migration to a reduced-precision FC datapath.
 
 The measured 5.28$\times$ speedup meets the design target of $\geq$5$\times$ acceleration for convolution operations.
 

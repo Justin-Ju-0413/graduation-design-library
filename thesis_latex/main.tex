@@ -1,9 +1,3 @@
-%===============================================================================
-% RISC-V Custom Instruction Based Lightweight CNN Accelerator
-% FPGA Prototype Validation - Main LaTeX File
-% XeLaTeX + Biber
-%===============================================================================
-
 \documentclass[12pt,a4paper,twoside]{report}
 
 \usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in, headheight=15pt]{geometry}
@@ -72,67 +66,127 @@
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\reg}[1]{\texttt{#1}}
 
-\author{JU JIAXING}
-
-%------------------------------------------------------------------------------
-\title{
-    \vspace*{2cm}
-    \Huge\textbf{RISC-V Custom Instruction Based \\[0.3cm]
-    Lightweight CNN Accelerator \\[0.3cm]
-    FPGA Prototype Validation}\\[2cm]
-    \Large A Thesis Submitted in Partial Fulfillment \\[0.3cm]
-    \Large of the Requirements for the Degree of \\[0.3cm]
-    \Large Bachelor of Science in Computer Engineering \\[2cm]
-    \large\textit{by}\\[1cm]
-    \large\textbf{JU JIAXING}\\[0.3cm]
-    \large Student ID: [Please fill in]\\[1.5cm]
-    \large Supervisor: [Supervisor Name]\\[0.3cm]
-    \large Department of Computer Science\\[0.3cm]
-    \large City University of Hong Kong\\[2cm]
-    \large\today
-}
+% Title page info
+\newcommand{\projectcode}{[Proposal Code]}
+\newcommand{\studentname}{JU JIAXING}
+\newcommand{\homeuniversity}{City University of Hong Kong}
+\newcommand{\studentid}{2501026}
+\newcommand{\supervisor}{[Supervisor Name]}
+\newcommand{\assessor}{[Assessor Name]}
+\newcommand{\major}{Computer Engineering}
+\newcommand{\programme}{BEng Computer Engineering}
 
 \begin{document}
-\maketitle
-\thispagestyle{empty}
-\newpage
 
+%===============================================================================
+% TITLE PAGE — matching FYP template (Appendix III)
+%===============================================================================
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+
+\vspace*{1cm}
+
+{\large\textbf{CityUHK Qingdao Research Institute}}
+
+\vspace{0.8cm}
+
+{\Large\textbf{FINAL YEAR PROJECT REPORT}}
+
+\vspace{0.5cm}
+
+{\large 2025/26 -- \projectcode}
+
+\vspace{1.5cm}
+
+{\Huge\textbf{RISC-V Custom Instruction Based \\[0.3cm] Lightweight CNN Accelerator \\[0.3cm] FPGA Prototype Validation}}
+
+\vspace{2cm}
+
+\begin{tabular}{rl}
+\textbf{Student Name:} & \studentname \\
+\textbf{Home University:} & \homeuniversity \\
+\textbf{Student ID:} & \studentid \\
+\textbf{Supervisor:} & \supervisor \\
+\textbf{Assessor:} & \assessor \\
+\textbf{Major:} & \major \\
+\textbf{Programme:} & \programme \\
+\end{tabular}
+
+\vspace{2cm}
+
+{\large\textbf{Department of Computer Science}\\[0.3cm]
+\large\textbf{City University of Hong Kong}}
+
+\vfill
+
+{\large May 2026}
+
+\end{center}
+\end{titlepage}
+
+%===============================================================================
+% FRONT MATTER — lowercase roman page numbering
+%===============================================================================
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% --- Declaration ---
 \chapter*{Declaration}
 \addcontentsline{toc}{chapter}{Declaration}
 \input{chapters/00_declaration.tex}
 \newpage
 
+% --- Abstract ---
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 \input{chapters/00_abstract.tex}
 \newpage
 
+% --- Acknowledgements ---
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\input{chapters/00_acknowledgements.tex}
+\newpage
+
+% --- Table of Contents ---
 \tableofcontents
 \newpage
 
+% --- List of Figures ---
 \listoffigures
 \addcontentsline{toc}{chapter}{List of Figures}
+
+% --- List of Tables ---
 \listoftables
 \addcontentsline{toc}{chapter}{List of Tables}
 \newpage
 
+%===============================================================================
+% MAIN TEXT — arabic page numbering, starting at 1
+%===============================================================================
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
 \chapter{Introduction}
 \input{chapters/01_1_introduction.tex}
-
-\chapter{Background and Related Work}
 \input{chapters/02_2_background.tex}
 
-\chapter{System Architecture and Methodology}
+\chapter{Methodology}
 \input{chapters/03_3_methodology.tex}
 
-\chapter{Implementation and Results}
+\chapter{Results}
 \input{chapters/04_4_results.tex}
 
 \chapter{Discussion}
 \input{chapters/05_5_discussion.tex}
 
-\chapter{Conclusion and Future Work}
+\chapter{Conclusion}
 \input{chapters/06_6_conclusion.tex}
 
+%===============================================================================
+% BACK MATTER
+%===============================================================================
 \printbibliography[heading=bibintoc, title=References]
+
 \end{document}

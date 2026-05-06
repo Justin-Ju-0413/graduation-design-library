@@ -89,7 +89,7 @@ Figure 3.2 shows the instruction format.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig3_2_instruction_format.png}
+\includegraphics[width=0.70\textwidth]{figures/fig3_2_instruction_format.png}
 \caption{RISC-V custom instruction format as interpreted by the E203 NICE interface.}
 \label{fig:3_2}
 \end{figure}
@@ -97,18 +97,18 @@ Figure 3.2 shows the instruction format.
 Table 3.3 defines the six custom instructions.
 
 \begin{table}[htbp]
-\centering
+\centering\small
 \caption{NICE custom instruction set for the CNN accelerator.}
 \label{tab:3_3}
-\begin{tabular}{lcccccc}
+\begin{tabular}{lp{1.8cm}p{1.8cm}p{2.8cm}p{3.5cm}}
 \hline
-Instruction & funct7 & xd & xs1 & xs2 & Encoding (hex) & Description \\ \hline\hline
-CFG & 5 & 0 & 1 & 0 & 0x0A00100B & Configure: rs1[0] enables ReLU \\ \hline
-CLEAR & 4 & 0 & 0 & 0 & 0x0800000B & Clear all PE accumulators and masks \\ \hline
-WLOAD & 0 & 0 & 1 & 1 & 0x0001800B & Load weight column: rs1=data, rs2=idx \\ \hline
-DLOAD & 1 & 0 & 1 & 1 & 0x0201800B & Load activation row: rs1=data, rs2=idx \\ \hline
-COMP & 2 & 0 & 0 & 0 & 0x0400000B & Trigger MAC computation on all PEs \\ \hline
-RSTAT & 3 & 1 & 0 & 0 & 0x0600250B & Read accumulator result into rd \\ \hline
+Instruction & Encoding (hex) & Fields & Operands & Description \\ \hline\hline
+CFG   & 0x0A00100B & funct7=5, xd=0, xs1=1, xs2=0 & rs1[0]=ReLU en & Configure accelerator \\ \hline
+CLEAR & 0x0800000B & funct7=4, xd=0, xs1=0, xs2=0 & none & Clear PE accumulators \\ \hline
+WLOAD & 0x0001800B & funct7=0, xd=0, xs1=1, xs2=1 & rs1=data, rs2=idx & Load weight column \\ \hline
+DLOAD & 0x0201800B & funct7=1, xd=0, xs1=1, xs2=1 & rs1=data, rs2=idx & Load activation row \\ \hline
+COMP  & 0x0400000B & funct7=2, xd=0, xs1=0, xs2=0 & none & Trigger MAC computation \\ \hline
+RSTAT & 0x0600250B & funct7=3, xd=1, xs1=0, xs2=0 & rd=result & Read accumulator result \\ \hline
 \end{tabular}
 \end{table}
 
@@ -177,7 +177,7 @@ Figure 3.3 shows the PE datapath.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig3_3_pe_microarchitecture.png}
+\includegraphics[width=0.60\textwidth]{figures/fig3_3_pe_microarchitecture.png}
 \caption{Processing element microarchitecture showing the INT8 multiplier and INT32 accumulator.}
 \label{fig:3_3}
 \end{figure}
@@ -220,13 +220,14 @@ Figure 3.4 shows the array structure and the data distribution pattern.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig3_4_pe_array.png}
+\includegraphics[width=0.70\textwidth]{figures/fig3_4_pe_array.png}
 \caption{4x4 PE array organization showing weight column broadcast and activation row broadcast.}
 \label{fig:3_4}
 \end{figure}
 
 The weight and activation storage within the PE array uses a column-wise and row-wise register file, implemented in pe\_array.v (Listing 3.4).
 
+\newpage
 \begin{lstlisting}[language=Verilog,style=verilog]
 // Listing 3.4: PE array module showing weight and activation register file
 // organization and the tree adder for the final sum.
@@ -293,12 +294,13 @@ The NICE bus width is 32 bits, but the PE array requires 128 bits of weight data
 The complete computation schedule is:
 
 Table 3.4: Computation schedule for one 4x4 matrix multiply-accumulate operation.
+% TODO: Table 3.4 content needs to be added
 
 The packed data format packs four INT8 values into one 32-bit word as shown in Figure 3.5.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig3_5_packed_format.png}
+\includegraphics[width=0.65\textwidth]{figures/fig3_5_packed_format.png}
 \caption{Packed INT8 data format within a 32-bit register for WLOAD and DLOAD.}
 \label{fig:3_5}
 \end{figure}
@@ -344,6 +346,7 @@ The NICE interface is activated by defining E203\_HAS\_NICE in the E203 configur
 
 The e203\_subsys\_nice\_core wrapper maps the E203 core’s NICE port signals to the accelerator’s ports. Listing 3.5 shows the wrapper instantiation.
 
+\newpage
 \begin{lstlisting}[language=Verilog,style=verilog]
 // Listing 3.5: NICE subsystem wrapper instantiation (e203_subsys_nice_core.v).
 

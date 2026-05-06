@@ -7,14 +7,13 @@ ILA_PROPERTY.NAME=hw_ila_1
 ILA_PROPERTY.CORE_UUID=140BA85DC7DA5EB9AE77EF27AE29B195
 ILA_PROPERTY.CONTROL.DATA_DEPTH=1024
 ILA_PROPERTY.CONTROL.TRIGGER_POSITION=512
-HW_PROBES=probe_csr_flags probe_mem_bus probe_nice_csr_addr probe_nice_csr_wdata probe_nice_hs probe_pc probe_status
-PROBE=probe_csr_flags WIDTH=3
-PROBE=probe_mem_bus WIDTH=4
-PROBE=probe_nice_csr_addr WIDTH=32
-PROBE=probe_nice_csr_wdata WIDTH=32
-PROBE=probe_nice_hs WIDTH=4
-PROBE=probe_pc WIDTH=32
-PROBE=probe_status WIDTH=3
-ILA_UPLOAD_FAILED=ERROR: [Labtools 27-3312] Data read from hw_ila [hw_ila_1] is corrupted. Unable to upload waveform.
-
-ILA_CAPTURE_STATUS=UPLOAD_FAILED
+HW_PROBES=probe0_pc probe1_reset_uart probe2_liveness probe3_pc_activity probe4_nice_csr probe5_nice_hs probe6_mem_status
+PROBE=probe0_pc WIDTH=32
+PROBE=probe1_reset_uart WIDTH=4
+PROBE=probe2_liveness WIDTH=3
+PROBE=probe3_pc_activity WIDTH=32
+PROBE=probe4_nice_csr WIDTH=32
+PROBE=probe5_nice_hs WIDTH=4
+PROBE=probe6_mem_status WIDTH=3
+ILA_CSV=C:/Users/16084/Documents/Graduation_Design_Library/04_Experiments/Board_BringUp/2026-04-28_board_connection_check/ila_capture/ila_capture.csv
+ILA_CAPTURE_STATUS=CAPTURED

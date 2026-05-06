@@ -1,0 +1,110 @@
+# Fig 3.1: RISC-V SoC with CNN Accelerator — System Architecture
+# v4 — with Memory & Peripherals container, calibrated against AI reference
+
+direction: right
+
+# ── LEFT: Processor ──
+"E203 RISC-V Core\n(RV32IMAC)": {
+  style.fill: "#FAFAFA"
+  style.stroke: "#333"
+  style.stroke-width: 2
+
+  IFU: "IFU\nInstruction\nFetch Unit"
+  EXU: "EXU\nExecution Unit\n+ NICE Interface"
+  "LSU / BIU": "LSU / BIU\nLoad/Store &\nBus Interface"
+}
+
+# ── CENTER: Accelerator ──
+"CNN Accelerator": {
+  style.fill: "#E3F2FD"
+  style.stroke: "#2196F3"
+  style.stroke-width: 2
+
+  "NICE Decoder\n+ Control FSM"
+  "4x4 PE Array\n(INT8 MAC)\nOutput-Stationary"
+}
+
+# ── RIGHT: Memory & Peripherals (container) ──
+"Memory & Peripherals": {
+  style.fill: "#FAFAFA"
+  style.stroke: "#333"
+  style.stroke-width: 2
+
+  "ITCM 64KB\n(64-bit)\n0x8000_0000" {
+    style.fill: "#FFFFFF"
+    style.stroke: "#666"
+    style.stroke-width: 1
+  }
+  "DTCM 64KB\n(32-bit)\n0x9000_0000" {
+    style.fill: "#FFFFFF"
+    style.stroke: "#666"
+    style.stroke-width: 1
+  }
+  "Boot ROM\n(MROM)\n0x0000_0000" {
+    style.fill: "#FFFFFF"
+    style.stroke: "#666"
+    style.stroke-width: 1
+  }
+  "UART0\n0x1001_3000" {
+    style.fill: "#FFFFFF"
+    style.stroke: "#666"
+    style.stroke-width: 1
+  }
+  GPIO {
+    style.fill: "#FFFFFF"
+    style.stroke: "#666"
+    style.stroke-width: 1
+  }
+}
+
+# ── BOTTOM: System Peripherals ──
+"CLINT\n0x0200_0000" {
+  style.fill: "#FAFAFA"
+  style.stroke: "#333"
+  style.stroke-width: 1
+}
+"PLIC\n0x0C00_0000" {
+  style.fill: "#FAFAFA"
+  style.stroke: "#333"
+  style.stroke-width: 1
+}
+
+# ── AHB Bus Fabric ──
+"AHB Bus Fabric" {
+  style.stroke-dash: 8
+  style.fill: "#F5F5F5"
+  style.stroke: "#999"
+  style.stroke-width: 2
+}
+
+# ── NICE CONNECTION (orange) ──
+"E203 RISC-V Core\n(RV32IMAC)".EXU -> "CNN Accelerator"."NICE Decoder\n+ Control FSM": "NICE Request\n/ Response" {
+  style.stroke: "#FF9800"
+  style.stroke-width: 2
+}
+
+# ── RESET VECTOR (dashed) ──
+"Memory & Peripherals"."Boot ROM\n(MROM)\n0x0000_0000" -> "Memory & Peripherals"."ITCM 64KB\n(64-bit)\n0x8000_0000": "Reset vector\n→ 0x80000000" {
+  style.stroke-dash: 6
+}
+
+# ── Instruction Fetch path (IFU → ITCM, tight coupling) ──
+"E203 RISC-V Core\n(RV32IMAC)".IFU -> "Memory & Peripherals"."ITCM 64KB\n(64-bit)\n0x8000_0000": "Instruction\nFetch" {
+  style.stroke: "#4CAF50"
+  style.stroke-width: 2
+}
+
+# ── AHB: Masters → Bus ──
+"E203 RISC-V Core\n(RV32IMAC)"."LSU / BIU" -> "AHB Bus Fabric"
+"CNN Accelerator"."4x4 PE Array\n(INT8 MAC)\nOutput-Stationary" -> "AHB Bus Fabric"
+
+# ── AHB: Bus → Memory & Peripherals ──
+"AHB Bus Fabric" -> "Memory & Peripherals"."ITCM 64KB\n(64-bit)\n0x8000_0000"
+"AHB Bus Fabric" -> "Memory & Peripherals"."DTCM 64KB\n(32-bit)\n0x9000_0000"
+"AHB Bus Fabric" -> "Memory & Peripherals"."Boot ROM\n(MROM)\n0x0000_0000"
+"AHB Bus Fabric" -> "Memory & Peripherals"."UART0\n0x1001_3000"
+"AHB Bus Fabric" -> "Memory & Peripherals".GPIO
+
+# ── AHB: Bus → Bottom Peripherals ──
+"AHB Bus Fabric" -> "CLINT\n0x0200_0000"
+"AHB Bus Fabric" -> "PLIC\n0x0C00_0000"

@@ -1,0 +1,62 @@
+
+Discarded input sections
+
+ .riscv.attributes
+                0x0000000000000000       0x29 C:\Users\16084\AppData\Local\Temp\ccMPClLR.o
+ .comment       0x0000000000000000       0x13 C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+ .riscv.attributes
+                0x0000000000000000       0x2b C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ITCM             0x0000000080000000 0x0000000000010000 xr
+DTCM             0x0000000090000000 0x0000000000010000 xrw
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD C:\Users\16084\AppData\Local\Temp\ccMPClLR.o
+LOAD C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+
+.text           0x0000000080000000      0x107
+ *(.text.init)
+ .text.init     0x0000000080000000        0xc C:\Users\16084\AppData\Local\Temp\ccMPClLR.o
+                0x0000000080000000                _start
+ *(.text .text.*)
+ .text          0x000000008000000c        0x0 C:\Users\16084\AppData\Local\Temp\ccMPClLR.o
+ .text          0x000000008000000c       0x36 C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+ .text.startup  0x0000000080000042       0x82 C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+                0x0000000080000042                main
+ *(.rodata .rodata.*)
+ *fill*         0x00000000800000c4        0x0 
+ .rodata.str1.4
+                0x00000000800000c4       0x43 C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+
+.rela.dyn       0x0000000080000108        0x0
+ .rela.text.init
+                0x0000000080000108        0x0 C:\Users\16084\AppData\Local\Temp\ccMPClLR.o
+
+.data           0x0000000090000000        0x0 load address 0x0000000080000108
+ *(.sdata .sdata.*)
+ *(.data .data.*)
+ .data          0x0000000090000000        0x0 C:\Users\16084\AppData\Local\Temp\ccMPClLR.o
+ .data          0x0000000090000000        0x0 C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+
+.bss            0x0000000090000000        0x0 load address 0x0000000080000108
+ *(.sbss .sbss.*)
+ *(.bss .bss.*)
+ .bss           0x0000000090000000        0x0 C:\Users\16084\AppData\Local\Temp\ccMPClLR.o
+ .bss           0x0000000090000000        0x0 C:\Users\16084\AppData\Local\Temp\ccC5Yx5f.o
+ *(COMMON)
+
+.stack          0x0000000090000000    0x10000 load address 0x0000000080000110
+                0x0000000090010000                . = (ORIGIN (DTCM) + LENGTH (DTCM))
+ *fill*         0x0000000090000000    0x10000 
+                0x0000000090010000                _stack_top = .
+
+/DISCARD/
+ *(.note .note.*)
+ *(.comment)
+ *(.riscv.attributes)
+OUTPUT(C:\Users\16084\DOCUME~1\NEWPRO~1\RISCV_~1\sw\HELLO_~1\build\HELLO_~1.ELF elf32-littleriscv)

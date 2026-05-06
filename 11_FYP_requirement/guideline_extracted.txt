@@ -1,0 +1,1187 @@
+--- Page 1 ---
+ 
+ 
+ 
+Applicable to those students starting 
+project in Sem A, 2025/26 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+EE4000 Final Year Project 
+ 
+ 
+ 
+Guidelines for Supervisors and Students 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+--- Page 2 ---
+ 
+ 
+Contents 
+ 
+1. 
+Assessment 
+ 
+2. 
+Supervisor’s Responsibilities 
+ 
+3. 
+Student's Responsibilities 
+ 
+4. 
+Project Work 
+ 
+4.1    Project Implementation 
+ 
+4.2    Project Demonstration 
+ 
+4.3    Project Report 
+ 
+4.4    Oral Presentation 
+ 
+Appendix I    - Point-to-Mark Mapping for Reference 
+ 
+Appendix II   - Rubrics for Each Level of Achievements 
+ 
+Appendix III  - General Format for Final Year Project Report  
+ 
+Appendix IV  - Student Declaration Form 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+--- Page 3 ---
+ 
+ 
+1.   Assessment 
+Details about assessment requirements are defined in each FYP proposal. In 
+general, they are very similar for each programme. All students embarking on 
+their final year projects should read the relevant syllabus. An overview of how the 
+final year project is assessed from various sources and how the final mark is 
+obtained is shown in Figure 1.  
+Figure 1. Overview of final year project assessment 
+It is important to note that, in order to pass the course, students are required to: 
+(i) 
+Conduct an oral presentation. The presentation is an essential element of 
+the FYP assessment. Students who do not deliver a final presentation will 
+not receive a passing grade for the project course.  
+(ii) 
+Achieve an overall pass (D) grade or above,  
+ 
+2. Supervisor's Responsibilities 
+The responsibilities of the supervisor are outlined as follows: 
+ 
+To ensure all necessary health and safety risk assessments have been 
+conducted and ethics approval obtained where necessary prior to the 
+commencement of the final year project. 
+ 
+To clearly define the project objectives and articulate how these align with the 
+assessment criteria. 
+ 
+To inform students about the resources available, including equipment, 
+software, consumables, and designated working areas. 
+ 
+To offer technical advice while allowing students to independently develop 
+solutions and implementation strategies. 
+
+--- Page 4 ---
+ 
+ 
+ 
+To be accessible for consultation at regular intervals, maintaining a minimum 
+of 20 contact hours throughout the project period. While supervisors are 
+available, it is the student’s responsibility to initiate appointments. 
+ 
+To address or remove any barriers that hinder progress beyond the student’s 
+control. 
+ 
+3.   Student's Responsibilities 
+The student is responsible for effectively managing their FYP by adhering to the 
+following guidelines: 
+ 
+To ensure that all necessary health and safety risk assessments are completed 
+and, where required, ethics approval is obtained through the supervisor 
+before commencing the FYP. 
+ 
+To maintain regular contact with the supervisor and proactively arrange 
+appointments as needed for guidance and support. 
+ 
+To arrange appointments with both the supervisor and/or the assessor for 
+formal assessment at the end of each semester. 
+ 
+To promptly report to the supervisor any difficulties encountered, including 
+equipment failures, resource shortages, health issues, personal circumstances, 
+or laboratory management problems. 
+ 
+To submit a detailed progress summary to the supervisor for Continuous 
+Assessment 1; and, for Continuous Assessment 2, to submit the project report 
+and deliver a project progress presentation to an assessment panel comprising 
+both the supervisor and the assessors. Failure to present will result in zero 
+marks for the progress component. 
+ 
+To recognize that presentations are an essential part of FYP assessment. 
+Students who do not deliver their final presentations will not pass the project 
+course. 
+It is important to note that while supervisors provide guidance, they are not 
+responsible for providing ready-made solutions. The FYP serves an opportunity  for 
+students to demonstrate their problem-solving abilities and effective project 
+management skills. 
+ 
+4.   Project Work 
+The amount of time students is expected to allocate to their final year projects is 
+formally specified in the course documents and is repeated here: 
+ 
+Semester A:                       20 semester hours per week. 
+ 
+Semester B:                       20 semester hours per week. 
+
+--- Page 5 ---
+ 
+ 
+Each student is expected to plan how to schedule their time on a weekly basis. 
+This may involve consulting laboratory staff to find out when laboratories will be 
+open. It is a good idea to identify specific time period(s) during each week that 
+can be devoted to project work so that assignments and other activities can be 
+scheduled around these periods. 
+ 
+4.1          Project Implementation 
+It is essential that students prepare their own schedules to partition their project 
+work into separate and distinct objectives, or tasks, and the time duration 
+estimated for each. Resources, constraints and links peculiar to an academic 
+environment should also be factored into the project scheduling, in particular 
+equipment and laboratory usage. The schedule could take the form of a horizontal 
+bar chart, for example, with semester months/weeks along the top and tasks listed 
+along the side, and the duration of each task depicted by a horizontal bar spanning 
+the estimated time interval required. Whatever form the schedule takes, it should 
+be available for inspection by the supervisor at every progress/consultation 
+meeting. The number of objectives and or tasks, which can be separately identified, 
+will vary from project to project but the schedule will typically include the following 
+Table 1: 
+No. Task name 
+Month Number 
+1 
+2 
+3 
+4 
+5 
+6 
+7 
+8 
+1 
+Literature Search 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2 
+Design 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 
+Analytical work 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4 
+Simulation work 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+5 
+Construction 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6 
+Measurements 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7 
+Improvements 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8 
+Demonstration 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+9 
+Presentation 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+10 
+Report writing 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Table 1. Example of Schedule Planning Chart 
+Students are expected to distribute their activities evenly over the two semesters. 
+STUDENTS SHOULD NOT RELY ON DOING MOST OF THE WORK IN SEMESTER B!!! 
+Otherwise, marks may be deducted for bad project management. 
+The project implementation will be graded according to four general assessment 
+outcomes and are shown in column 1 of Table 2. 
+Assessment Outcome for Project implementation 
+No 
+General 
+Specific 
+
+--- Page 6 ---
+ 
+ 
+Exploration 
+Material research 
+1 
+Required skill acquisition 
+2 
+Growth 
+Formulation of design problem and its solution 
+1 
+Use of technical and/or practical skills 
+2 
+Contribution 
+Help and guidance provided 
+1 
+Project output 
+2 
+Extension of knowledge 
+3 
+Novelty and Innovation 
+4 
+Project management 
+Usage 
+1 
+Resource Management 
+2 
+Meetings 
+3 
+Table 2. General and specific assessment outcomes for a typical hardware engineering type project. 
+Specific outcomes for an engineering type project are shown in the second column 
+of Table 2. Weighting for each assessment outcome can be determined by the 
+addition of more specific assessment outcomes by the supervisor/assessor 
+according to their perceived importance for that particular project. 
+ 
+4.2          Project Demonstrations 
+The project demonstration provides the student with the opportunity to present a 
+live demonstration of the project to both the supervisor and the assessor. However, 
+it is recommended that the demonstration be organized so that the assessor is 
+provided with a "guided tour”, through all the features of the work that have been 
+completed. It is also recommended that some support materials be available, 
+particularly diagrams, to assist with any explanations which may be called for (of 
+course, these may have been provided in the project report but they should also 
+be available during the demonstration). This kind of preparation, together with 
+intelligent answers to any questions that maybe asked, will help maximize the mark 
+awarded. 
+It is often the case that students do not manage to reach all the goals originally 
+agreed between themselves and their supervisors. This may not necessarily be the 
+fault of the student; there are a number of possible reasons why this situation may 
+arise and it is up to both the supervisor and the assessor to provide a balanced 
+judgment and to take into consideration any adverse factors that were beyond the 
+student's control. However, under circumstances where a piece of hardware may 
+not work properly, or may not work at all, or where software does not perform as 
+
+--- Page 7 ---
+ 
+ 
+expected, it is essential that students provide a good demonstration and 
+explanation of problems they have encountered. For example, with a hardware 
+project that does not work properly, it would still be possible to set the equipment 
+up in some diagnostic mode (e.g. with oscilloscope, logic analyser, etc.) and centre 
+the discussions around a detailed demonstration of the problem(s). This will 
+provide the assessor, in particular, with a good opportunity to determine how 
+much work the student has devoted to his/her project. 
+ 
+4.3           The Project Report 
+The general format of the project report is identical to that formal report template. 
+However, the precise format of your report will depend on the nature of the 
+project. For example, a hardware-oriented project may justify extensive 
+explanations of circuit design (with diagrams), built in test features, circuit board 
+implementation details, testing, etc., A software-oriented project may require 
+extensive treatment of the user interface, program structure, testing and 
+debugging, and a user guide (perhaps as an appendix). What to include, or not to 
+include, should be discussed between the student and the supervisor. 
+A guideline for the general format is given in Appendix III and a template provided 
+to students so that all reports will in general look the same. This will give a more 
+professional appearance since electronic copies will be archived in the library. 
+The project report will in general be graded according to five general assessment 
+outcomes and is shown in column 1 of Table 3. 
+Assessment Outcome for Project Report 
+No 
+General 
+Specific 
+Organization 
+Organization 
+1 
+Content 
+Engineering/theoretical analysis 
+1 
+Relevance 
+Use of appendices 
+1 
+Engineering/theoretical work 
+2 
+Writing style & grammar 
+Spelling and grammar 
+1 
+Writing style 
+2 
+Presentation of material 
+Visual, example: graphs/diagrams 
+1 
+Table 3. General and specific project report assessment outcomes for a typical hardware 
+engineering type project. 
+The more specific outcomes are shown in the second column of Table 3. Included 
+in appendix II are descriptive evidence in the form of rubrics for each level of 
+
+--- Page 8 ---
+ 
+ 
+achievements. Weighting for each assessment outcome is determined by the 
+supervisor/assessor according to their perceived importance for that particular 
+project. 
+The writing of a project report can be a daunting task and there can be a tendency 
+to copy material from textbooks, technical papers and to download material from 
+the Internet. Plagiarism is a serious offence, its meaning as defined in Longman 
+Dictionary of Contemporary English, 1987 is “to take (words, ideas, etc. from 
+someone else’s work and use them in one’s own work without admitting one has 
+done so”. Students should refer to their student handbook on how to avoid 
+plagiarism, in particular on proper referencing and paraphrasing. Students will be 
+required to fill in a declaration form stating the academic honesty of the work 
+presented in their final year project and permission for their report to be 
+electronically scanned. The declaration form can be found in Appendix IV. All FYP 
+students must submit their project reports to the plagiarism-checking system and 
+append the resulting originality report to their final submission. Where the Overall 
+Similarity Index exceeds 24%, staff must scrutinise the report for potential 
+plagiarism and record explicit comments on this aspect in the assessment. 
+Improper referencing that is not considered plagiarism will incur a penalty of a sub-
+grade. 
+ 
+4.4          Oral Presentations 
+A presentation is an essential element in FYP assessment. Students not delivering 
+presentation to an FYP panel cannot pass the project course. The presentation 
+usually lasts approximately for up to 30 minutes. Students should prepare their 
+presentation materials not exceeding 15 minutes and answer questions raised by 
+the panel members for the remaining time. 
+Oral presentations are considered as an important part of the final year project 
+assessment because of the importance placed on communications skills both in 
+industry and academia. Please note that the term "communication skills" should 
+not be taken to mean only your proficiency in spoken or written languages. 
+Communication skills go beyond the constraints of a particular language and really 
+refer to an individual's ability to transfer information in a manner that is interesting, 
+informative, accurate, and concise. Consequently, it is possible for a student with 
+a lower level of proficiency in, for example, English to give a better presentation 
+than his/her colleague who is better at English. 
+The project presentation is assessed in general both on content and delivery to 
+ensure that the student is able to communicate project work done. The project 
+presentation will be graded according to five specific assessment outcomes and is 
+shown in the second column of Table 4. 
+
+--- Page 9 ---
+ 
+ 
+Assessment Outcome 
+No 
+Weigh
+t 
+General 
+Specific 
+Content (To include 
+Q&A) 
+Relevance 
+1 
+25% 
+Accuracy 
+2 
+25% 
+Delivery 
+Organization, preparation and 
+effectiveness of delivery 
+3 
+25% 
+Style, pacing and body language 
+4 
+25% 
+Time management 
+5 
+Table 4.  General and specific project presentation assessment outcomes for a typical 
+hardware engineering type project. 
+Descriptive examples on what is required for each level of achievement in the form 
+of rubrics can be found in appendix II. 
+The "magic" ingredients in giving a good presentation tend to be preparation, 
+enthusiasm and confidence. Some tips for good presentation technique include the 
+following: 
+ 
+Prepare professionally formatted PowerPoint presentations. (do not just copy 
+and paste from the project report without proper formatting) 
+ 
+Do not try to put too much information on a single power point slide. Consider 
+using nothing less than 16-point print. 
+ 
+Try to schedule some periods in the presentation to communicate directly with 
+the audience (making eye contact) without any visual aids. 
+ 
+Consider very carefully whether a "live" demonstration of the project is 
+necessary. A professionally prepared short video clip is much less likely to 
+cause problems or delays during the presentation. 
+ 
+Attempt to understand and give comprehensive answers to any questions that 
+are asked at the end of the presentation. Do not give an answer to a question 
+that was not asked! 
+
+--- Page 10 ---
+ 
+ 
+Appendix I – Point-to-Mark Mapping for Reference 
+ 
+Mark 
+Grade 
+Point 
+90-100 
+A+ 
+4.01-4.3 
+80-89.9 
+A 
+3.71-4.0 
+70-79.9 
+A- 
+3.31-3.7 
+65-69.9 
+B+ 
+3.01-3.3 
+60-64.9 
+B 
+2.71-3.0 
+55-59.9 
+B- 
+2.31-2.7 
+50-54.9 
+C+ 
+2.01-2.3 
+45-49.9 
+C 
+1.71-2.0 
+40-44.9 
+C- 
+1.31-1.7 
+30-39.9 
+D 
+1.01-1.3 
+0-29.9 
+F 
+0.00-1.00 
+ 
+ 
+
+--- Page 11 ---
+ 
+ 
+Appendix II - Rubrics for Each Level of Achievements 
+Project Presentation Rubric 
+ 
+Areas of 
+Achievements 
+No progress 
+(F) 
+Unacceptable 
+(D) 
+Basic 
+(C) 
+Good 
+(B) 
+Excellent 
+(A) 
+0 
+1 point 
+2 points 
+3 points 
+4 points 
+I. Content –
+Relevance of 
+information 
+presented 
+No progress •Irrelevant to or 
+inappropriate for 
+the purpose, 
+audience and 
+setting 
+•Relevant to and 
+appropriate for the 
+purpose, audience 
+and setting 
+•Relevant to and 
+appropriate for the 
+purpose, audience 
+and setting  
+•Audience is 
+attentive. 
+•Relevant to and 
+appropriate for the 
+purpose, audience 
+and setting  
+•Audience is 
+engaged in the 
+presentation. 
+II. Content –
+Accuracy of 
+information 
+presented 
+No progress •Contains major 
+inaccuracies 
+•Covers main 
+points but with 
+limited facts and 
+few details;  
+•There may be 
+minor inaccuracies. 
+•Statements or 
+positions 
+communicated 
+clearly and 
+accurately, with no 
+major omissions. 
+•Statements or 
+positions 
+communicated 
+clearly and strongly 
+supported with 
+accurate and 
+appropriate details. 
+III. Delivery -
+Organization, 
+preparation and 
+effectiveness of 
+delivery 
+No progress •Appears 
+uncomfortable & 
+not confident in 
+most parts of 
+presentation  
+•Little evidence of 
+organization 
+&preparation  
+•Awkward and 
+frequent errors in 
+sentence structure; 
+poor English and 
+consistently 
+referring to notes. 
+•Appears 
+comfortable in only 
+parts of the 
+presentation  
+•Some evidence of 
+organization 
+&preparation  
+•Some errors in 
+sentence structure; 
+English just 
+comprehensible 
+and often referring 
+to notes. 
+•Appears 
+comfortable in 
+most parts of 
+presentation  
+•Evidence of 
+organization 
+&preparation  
+•Correct sentence 
+structure; 
+proficiency in 
+English 
+demonstrated with 
+some referral to 
+notes. 
+•Confident & 
+relaxed throughout 
+the presentation  
+•Clear evidence of 
+organization and 
+presentation  
+•Sentence 
+structure 
+consistently 
+corrects; good 
+English with 
+occasional referral 
+to notes. 
+IV. Delivery -Style, 
+pacing and body 
+language; Time 
+management 
+No progress •Inappropriate 
+separation from 
+audience, no eye 
+contact & 
+communication 
+appears distant  
+•Distractive body 
+stance &use of 
+hands  
+•Noticeably exceed 
+or fall short of the 
+time allotted. 
+•Body stance, eye 
+contact & proximity 
+to audience 
+indicate some 
+discomfort with the 
+subject and 
+audience  
+•Distractive hand 
+gestures  
+•Speaker either 
+rushes or rambles 
+excessively to meet 
+the time allotted. 
+Time frame is 
+“approximately” 
+met. 
+•Body stance, eye 
+contact &proximity 
+to audience 
+indicate comfort 
+with the subject 
+and the audience  
+•Hand gestures 
+emphasize major 
+points  
+•The speaker uses 
+time allotted, but 
+the presentation is 
+slightly rushed or 
+delayed. 
+•Body stance, eye 
+contact &proximity 
+to audience 
+indicate confidence 
+and comfort with 
+the subject and the 
+audience.  
+•Hand gestures 
+facilitate 
+communication  
+•Comfortably uses 
+the time allotted, 
+without evidence 
+of compensation. 
+
+--- Page 12 ---
+ 
+ 
+Project Report Rubric 
+Areas of 
+Achievements 
+No 
+progress 
+(F) 
+Unacceptable 
+(D) 
+Basic 
+(C) 
+Good 
+(B) 
+Excellent 
+(A) 
+0 
+1 point 
+2 points 
+3 points 
+4 points 
+Organization 
+1)Organization 
+ 
+The report is 
+disorganized to 
+the extent that it 
+prevents 
+understanding of 
+content. 
+The organization 
+is unclear. 
+The organization is 
+generally good, but 
+some parts seem 
+out of place. 
+Written work is well 
+organized and easy to 
+understand. 
+Content 
+1)Engineering/ 
+theoretical  
+analysis 
+ 
+Little 
+engineering/theo
+retical analysis is 
+presented. 
+Engineering/theo
+retical analysis 
+consists of trivial 
+calculations and 
+is poorly 
+explained. 
+Engineering/theoret
+ical analysis is 
+poorly explained or 
+so detailed that the 
+audience loses 
+interest. 
+Engineering/theoretica
+l analysis is presented 
+with sufficient detail to 
+be understood at peer 
+level. 
+Relevance 
+1)Use of  
+appendices 
+ 
+Considerable 
+amount of 
+material is 
+misplaced. 
+Appendices are 
+not documented 
+or referenced in 
+text. 
+There is some 
+misplacement of 
+information in 
+the text vs. the 
+appendix. 
+Appendices are 
+poorly 
+documented and 
+referenced in 
+text. 
+Information is 
+appropriately 
+placed in either the 
+main text or an 
+appendix.  
+Documentation and 
+referencing in text 
+are somewhat 
+incomplete. 
+Information is 
+appropriately placed in 
+either the main text or 
+appendix. 
+2)Engineering/  
+theoretical work) 
+ 
+Engineering/theo
+retical work 
+presented is 
+totally irrelevant 
+to the work 
+performed. 
+A lot of the 
+engineering/theo
+retical work 
+presented is 
+either trivial or 
+not used in the 
+work performed. 
+Most of the 
+engineering/theoret
+ical work presented 
+is relevant to the 
+work performed. 
+Engineering/theoretica
+l work presented is 
+entirely relevant to the 
+work performed. 
+Writing style and grammar 
+1)Spelling and 
+grammar 
+ 
+There are 
+frequent mis- 
+spelled words 
+and serious 
+grammatical 
+errors, indicating 
+that time was not 
+taken to spell-
+check and 
+proofread 
+There is more 
+than one spelling 
+or grammatical 
+error per page. 
+There are a few 
+spelling and 
+grammatical errors. 
+The work has been 
+thoroughly spell-
+checked and 
+proofread. 
+
+--- Page 13 ---
+ 
+ 
+2)Writing style 
+ 
+The writing style 
+is difficult to read 
+and the writing 
+disorganized, 
+making  
+understanding a 
+difficult  
+task. 
+The writing style 
+is readable, but 
+difficult to follow. 
+The writing style 
+indicates planning 
+that makes reading 
+easy. 
+The writing style 
+indicates planning that 
+makes reading easy 
+and the flow of 
+material makes 
+understanding easy. 
+Presentation of material 
+1)Visual,  
+example;  
+graphs/diagram
+s. 
+ 
+There are few 
+visual aids, and 
+those used are 
+carelessly 
+prepared. 
+Most visual aids 
+are sloppy and 
+hard to read. 
+Visual aids are good, 
+but a few are sloppy 
+or difficult to read. 
+Visual aids are used 
+frequently. They are 
+easy to read and 
+understand, and are of 
+professional quality. 
+ 
+
+--- Page 14 ---
+ 
+ 
+Project Implementation Rubric 
+Area of 
+achievement 
+No progress 
+(F) 
+Unacceptable 
+(D) 
+Basic 
+(C) 
+Good 
+(B) 
+Excellent 
+(A) 
+0 point 
+1 point 
+2 points 
+3 points 
+4 points 
+Exploration 
+Material research No progress 
+•Material 
+acquired from 
+questionable 
+sources  
+•Unrelated 
+materials 
+acquired. 
+•Material 
+acquired from 
+several sources.  
+•Some relevant 
+acquire 
+material. 
+•Material 
+acquired from 
+different 
+sources.  
+•Material 
+acquired are 
+relevant. 
+•Material acquired from 
+different, reliable and 
+reputable sources.  
+•Different material 
+acquired are relevant and 
+form a good 
+amalgamation. 
+Required skill 
+acquisition 
+No progress 
+•Unaware of what 
+skills are required. 
+•Unable to 
+acquire new skills. 
+•Aware of what 
+skills are 
+required.  
+•New basic 
+skills and 
+knowledge 
+acquired. 
+•Aware of skill 
+and knowledge 
+required.  
+•New skills and 
+knowledge 
+acquired. 
+•Aware of skills and 
+knowledge required and 
+their limitations.  
+•More advanced new 
+skills and knowledge  
+•recognized and acquired. 
+Growth 
+Formulation of 
+design problem 
+and its solution 
+No progress 
+•Design problem 
+is not formulated 
+clearly.  
+•No practical 
+solutions 
+presented. 
+•Problem 
+formulation is 
+unclear in some 
+respects and 
+does not appear 
+to be well 
+thought out.  
+•Practical 
+solutions 
+require further 
+thoughts. 
+•Problem 
+formulation is 
+clear, but the 
+scope is not 
+well-defined  
+•Some 
+practical 
+solutions. 
+•Design problem 
+formulation is clear and 
+well thought out. The 
+problem scope is well-
+defined.  
+•Clear and practical 
+solutions presented. 
+Use of technical 
+and/or practical 
+skills  
+(Engineering,  
+mathematical,  
+simulation,  
+measurements,  
+etc.) 
+No progress 
+•Engineering skills 
+are infrequently 
+used.  
+•When used, it 
+appears trivial and 
+leads to obvious 
+conclusions.  
+•No assumptions 
+are stated. 
+•Some 
+engineering 
+skills included, 
+but it is not very 
+detailed or 
+challenging.  
+•Many steps 
+are not 
+supported by 
+calculations.  
+•Assumptions 
+are stated but 
+none are 
+justified. 
+•Engineering 
+skills are 
+detailed and 
+challenging.  
+•Some steps 
+do not appear 
+to be 
+supported by 
+calculations  
+•Assumptions 
+are stated, but 
+some are not 
+justified. 
+•Engineering skills are 
+detailed and challenging.  
+•They are used at every 
+stage of the design 
+process.  
+•All assumptions are 
+stated and justified. 
+ 
+
+--- Page 15 ---
+ 
+ 
+Appendix III - General Format for Final Year Project Report 
+1)    Format of Final Year Project Report: Final year project report should strictly 
+follow the right order as below: 
+1. The standard cover template having information of project title and project 
+code, student name, ID no, major and programme, supervisor and assessor 
+2. The Student Declaration Form 
+3. Abstract 
+4. Acknowledgements 
+5. Contents 
+6. List of Figures 
+7. List of Tables 
+8. Introduction 
+9.1 Background 
+9.2. Objectives 
+9. Methodology 
+10. Results 
+11. Discussion 
+12. Conclusion 
+13. Appendix 
+14. References 
+2)    Font Size, Line Spacing and Margins:  For the single-sided main text, the 
+font used should be Times New Roman. The font size should be 12 points for 
+text, bold 14 points for paragraph titles/headings and bold 16 points for 
+chapter name. Line spacing should be 1.5. Top/Bottom margins are 1.5 inches 
+and Left/Right margins are one inch. 
+3)    Number of Pages and Page Numbering: The report should be at least 40 
+pages (excluding appendices) from 3. Abstract to 12. Conclusion. Reports that 
+do not follow this requirement will incur a penalty of a sub grade. Page 
+numbers should be inserted at the bottom centre, with page 1 being the first 
+page of the main text of the report. Page numbering prior to the main text 
+should follow a lowercase roman numeral (i, ii, iii, iv, ...) starting from the 
+contents. 
+
+--- Page 16 ---
+ 
+ 
+Appendix IV - Student Declaration Form 
+CityUHK Qingdao Research Institute 
+Academic Honesty Regarding Final Year Projects 
+ 
+The following are examples of academic dishonesty extracted from “Student 
+Handbook” that are more applicable to final year projects. 
+ 
+ 
+plagiarism, i.e., the failure to properly acknowledge the use of another person’s 
+work; 
+ 
+submission for assessment of material that is not the student’s own work; 
+ 
+collusion, i.e., obtaining assistance in doing work which is meant to be solely the 
+student’s own work; 
+ 
+use of fabricated data claimed to be obtained by experimental work, or data 
+copied or obtained by unfair means; 
+ 
+It is important that the student reads the Student Handbook and understands the 
+seriousness of academic dishonesty. The student should pay particular attention on 
+how to avoid plagiarism. 
+ 
+Student Final Year Project Declaration 
+I have read the student handbook and I understand the meaning of academic 
+dishonesty, in particular plagiarism and collusion. I declare that the work submitted 
+for the final year project does not involve academic dishonesty. I give permission for 
+my final year project work to be electronically scanned and if found to involve 
+academic dishonesty, I am aware of the consequences as stated in the Student 
+Handbook. 
+ 
+Project Title: 
+ 
+ 
+ 
+Student Name:                                                           Student ID: 
+ 
+ 
+Signature:                                                                  Date: 

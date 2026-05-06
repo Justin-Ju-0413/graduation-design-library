@@ -1,0 +1,45 @@
+# Build artifacts
+*.bit
+*.dcp
+*.jou
+*.log
+*.backup.*
+*.rpt
+*.rpx
+*.pb
+
+# Large generated files
+*.pdf
+*.pptx
+*.docx
+*.zip
+*.xls
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Vivado
+.Xil/
+.ip_user_files/
+obj/
+install/
+
+# Temp files
+~$*
+*.tmp
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.lof
+*.lot
+*.toc
+*.out
+*.run.xml
+main.pdf
+
+# Gen scripts
+*_copy*.sqlite

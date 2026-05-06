@@ -1,0 +1,17 @@
+hello_e203 Board Validation - SUCCESS
+Date: 2026-04-30
+Build mode: bootvec_sysclk_ila
+
+ILA Evidence:
+- PC: 0x800000a0-0x800000be (in ITCM, executing hello_e203)
+- mem_cmd_addr: 0x10012008 (GPIOA register access)
+- UART: tx_edge_seen=1, txd=1 (idle high), gpio17 configured (oe=1)
+- No core_cgstop, no dbg_halt Status: CPU running normally
+
+Root causes fixed:
+1. sirv_gnrl_dffs.v #1 delay (sim only)
+2. ITCM hex byte format vs 64-bit BRAM (sim + board)
+3. E203_FORCE_BOOTROM_BOOT not globally visible (board)
+
+Next: Capture UART text output via serial terminal (115200-8N1)
+Then proceed to CNN/NICE board validation (Day 5)

@@ -1,0 +1,6 @@
+Build mode: soc_bootdiag_sysclk_ila
+Date: 2026-04-29 12:02:36 +08:00
+Bitstream: soc_bootdiag_sysclk_ila_system.bit
+Probes: soc_bootdiag_sysclk_ila_system.ltx
+Timing: WNS 13.337 ns, WHS 0.039 ns, failing endpoints 0
+Notes: Rebuilt after regenerating fpga/install from tracked rtl/e203 sources.

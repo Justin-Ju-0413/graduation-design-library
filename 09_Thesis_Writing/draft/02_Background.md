@@ -1,0 +1,320 @@
+# Chapter 2: Background
+
+This chapter provides the technical foundation necessary for understanding the design and implementation of a RISC-V custom instruction-based lightweight CNN accelerator. It covers four key domains: the RISC-V instruction set architecture and its extensibility mechanisms, the E203 Hummingbird v2 processor core used as the host CPU, the fundamentals of convolutional neural networks and their computational characteristics, and the FPGA prototyping methodology employed for hardware verification.
+
+---
+
+## 2.1 RISC-V ISA and Custom Instruction Extensions
+
+### 2.1.1 Overview of the RISC-V Architecture
+
+RISC-V is an open, free instruction set architecture (ISA) originally designed at the University of California, Berkeley. Unlike proprietary ISAs such as ARM or x86, RISC-V is released under permissive open-source licenses that allow anyone to implement processors without royalty or licensing fees. This characteristic has made RISC-V particularly attractive for academic research and custom hardware design.
+
+The RISC-V ISA follows a modular design philosophy. It consists of a mandatory base integer instruction set (denoted as "I") and multiple optional standard extensions. The base integer ISA provides a minimal set of instructions for a general-purpose computer, including arithmetic, logical, branch, load/store, and system instructions. For RV32, the base ISA comprises 40 instructions with 32 general-purpose registers (x0--x31), each 32 bits wide. Register x0 is hardwired to the constant zero. The program counter (PC) holds the address of the current instruction, and branch instructions use PC-relative addressing.
+
+The standard extensions include:
+
+- **M Extension**: Integer multiplication and division instructions (mul, div, rem, etc.).
+- **A Extension**: Atomic memory operations (load-reserved/store-conditional, atomic fetch-and-op).
+- **F Extension**: Single-precision floating-point arithmetic.
+- **D Extension**: Double-precision floating-point arithmetic.
+- **C Extension**: Compressed instructions (16-bit instruction encoding for improved code density).
+
+A processor must implement at least the base I extension to be considered RISC-V compliant. The core described in this work supports the RV32IMAC configuration, which combines the base integer ISA with the M, A, and C extensions.
+
+### 2.1.2 Instruction Encoding and Custom Instruction Spaces
+
+RISC-V defines a fixed-length 32-bit instruction format for the base ISA (the C extension additionally supports 16-bit compressed instructions). The major instruction formats are R-type (register-register), I-type (immediate), S-type (store), B-type (branch), U-type (upper immediate), and J-type (jump). All formats share a common 7-bit opcode field located in bits [6:0].
+
+The RISC-V specification reserves four opcode spaces for custom extensions, designated as `custom0` (opcode `0x0b`), `custom1`, `custom2`, and `custom3`. These opcode spaces allow designers to define their own instruction semantics without conflicting with standard or future RISC-V instructions. Each custom opcode provides a complete instruction encoding space of up to \( 2^{25} \) unique instructions, as the remaining 25 bits (after the 7-bit opcode) are fully available for user-defined operand fields and function selectors.
+
+The standard R-type encoding for a custom instruction is structured as follows:
+
+```
+  31        25  24  20  19  15  14  12  11     7   6      0
++---------------+---------------+---+-----------+-------------+
+|   funct7      |  rs2  |  rs1  |  funct3  |   rd    |  custom  |
+|     7-bit     |  5-bit|  5-bit|  3-bit   |  5-bit  |  7-bit   |
++---------------+---------------+---+-----------+-------------+
+```
+
+For a standard R-type instruction, bits [14:12] encode a funct3 field that further qualifies the operation. However, the E203 NICE (Nuclei Instruction Co-unit Extension) protocol repurposes this field for a different purpose, as detailed in Section 2.2.5.
+
+### 2.1.3 Motivations for Custom Instruction Extensions in Embedded Deep Learning
+
+Custom instruction extensions provide a middle ground between purely software-based computation and dedicated hardware accelerators. They offer several advantages for embedded deep learning workloads:
+
+1. **Reduced Function-Call Overhead**: Instead of writing to memory-mapped registers through load/store instructions---which incurs multiple instructions per transfer---a custom instruction can pass operands directly via the processor's register file. This reduces both instruction count and latency.
+
+2. **Tight Coupling with the Processor Pipeline**: A custom instruction co-unit (such as NICE) interfaces directly with the processor's execution stage, allowing data to flow from the register file to the accelerator in a single cycle. This eliminates the bus arbitration overhead typical of memory-mapped peripherals.
+
+3. **Programmer-Transparent Parallelism**: From the programmer's perspective, a custom instruction behaves like any other RISC-V instruction. The compiler and assembler treat it as an atomic operation, while the underlying hardware can exploit parallelism internally.
+
+These characteristics make custom instruction extensions particularly suitable for lightweight CNN inference accelerators, where the computational patterns are regular and well-defined but the data volumes are too large for pure software execution on a low-power embedded core.
+
+---
+
+## 2.2 E203 Hummingbird v2 Processor Architecture
+
+### 2.2.1 Overview
+
+The Hummingbird E203 v2 is an open-source, low-power RISC-V processor core developed by Nuclei System Technology. It implements the RV32IMAC instruction set and is designed for resource-constrained embedded applications. The E203 is widely used in both academic and industrial settings due to its small footprint, complete open-source availability, and the inclusion of the NICE (Nuclei Instruction Co-unit Extension) custom instruction interface, which is central to this work.
+
+The key parameters of the E203 core are summarized in Table 2.1.
+
+**Table 2.1: E203 Processor Core Parameters**
+
+| Parameter         | Value            |
+|-------------------|------------------|
+| ISA               | RV32IMAC         |
+| Pipeline Depth    | 2 stages         |
+| Operating Mode    | Machine Mode only|
+| Register File     | 32 x 32-bit      |
+| Address Width     | 32 bits          |
+| Debug Support     | RISC-V Debug 0.11|
+| Co-unit Interface | NICE (native)    |
+| ITCM              | 64 KB            |
+| DTCM              | 64 KB            |
+
+### 2.2.2 Two-Stage Pipeline Architecture
+
+The E203 implements a two-stage pipeline---the shortest feasible pipeline depth for a RISC-V processor. This design choice prioritizes low power consumption, small area, and simplified control logic over peak clock frequency, making it suitable for FPGA implementation and embedded use cases.
+
+The two stages are:
+
+**Stage 1: Instruction Fetch (IFU Stage)**
+
+The Instruction Fetch Unit (IFU) is responsible for generating the program counter (PC) sequence, fetching instructions from memory, and delivering them to the execution stage. The IFU module (`e203_ifu.v`) interfaces with two memory subsystems via the Internal Chip Bus (ICB) protocol:
+
+- **ITCM (Instruction Tightly Coupled Memory)**: A 64 KB, 64-bit wide instruction memory mapped at address `0x8000_0000`. The ITCM provides single-cycle access latency for sequential instruction fetches. The IFU-to-ITCM interface uses the ICB command/response channel pair, with signals such as `ifu2itcm_icb_cmd_valid`, `ifu2itcm_icb_cmd_addr`, and `ifu2itcm_icb_rsp_rdata[63:0]`.
+
+- **System Memory Interface (BIU)**: For instruction fetches that miss the ITCM region, the IFU sends requests through the Bus Interface Unit (BIU). The external memory interface also uses the ICB protocol with signals `ifu2biu_icb_cmd_valid`, `ifu2biu_icb_cmd_addr[31:0]`, and `ifu2biu_icb_rsp_rdata[31:0]`.
+
+The IFU also performs limited decode pre-processing: it extracts the source register indices (rs1 and rs2) from the fetched instruction and forwards them to the execution stage to enable early register file read. This is visible in the IFU interface signals `ifu_o_rs1idx[4:0]` and `ifu_o_rs2idx[4:0]`.
+
+Branch prediction in the E203 is minimal: a static "not-taken" strategy is employed, with the `ifu_o_prdt_taken` signal indicating when a branch is predicted as taken based on its instruction type.
+
+**Stage 2: Execute (EXU Stage)**
+
+The Execution Unit (EXU) encompasses instruction decode, operand fetch, arithmetic execution, memory access, and write-back---all within a single stage. The EXU module (`e203_exu.v`) instantiates several sub-modules:
+
+1. **Register File** (`e203_exu_regfile`): A 32-entry, 32-bit register file with two read ports and one write port. The register file supports write-back from multiple sources (ALU result, LSU load data, CSR read data, and NICE response data).
+
+2. **Instruction Decoder** (`e203_exu_decode`): The decoder interprets the 32-bit instruction word and produces a wide decode information bus (`dec_info`) that controls the datapath. The decoder identifies the instruction group (ALU, AGU, BJP, CSR, MULDIV, NICE, or FPU) and generates the appropriate control signals. For NICE instructions, the decoder forwards the entire instruction word to the NICE co-unit via the `E203_DECINFO_NICE_INSTR` field, which is 27 bits wide (bits [31:7] of the instruction).
+
+3. **ALU and MULDIV Units**: The ALU handles arithmetic and logical operations, while the MULDIV unit handles multiply and divide operations. The E203 supports shared ALU/MULDIV hardware to reduce area.
+
+4. **Out-of-Instruction Tracking FIFO (OITF)**: The OITF tracks up to two (or optionally four) in-flight instructions. It is used to manage write-back ordering and hazard detection. The `oitf_empty` signal is used by the IFU to determine whether it can safely flush the pipeline.
+
+### 2.2.3 Pipeline Flow and Handshake
+
+The two-stage pipeline operates with a simple valid-ready handshake between the IFU and EXU stages:
+
+- `ifu_o_valid`: Asserted by the IFU when a valid instruction is available.
+- `ifu_o_ready`: Asserted by the EXU when it is ready to accept a new instruction.
+- When both `valid` and `ready` are asserted in the same cycle, the instruction is transferred from the IFU to the EXU.
+
+The IFU can continue fetching and buffering instructions as long as the EXU accepts them. When a pipeline hazard occurs (e.g., a multi-cycle instruction or a load-use dependency), the EXU deasserts `i_ready`, causing the IFU to stall.
+
+Pipeline flushes are coordinated through the `pipe_flush_req` / `pipe_flush_ack` handshake pair. When a branch misprediction or exception occurs, the EXU asserts `pipe_flush_req` along with the target PC (via `pipe_flush_add_op1` and `pipe_flush_add_op2`), and the IFU responds by discarding its prefetched instructions and redirecting fetch to the correct address.
+
+### 2.2.4 Load/Store Unit and Memory Map
+
+The Load/Store Unit (LSU, `e203_lsu.v`) handles all data memory accesses---load and store instructions---initiated by the EXU. The LSU receives requests from the Address Generation Unit (AGU) within the EXU and translates them into ICB bus transactions.
+
+The LSU supports a single outstanding memory transaction at any time (`E203_LSU_OUTS_NUM` = 1), which simplifies control logic at the cost of throughput. The LSU write-back interface returns loaded data and completion status to the EXU via signals such as `lsu_o_wbck_wdat[31:0]` and `lsu_o_wbck_err`.
+
+The E203 memory map is defined by compile-time configuration parameters in `config.v`:
+
+**Table 2.2: E203 Memory Map (Davinci A7-100T Configuration)**
+
+| Region | Base Address | Size    | Description                       |
+|--------|-------------|---------|-----------------------------------|
+| ITCM   | 0x8000_0000 | 64 KB   | Instruction Tightly Coupled Memory|
+| DTCM   | 0x9000_0000 | 64 KB   | Data Tightly Coupled Memory       |
+| CLINT  | 0x0200_0000 | 64 KB   | Core Local Interrupt Controller   |
+| PLIC   | 0x0C00_0000 | 16 MB   | Platform-Level Interrupt Ctrl     |
+| PPI    | 0x1000_0000 | 256 MB  | Private Peripheral Interface      |
+| FIO    | 0xF000_0000 | 256 MB  | Fast I/O Region (GPIO, QSPI, UART)|
+
+The ITCM and DTCM are the primary memories for program code and data, respectively. The ITCM is 64 bits wide and provides a 64 KB address space (`E203_CFG_ITCM_ADDR_WIDTH` = 16). The DTCM is 32 bits wide and configured to 64 KB (`E203_CFG_DTCM_ADDR_WIDTH` = 16). Both TCMs use the ICB protocol for bus transactions.
+
+The E203 core supports two bus interconnect pathways: a high-speed TCM pathway for ITCM/DTCM access, and a system bus pathway routed through the BIU for all other address regions. This split-bus architecture allows the core to achieve deterministic low-latency access to critical memory while still supporting a wider memory map for peripherals.
+
+### 2.2.5 The NICE Co-Unit Interface
+
+The NICE (Nuclei Instruction Co-unit Extension) interface is the most important architectural feature of the E203 for this work. It provides a standardized mechanism for attaching custom coprocessors (called "co-units") to the E203 pipeline with minimal glue logic.
+
+**Interface Signals**
+
+The NICE interface consists of two primary channel pairs and one optional memory channel pair:
+
+1. **Request Channel** (Core to NICE): Transmits the instruction word and source operands.
+   - `nice_req_valid`, `nice_req_ready`: Handshake signals
+   - `nice_req_instr[31:0]`: The full 32-bit instruction word
+   - `nice_req_rs1[31:0]`: Source operand 1 (from register rs1)
+   - `nice_req_rs2[31:0]`: Source operand 2 (from register rs2)
+
+2. **Response Channel** (NICE to Core): Returns the result.
+   - `nice_rsp_valid`, `nice_rsp_ready`: Handshake signals
+   - `nice_rsp_rdat[31:0]`: Result data
+   - `nice_rsp_err`: Error flag
+
+3. **Memory Channel** (optional): Allows the NICE co-unit to initiate its own memory accesses via the ICB protocol. This channel is not used in the current design, as all data transfers occur through register-file operands passed via the request channel.
+
+**Instruction Encoding Convention**
+
+The E203 NICE protocol repurposes bits [14:12] of the instruction word---normally the funct3 field in a standard R-type encoding---as three control flags:
+
+- Bit 14 (`xd`): When set, the NICE instruction writes its result to register rd.
+- Bit 13 (`xs1`): When set, the NICE co-unit reads source operand 1 from rs1.
+- Bit 12 (`xs2`): When set, the NICE co-unit reads source operand 2 from rs2.
+
+The funct7 field (bits [31:25]) selects the specific NICE operation. This encoding convention is specific to the E203 implementation and differs from the standard RISC-V R-type format, where bits [14:12] serve as a funct3 field.
+
+**Handshake Protocol**
+
+The request handshake follows a pulse-style protocol: the core asserts `nice_req_valid` for exactly one cycle when the instruction and operands are ready. The NICE co-unit accepts the request by asserting `nice_req_ready`. If the co-unit is busy (e.g., performing a previous computation), it deasserts `nice_req_ready` to stall the pipeline.
+
+The response handshake uses a level-style protocol: the NICE co-unit asserts `nice_rsp_valid` and holds it until the core asserts `nice_rsp_ready`, at which point the result is transferred and the co-unit can deassert `nice_rsp_valid`.
+
+**Integration in the Subsystem**
+
+The NICE co-unit is instantiated at the subsystem level in `e203_subsys_nice_core.v`. This wrapper module connects the NICE interface signals from the E203 core to the custom accelerator logic. The `nice_active` signal is asserted when the co-unit is actively processing, which is used for power management. The wrapper also handles the optional ICB memory channel signals, which are tied off when not used.
+
+Inside the E203 core, NICE instructions are decoded by the EXU decoder (detected by opcode `0x0b` and placed into decode group `E203_DECINFO_GRP_NICE`). The decoder forwards the full instruction word to the NICE co-unit, which performs its own internal decoding of the funct7 field to determine the specific operation.
+
+---
+
+## 2.3 Convolutional Neural Networks Fundamentals
+
+### 2.3.1 Convolution Operation
+
+Convolutional neural networks (CNNs) are a class of deep neural networks designed for processing grid-structured data, most commonly images. The fundamental building block of a CNN is the convolution layer, which applies a set of learnable filters (kernels) to the input feature map.
+
+Formally, a 2D convolution operation computes:
+
+\[
+O[y, x, k] = \sum_{c=0}^{C-1} \sum_{i=0}^{R-1} \sum_{j=0}^{S-1} I[y+i, x+j, c] \times K[i, j, c, k] + b_k
+\]
+
+where:
+- \(I\) is the input feature map of dimensions \(H \times W \times C\) (height, width, channels),
+- \(K\) is the convolution kernel of dimensions \(R \times S \times C \times K_c\) (kernel height, kernel width, input channels, output channels),
+- \(O\) is the output feature map,
+- \(b_k\) is the bias term for output channel \(k\).
+
+Each output pixel is computed as the dot product between a kernel and a spatially corresponding window of the input feature map, summed across all input channels. For a 3x3 kernel applied to an RGB image, this requires 27 multiplications and 26 additions per output pixel (3 x 3 x 3 = 27 multiplications, one per channel element per spatial position).
+
+### 2.3.2 Convolution as Matrix Multiplication
+
+While convolution is commonly described in its sliding-window form, modern CNN implementations frequently re-frame it as a matrix multiplication, which maps more naturally onto hardware acceleration structures. This transformation is known as "im2col" (image-to-column):
+
+1. The input feature map is unfolded into a matrix, where each column corresponds to the pixels within one kernel window.
+2. The kernel weights are reshaped into a matrix where each row corresponds to one output channel's flattened kernel.
+3. The convolution is then computed as a single matrix-matrix multiplication: \(Y = W \times X\).
+
+The 4x4 matrix multiplication is the core computational primitive supported by the accelerator designed in this work. A 4x4 matrix multiplication between a weight matrix \(W\) and an input matrix \(D\) computes:
+
+\[
+\text{out}[i] = \sum_{j=0}^{3} W[i][j] \times D[j]
+\]
+
+This maps directly to a 4x4 processing element (PE) array, where each PE computes one multiply-accumulate operation.
+
+### 2.3.3 INT8 Quantization
+
+Quantization is the process of reducing the numerical precision of neural network parameters and activations. INT8 quantization represents values as 8-bit signed integers in the range \([-128, 127]\), as opposed to the 32-bit floating-point (FP32) format typically used during training.
+
+The quantization relationship between a real-valued number \(r\) and its quantized representation \(q\) is:
+
+\[
+r = S \times (q - Z)
+\]
+
+where \(S\) is the scaling factor (a positive real number) and \(Z\) is the zero-point (an integer that maps to the real value zero).
+
+For inference, the convolution operation can be expressed entirely in integer arithmetic:
+
+1. The input and weights are pre-quantized to INT8.
+2. The multiply-accumulate (MAC) operations produce INT32 intermediate results.
+3. The INT32 accumulator is re-quantized to INT8 (or kept as INT32 for the output) by applying the scaling factors.
+
+The INT8 quantization offers significant advantages for hardware implementation:
+- **Reduced Area**: An 8x8-bit multiplier occupies approximately one-quarter the area of a 32x32-bit floating-point multiplier.
+- **Lower Power**: Smaller datapath widths reduce dynamic power consumption.
+- **Adequate Accuracy**: For many embedded vision tasks, INT8 inference achieves accuracy within 1--2% of FP32 inference.
+
+In this accelerator design, weights and activations are both stored as INT8 values. The NICE bus transfers 32-bit words, each packing four INT8 values (one weight column or one activation row). The PE array performs 8x8-bit signed multiplications, and the results accumulate in 32-bit registers to prevent overflow during multi-channel accumulation.
+
+### 2.3.4 Systolic Arrays and Processing Element Arrays
+
+Hardware acceleration of matrix multiplication commonly employs systolic arrays or PE arrays.
+
+**Systolic arrays** are networks of processing elements where data flows rhythmically (like blood in a circulatory system) from element to element. Each PE performs a MAC operation and passes partial results to its neighbors. Systolic arrays achieve high throughput and efficient data reuse but can suffer from load imbalance and control complexity.
+
+**PE arrays** (also called SIMD arrays) use a shared data bus to broadcast operands to all processing elements simultaneously. Each PE contains a local multiplier and accumulator. The key architectural variants are:
+
+- **Weight Stationary**: Weights are held in place in the PEs while activations stream through. This maximizes weight reuse.
+- **Output Stationary**: Accumulators are held in place in the PEs while both weights and activations are streamed. This minimizes accumulator movement and is well-suited for fixed-size output computations.
+- **Row Stationary**: Both weights and activations flow diagonally through the array. This balances data movement across all three data types.
+
+The accelerator in this work adopts a 4x4 PE array with an **Output Stationary** data flow. Each of the 16 PEs contains an 8x8-bit signed multiplier, a 32-bit accumulator register, and control logic for the clear/enable operations. The PEs are arranged in a 4x4 grid as follows:
+
+- Horizontal rows share activation inputs: row \(i\) receives activation \(D[i]\).
+- Vertical columns share weight inputs: column \(j\) receives weight \(W[j]\).
+- Each PE at position \((i, j)\) computes \(\text{Acc}_{ij} += W[j] \times D[i]\).
+- The 16 PE outputs are summed to produce the final dot product.
+
+This organization allows a complete 4x4 matrix-vector multiplication to be computed in 9 clock cycles: 4 cycles for weight loading, 4 cycles for activation loading, and 1 cycle for computation. The peak throughput is 16 MAC operations per cycle.
+
+---
+
+## 2.4 FPGA Prototyping Methodology
+
+### 2.4.1 Development Flow with Vivado
+
+The FPGA prototyping flow uses AMD Xilinx Vivado Design Suite as the primary development tool. The standard flow comprises the following stages:
+
+1. **Synthesis**: Register-Transfer Level (RTL) Verilog code is synthesized into a gate-level netlist targeting a specific FPGA device. The target device for this project is the AMD Xilinx Artix-7 XC7A100TFGG484-2, which offers 100K logic cells, 240 DSP slices, and 4,860 Kb of block RAM.
+
+2. **Implementation**: The synthesized netlist undergoes placement and routing. The Place & Route (P&R) engine assigns logic elements to specific FPGA sites and routes interconnections between them. Timing constraints specified in XDC (Xilinx Design Constraints) files guide the P&R process.
+
+3. **Bitstream Generation**: The implemented design is converted into a binary bitstream file (.bit) that can be downloaded to the FPGA device to configure its logic resources.
+
+4. **Hardware Download**: The bitstream is downloaded to the FPGA using the Vivado Hardware Manager, which communicates with the device through a JTAG connection. The Davinci A7-100T board uses a PTD04 debug probe for this purpose.
+
+### 2.4.2 Integrated Logic Analyzer (ILA)
+
+The Vivado Integrated Logic Analyzer (ILA) is an on-chip debugging IP core that allows real-time observation of internal FPGA signals after the design is programmed. The ILA is inserted into the design during the synthesis or implementation stage and configured with specific probe signals.
+
+The ILA probes capture signal activity on rising clock edges and store the sampled data in on-chip block RAM. Key configuration parameters include:
+- **Probe Width**: The number of signals monitored (determined by the designer).
+- **Capture Depth**: The number of samples stored in BRAM (typically 1024 to 65536 samples).
+- **Trigger Conditions**: User-defined patterns that start the capture.
+
+In this project, the ILA monitors the following signal groups during the bring-up process:
+- Program counter (PC) progression to verify instruction fetch activity.
+- Memory command and response activity on the ICB bus.
+- NICE CSR write phase signals (valid, ready, address, write enable, data).
+- NICE request/response handshake signals (req_valid, req_ready, rsp_valid, rsp_ready).
+- Core status bits (halt, trap, clock gating).
+
+### 2.4.3 JTAG Debug and Board Bring-Up
+
+The JTAG (Joint Test Action Group, IEEE 1149.1) interface provides a standardized mechanism for FPGA configuration and debug access. The Davinci A7-100T board includes a PTD04 debug probe that connects to the host PC via USB and to the FPGA JTAG chain via four signals: TCK (test clock), TMS (test mode select), TDI (test data in), and TDO (test data out).
+
+The board bring-up process for the accelerator involves the following phases:
+
+1. **Bitstream Programming**: The system.bit file is downloaded to the FPGA through the JTAG interface using the Vivado Hardware Manager.
+
+2. **Program Image Initialization**: The software program (CNN accelerator demo) and its data are pre-initialized into the ITCM and DTCM memories during the bitstream generation process. The program ELF binary is converted to Verilog memory initialization files (`itcm.verilog` and `dtcm.verilog`) using a custom script, and these files are consumed during FPGA synthesis to initialize the on-chip memories.
+
+3. **Runtime Observation**: After the FPGA is programmed and the processor begins executing, three independent observation channels are used:
+   - **UART**: Serial output transmits milestone markers ("boot", "main", "accel cfg", "start", "done", "result") to a host terminal, providing high-level progress indication.
+   - **LED**: An LED output changes state to indicate active execution stages.
+   - **ILA**: The Vivado ILA captures internal signal activity, providing detailed cycle-level visibility into processor and accelerator operation.
+
+4. **Verification Criteria**: Successful bring-up requires UART milestone output, LED state changes, and ILA traces showing PC progression, memory activity, and NICE handshake activity---all without requiring CPU single-step debug capability.
+
+The FPGA prototype serves as the primary verification vehicle for the CNN accelerator design, allowing real-time performance measurement, functional correctness verification, and hardware-software co-validation before any potential ASIC implementation.

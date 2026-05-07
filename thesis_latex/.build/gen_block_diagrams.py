@@ -34,69 +34,77 @@ def draw_arrow(ax, x1, y1, x2, y2, color='#37474F', lw=1.0, style='->'):
                 arrowprops=dict(arrowstyle=style, color=color, lw=lw))
 
 # ================================================================
-# Fig 3.1: System Architecture
+# Fig 3.1: System Architecture (COMPLETELY REWRITTEN)
 # ================================================================
 print("Generating Fig 3.1: System Architecture...")
 
-fig, ax = plt.subplots(figsize=(9, 5.5))
-ax.set_xlim(0, 10)
-ax.set_ylim(0, 6.5)
+fig, ax = plt.subplots(figsize=(8.5, 5.5))
+ax.set_xlim(0, 12)
+ax.set_ylim(0, 8)
 ax.axis('off')
 
 CPU_C = '#E3F2FD'; ACC_C = '#E8F5E9'; MEM_C = '#F3E5F5'; IO_C = '#ECEFF1'
-BUS_C = '#90A4AE'; NICE_C = '#E65100'; LINE_C = '#546E7A'
+BUS_C = '#B0BEC5'; NICE_C = '#E65100'; LINE_C = '#546E7A'
+INNER_CPU = '#90CAF9'; INNER_ACC = '#A5D6A7'
 
 # ---- CPU Block (left) ----
-draw_block(ax, 0.5, 2.3, 3.0, 3.0, '', CPU_C)
-draw_block(ax, 0.7, 4.2, 2.6, 0.9, 'E203 RISC-V Core\n(RV32IMAC)', CPU_C, 9)
-draw_label(ax, 0.7, 4.15, '2-stage pipeline, Machine Mode', 6, '#546E7A')
-draw_block(ax, 1.0, 3.45, 2.0, 0.55, 'IFU (Instr. Fetch)', '#BBDEFB', 6.5)
-draw_block(ax, 1.0, 2.65, 2.0, 0.55, 'EXU (Execute + NICE)', '#BBDEFB', 6.5)
+draw_block(ax, 0.4, 2.6, 3.2, 3.8, '', CPU_C)
+draw_block(ax, 0.6, 5.3, 2.8, 0.85, 'E203 RISC-V Core\n(RV32IMAC)', CPU_C, 9)
+draw_label(ax, 2.0, 5.05, '2-stage pipeline, Machine Mode', 6.5, '#37474F')
+draw_block(ax, 1.0, 4.1, 2.2, 0.55, 'IFU (Instruction Fetch)', INNER_CPU, 7)
+draw_block(ax, 1.0, 3.1, 2.2, 0.55, 'EXU (Execute + NICE)', INNER_CPU, 7)
 
 # ---- Accelerator Block (middle) ----
-draw_block(ax, 4.0, 2.3, 2.5, 3.0, '', ACC_C)
-draw_block(ax, 4.2, 4.2, 2.1, 0.9, 'CNN Accelerator', ACC_C, 9)
-draw_label(ax, 4.2, 4.15, 'NICE Interface', 6, '#546E7A')
-draw_block(ax, 4.4, 3.45, 1.7, 0.55, 'NICE Decoder\n+ Control FSM', '#C8E6C9', 6.5)
-draw_block(ax, 4.4, 2.65, 1.7, 0.55, '4x4 PE Array\n(INT8 MAC)', '#C8E6C9', 6.5)
+draw_block(ax, 4.3, 2.6, 2.7, 3.8, '', ACC_C)
+draw_block(ax, 4.5, 5.3, 2.3, 0.85, 'CNN Accelerator', ACC_C, 9)
+draw_label(ax, 5.65, 5.05, 'NICE Interface', 6.5, '#1B5E20')
+draw_block(ax, 4.7, 4.1, 1.9, 0.55, 'NICE Decoder\n+ Control FSM', INNER_ACC, 7)
+draw_block(ax, 4.7, 3.1, 1.9, 0.55, '4x4 PE Array\n(INT8 MAC)', INNER_ACC, 7)
 
 # ---- Memory (right top) ----
-draw_block(ax, 7.0, 3.3, 1.8, 2.0, '', MEM_C)
-draw_block(ax, 7.1, 4.0, 1.6, 1.1, 'ITCM 64KB (64-bit)\n@0x8000_0000', MEM_C, 7.5)
-draw_block(ax, 7.1, 3.45, 1.6, 0.45, 'DTCM 64KB\n@0x9000_0000', '#E1BEE7', 6.5)
+draw_block(ax, 7.7, 4.2, 2.5, 2.2, '', MEM_C)
+draw_block(ax, 7.85, 5.15, 2.2, 1.0, 'ITCM 128KB (64-bit)\n@ 0x8000_0000', MEM_C, 7.5)
+draw_block(ax, 7.85, 4.35, 2.2, 0.55, 'DTCM 64KB\n@ 0x9000_0000', '#CE93D8', 7)
 
 # ---- IO (right bottom) ----
-draw_block(ax, 7.0, 0.8, 1.8, 1.2, '', IO_C)
-draw_block(ax, 7.1, 1.35, 1.6, 0.50, 'UART0\n@0x1001_3000', IO_C, 6.5)
-draw_block(ax, 7.1, 0.95, 1.6, 0.30, 'GPIO', '#CFD8DC', 6)
+draw_block(ax, 7.7, 1.2, 2.5, 1.6, '', IO_C)
+draw_block(ax, 7.85, 2.05, 2.2, 0.50, 'UART0\n@ 0x1001_3000', IO_C, 7)
+draw_block(ax, 7.85, 1.35, 2.2, 0.45, 'GPIO (LED, UART pins)', '#CFD8DC', 6.5)
 
 # ---- AHB Bus (bottom) ----
-draw_block(ax, 0.5, 0.2, 8.3, 0.35, 'AHB Bus Fabric', BUS_C, 7, 'bold')
+draw_block(ax, 0.4, 0.15, 10.5, 0.40, 'AHB Bus Fabric', BUS_C, 8, 'bold')
 
-# ---- Peripherals on bus (with CLEAR space below vertical lines) ----
-# Place peripherals between the bus lines, NOT under the vertical drops
-peri_y = 0.6
-draw_block(ax, 1.0, peri_y, 1.3, 0.50, 'CLINT\n@0x0200_0000', IO_C, 5.5)
-draw_block(ax, 2.6, peri_y, 1.3, 0.50, 'PLIC\n@0x0C00_0000', IO_C, 5.5)
-draw_block(ax, 4.2, peri_y, 1.8, 0.50, 'Boot ROM (MROM)\n@0x0000_0000', IO_C, 5.5)
+# ---- Peripherals ABOVE bus with vertical drops ----
+peri_y = 0.75
+p_w, p_h = 1.6, 0.65
+draw_block(ax, 1.0, peri_y, p_w, p_h, 'CLINT\n@0x0200_0000', IO_C, 7)
+draw_block(ax, 3.2, peri_y, p_w, p_h, 'PLIC\n@0x0C00_0000', IO_C, 7)
+draw_block(ax, 5.3, peri_y, 2.2, p_h, 'Boot ROM (MROM)\n@0x0000_0000', IO_C, 7)
 
-# ---- NICE arrow: bidirectional (double-headed) ----
-ax.annotate('', xy=(4.0, 4.65), xytext=(3.5, 4.65),
-            arrowprops=dict(arrowstyle='<->', color=NICE_C, lw=1.5))
-draw_label(ax, 3.75, 5.0, 'NICE Req / Rsp', 6.5, NICE_C)
+# Peripheral → bus vertical drops
+for px in [1.8, 4.0, 6.4]:
+    draw_arrow(ax, px, peri_y - 0.05, px, 0.22, LINE_C, 2.5, "-")
 
-# ---- Bus connections: route AROUND peripherals ----
-# CPU vertical → bus (drop from left edge, avoiding CLINT at x=1.0-2.3)
-draw_arrow(ax, 2.0, 2.3, 2.0, 0.22, LINE_C, 0.8)
-# Acc vertical → bus (drop from middle, avoiding PLIC at x=2.6-3.9 and MROM at x=4.2-6.0)
-draw_arrow(ax, 5.25, 2.3, 5.25, 0.22, LINE_C, 0.8)
-# Mem vertical → bus
-draw_arrow(ax, 7.9, 3.3, 7.9, 0.22, LINE_C, 0.8)
-# IO vertical → bus
-draw_arrow(ax, 7.9, 0.8, 7.9, 0.22, LINE_C, 0.8)
+# ---- NICE arrow: bidirectional between CPU EXU and Acc ----
+# Gap between CPU (right edge x=3.6) and Acc (left edge x=4.3)
+ax.annotate('', xy=(4.25, 3.375), xytext=(3.65, 3.375),
+            arrowprops=dict(arrowstyle='<->', color=NICE_C, lw=5.0))
+draw_label(ax, 3.95, 3.85, 'NICE Req / Rsp', 9, NICE_C)
 
-# Title
-draw_label(ax, 5.0, 6.2, 'E203 SoC with NICE CNN Accelerator — System Architecture', 11, '#263238')
+# ---- Bus connections: route through gaps between peripherals ----
+# Gaps: left[0.4-1.0], CLINT-PLIC[2.6-3.2], PLIC-BootROM[4.8-5.3], right[7.5-10.9]
+# CPU → bus (through gap left of CLINT)
+draw_arrow(ax, 0.8, 2.6, 0.8, 0.22, LINE_C, 2.5, '-')
+# Acc → bus (through gap between PLIC and Boot ROM)
+draw_arrow(ax, 5.05, 2.6, 5.05, 0.22, LINE_C, 2.5, '-')
+# Memory → bus: horizontal stub from block edge, then vertical drop right of IO
+ax.plot([10.2, 10.4], [4.2, 4.2], '-', color=LINE_C, lw=2.5)
+draw_arrow(ax, 10.4, 4.2, 10.4, 0.22, LINE_C, 2.5, '-')
+# IO → bus (through gap right of Boot ROM, left of memory drop)
+draw_arrow(ax, 8.95, 1.2, 8.95, 0.22, LINE_C, 2.5, '-')
+
+# ---- Title ----
+draw_label(ax, 6.0, 7.6, 'E203 SoC with NICE CNN Accelerator — System Architecture', 11, '#263238')
 
 plt.tight_layout()
 out = os.path.join(FIG_DIR, 'fig3_1_soc_architecture.png')
@@ -173,9 +181,9 @@ print(f"  Saved: {out}")
 # ================================================================
 print("Generating Fig 3.4: PE Array...")
 
-fig, ax = plt.subplots(figsize=(7, 5))
+fig, ax = plt.subplots(figsize=(7, 5.5))
 ax.set_xlim(0, 12)
-ax.set_ylim(0, 8)
+ax.set_ylim(0, 8.5)
 ax.axis('off')
 
 pe_w, pe_h = 1.4, 1.0
@@ -188,12 +196,12 @@ for col in range(4):
         color = '#E8F5E9' if (col + row) % 2 == 0 else '#C8E6C9'
         draw_block(ax, x, y, pe_w, pe_h, f'PE{row},{col}', color, 8.5)
 
-# Weight inputs (top) → flow DOWN
+# Weight inputs (top) → flow DOWN (position ABOVE grid, not inside top row)
 for col in range(4):
     x = grid_x0 + col * (pe_w + 0.2) + pe_w/2
-    top = grid_y0 + 4*(pe_h+0.2) - pe_h - 0.2
-    draw_label(ax, x, top + 0.5, f'W[{col}]', 8, '#1565C0')
-    draw_arrow(ax, x, top + 0.3, x, top + 0.05, '#1565C0', 0.8)
+    grid_top = grid_y0 + 4*(pe_h+0.2) - 0.2
+    draw_label(ax, x, grid_top + 0.35, f'W[{col}]', 7.5, '#1565C0')
+    draw_arrow(ax, x, grid_top + 0.05, x, grid_top - 0.05, '#1565C0', 0.8)
 
 # Weight broadcast arrows (along left of each column)
 for col in range(4):
@@ -225,8 +233,8 @@ draw_block(ax, tree_x - 0.8, tree_y, 1.6, 0.7, 'Tree\nAdder', '#FFF3E0', 7.5)
 draw_arrow(ax, tree_x, tree_y, tree_x, tree_y - 0.5, '#37474F', 1.0)
 draw_label(ax, tree_x, tree_y - 0.7, 'Result (INT32)', 8, '#263238')
 
-draw_label(ax, 6, 7.5, '4×4 Systolic Processing Element Array', 10, '#263238')
-draw_label(ax, 6, 7.1, 'Output-Stationary Dataflow', 7.5, '#546E7A')
+draw_label(ax, 6, 8.2, '4×4 Systolic Processing Element Array', 10, '#263238')
+draw_label(ax, 6, 7.85, 'Output-Stationary Dataflow', 7.5, '#546E7A')
 
 plt.tight_layout()
 out = os.path.join(FIG_DIR, 'fig3_4_pe_array.png')

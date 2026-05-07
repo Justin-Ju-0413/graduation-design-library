@@ -243,19 +243,22 @@ def gen_ila_nice_activity():
     axes[3].grid(True, alpha=0.15)
     axes[3].tick_params(labelsize=8)
 
+    # Zoom Y-axis to PC range so step-wise progression is visible
+    pc_min = 0x80000000 - 0x10
+    pc_max = 0x80000030
+    axes[0].set_ylim(pc_min, pc_max)
+
     # Annotations — above the chart area to avoid overlap
     instructions = ['CLEAR', 'WLOAD0', 'WLOAD1', 'WLOAD2', 'WLOAD3',
                     'DLOAD0', 'DLOAD1', 'DLOAD2', 'DLOAD3', 'COMP', 'RSTAT']
     centers = [150, 250, 350, 450, 550, 650, 750, 825, 875, 925, 987]
     for name, cx in zip(instructions, centers):
-        axes[0].text(cx, pc_base.max() * 1.15, name, fontsize=6.5, color='#C62828',
+        axes[0].text(cx, pc_max - 4, name, fontsize=6.5, color='#C62828',
                      ha='center', va='bottom', rotation=45)
 
     # Trigger
     for ax in axes:
         ax.axvline(x=95, color='red', linestyle='--', linewidth=1.0, alpha=0.5)
-
-    axes[0].set_ylim(0, pc_base.max() * 1.35)  # Extra room for labels
     axes[0].set_title('ILA Capture: NICE Accelerator Instruction Execution', fontsize=13, fontweight='bold')
     axes[-1].set_xlabel('Sample', fontsize=10)
 

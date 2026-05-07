@@ -27,6 +27,10 @@ echo ""
 
 # ---- Build PDF ----
 build_pdf() {
+    echo "[0/3] Generating figures..."
+    "$PYTHON" "$BUILD_DIR/gen_block_diagrams.py" 2>&1
+    "$PYTHON" "$BUILD_DIR/fix_figures.py" 2>&1
+
     echo "[1/3] Building PDF..."
     xelatex -interaction=nonstopmode -job-name=main_final main.tex > /dev/null 2>&1
     biber main_final > /dev/null 2>&1

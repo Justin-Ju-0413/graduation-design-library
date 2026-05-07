@@ -16,7 +16,7 @@ The key factors that caused the simulation-to-hardware gap were not related to t
 
 \subsection{ITCM/DTCM Initialization Complexity}
 
-The discovery that both Vivado’s synthesis-time $readmemh and iverilog’s simulation-time $readmemh interpret whitespace-separated hex tokens as full memory words, combined with the E203’s use of different data widths for ITCM (64-bit) and DTCM (32-bit), created a subtle but critical initialization bug. The riscv64-unknown-elf-objcopy -O verilog command produces byte-level hex format, which is incompatible with word-level \$readmemh interpretation for memories wider than 8 bits.
+A key discovery was that both Vivado’s synthesis-time \texttt{\$readmemh} and iverilog’s simulation-time \texttt{\$readmemh} interpret whitespace-separated hex tokens as full memory words. Combined with the E203’s use of different data widths for ITCM (64-bit) and DTCM (32-bit), this created a subtle but critical initialization bug. The \texttt{riscv64-unknown-elf-objcopy}~\mbox{\texttt{-O verilog}} command produces byte-level hex, incompatible with word-level \texttt{\$readmemh} for memories wider than 8 bits.
 
 
 The solution—a configurable-width hex format converter—highlights the importance of understanding the specific requirements of each tool in the build chain. This issue would not manifest in an ASIC flow where memory initialization is handled through different mechanisms.
@@ -53,6 +53,8 @@ In the multi-tile convolution mode used for 5$\times$5 kernels, the RSTAT readba
 
 
 \section{Comparison with Project Objectives}\label{sec:5_3}
+
+Table~\ref{tab:5_1} summarizes the achievement status of each project objective.
 
 \begin{table}[htbp]
 \centering

@@ -2,7 +2,7 @@
 
 \section{System Architecture Overview}\label{sec:3_1}
 
-The system architecture integrates a RISC-V E203 Hummingbird v2 processor core with a custom CNN accelerator through the NICE coprocessor interface. Figure 3.1 shows the top-level block diagram of the complete SoC.
+The system architecture integrates a RISC-V E203 Hummingbird v2 processor core with a custom CNN accelerator through the NICE coprocessor interface. Figure~\ref{fig:3_1} shows the top-level block diagram of the complete SoC.
 
 \begin{figure}[htbp]
 \centering
@@ -11,7 +11,7 @@ The system architecture integrates a RISC-V E203 Hummingbird v2 processor core w
 \label{fig:3_1}
 \end{figure}
 
-The E203 core is a 32-bit, 2-stage in-order RISC-V processor implementing the RV32IMAC instruction set. It provides a complete memory subsystem including an instruction tightly-coupled memory (ITCM) mapped at 0x8000\_0000 and a data tightly-coupled memory (DTCM) mapped at 0x9000\_0000. Standard peripherals—the Core Local Interruptor (CLINT), Platform-Level Interrupt Controller (PLIC), UART0, and GPIO—are connected through the system bus fabric.
+The E203 core is a 32-bit, 2-stage in-order RISC-V processor implementing the RV32IMAC instruction set. It provides a complete memory subsystem including an instruction tightly-coupled memory (ITCM) mapped at 0x8000\_0000 and a data tightly-coupled memory (DTCM) mapped at 0x9000\_0000. Standard peripherals—the Core Local Interrupt Controller (CLINT), Platform-Level Interrupt Controller (PLIC), UART0, and GPIO—are connected through the system bus fabric.
 
 The CNN accelerator does not occupy a memory-mapped address range. Instead, it communicates with the processor exclusively through the NICE interface, which extends the processor’s execution pipeline with custom datapath logic. This architectural choice was made for three reasons:
 
@@ -23,7 +23,7 @@ Simplified integration: No bus arbitration, address decoding, or memory protecti
 
 The system runs from the ITCM during normal operation. On reset, the E203 core fetches the first instruction from the boot ROM (MROM) at address 0x0000\_0000, which contains a jump vector that redirects execution to the start of the user program in ITCM. The DTCM stores input data (weights, activations) and output results, which are loaded into the accelerator via the NICE custom instructions.
 
-Table 3.1 presents the address map of the system.
+Table~\ref{tab:3_1} presents the address map of the system.
 
 \begin{table}[htbp]
 \centering
@@ -37,7 +37,7 @@ ITCM & 0x8000\_0000 - & 64-bit & Instruction memory (128 KB) \\ \hline
  & 0x8001\_FFFF &  &  \\ \hline
 DTCM & 0x9000\_0000 - & 32-bit & Data memory (64 KB) \\ \hline
  & 0x9000\_FFFF &  &  \\ \hline
-CLINT & 0x0200\_0000 & 32-bit & Core local interruptor \\ \hline
+CLINT & 0x0200\_0000 & 32-bit & Core local interrupt controller \\ \hline
 PLIC & 0x0C00\_0000 & 32-bit & Platform-level interrupt ctrl \\ \hline
 UART0 & 0x1001\_3000 & 32-bit & Serial communication \\ \hline
 \end{tabular}
@@ -59,7 +59,7 @@ Memory response channel (optional): Returns data for memory read requests initia
 
 In this design, the memory channels are not used. All data transfers between the processor and the accelerator occur through register operands (rs1 and rs2), which avoids the complexity of bus mastering and keeps the accelerator control logic simple.
 
-The request channel signals are summarized in Table 3.2.
+The request channel signals are summarized in Table~\ref{tab:3_2}.
 
 \begin{table}[htbp]
 \centering
@@ -85,7 +85,7 @@ The handshake protocol uses a valid-ready mechanism on both channels. The reques
 
 The six custom instructions use the RISC-V custom0 opcode (0x0B). Because the E203 NICE interface repurposes bits [14:12] as \{xd, xs1, xs2\} control flags rather than the standard funct3 field, the instruction differentiation is encoded entirely within the funct7 field (bits [31:25]).
 
-Figure 3.2 shows the instruction format.
+Figure~\ref{fig:3_2} shows the instruction format.
 
 \begin{figure}[htbp]
 \centering
@@ -94,7 +94,7 @@ Figure 3.2 shows the instruction format.
 \label{fig:3_2}
 \end{figure}
 
-Table 3.3 defines the six custom instructions.
+Table~\ref{tab:3_3} defines the six custom instructions.
 
 \begin{table}[htbp]
 \centering\small
@@ -112,6 +112,15 @@ RSTAT & 0x0600250B & funct7=3, xd=1, xs1=0, xs2=0 & rd=result & Read accumulator
 \end{tabular}
 \end{table}
 
+Figure~\ref{fig:3_2b} provides a visual summary of the complete NICE instruction set encoding.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig3_2b_instruction_table.png}
+\caption{NICE custom instruction set for the CNN accelerator.}
+\label{fig:3_2b}
+\end{figure}
+
 The key design decisions for this encoding are as follows.
 
 WLOAD and DLOAD pack four INT8 values (32 bits total) into the rs1 register. The rs2 register supplies a 2-bit column/row index (0–3), selecting which group of four PEs to load. Over four consecutive WLOAD instructions, all 16 weight registers are filled; likewise, four DLOAD instructions fill all 16 activation registers.
@@ -128,7 +137,7 @@ CLEAR resets all PE accumulators, the loaded mask registers, and the internal st
 
 The NICE instruction decoder in cnn\_nice\_core.v inspects the funct7 field of the incoming instruction and generates the appropriate control signals. The Verilog code for the decoding logic is shown in Listing 3.1.
 
-The decoder includes two error-checking mechanisms. First, if the instruction opcode is not 0x0B (custom0), the accelerator reports an error via nice\_rsp\_err. Second, for WLOAD and DLOAD instructions, the rs2 index is validated: only the lower two bits may be nonzero, ensuring the index is in the range \cite{ASANOVIC_HOTCHIPS}.
+The decoder includes two error-checking mechanisms. First, if the instruction opcode is not 0x0B (custom0), the accelerator reports an error via nice\_rsp\_err. Second, for WLOAD and DLOAD instructions, the rs2 index is validated: only the lower two bits may be nonzero, ensuring the index is in the range [0,3].
 
 The COMP instruction implements a guard condition: the accelerator asserts en\_pe only if all four weight-load and all four data-load operations have been completed, tracked by w\_loaded\_mask and d\_loaded\_mask. This prevents undefined behavior from partial data loading.
 
@@ -173,7 +182,7 @@ A typical convolution kernel follows a five-step sequence: (1) CLEAR to reset th
 
 Each processing element in the 4x4 array implements a single MAC operation on INT8 operands with INT32 accumulation. The PE is designed for output-stationary (OS) dataflow, meaning the partial sum is stored locally in the PE’s accumulator register.
 
-Figure 3.3 shows the PE datapath.
+Figure~\ref{fig:3_3} shows the PE datapath.
 
 \begin{figure}[htbp]
 \centering
@@ -216,7 +225,7 @@ The signed multiplication w * d produces an INT16 intermediate result that is au
 
 The 16 PEs are organized as a 4x4 grid. Each column shares a common weight value, and each row shares a common activation value. This organization maps directly to the computation of one output element in a 4x4 matrix multiplication: each PE computes the product of weight column i and activation row j, and the 16 products are summed to form the output.
 
-Figure 3.4 shows the array structure and the data distribution pattern.
+Figure~\ref{fig:3_4} shows the array structure and the data distribution pattern.
 
 \begin{figure}[htbp]
 \centering
@@ -293,10 +302,30 @@ The NICE bus width is 32 bits, but the PE array requires 128 bits of weight data
 
 The complete computation schedule is:
 
-Table 3.4: Computation schedule for one 4x4 matrix multiply-accumulate operation.
-% TODO: Table 3.4 content needs to be added
+Table~\ref{tab:3_4} shows the computation schedule for one 4×4 matrix multiply-accumulate operation.
 
-The packed data format packs four INT8 values into one 32-bit word as shown in Figure 3.5.
+\begin{table}[htbp]
+\centering
+\caption{Computation schedule for one 4×4 matrix MAC operation.}
+\label{tab:3_4}
+\begin{tabular}{rll}
+\hline
+Cycle & Instruction & Description \\ \hline\hline
+0 & CLEAR & Reset all PE accumulators and load mask registers \\ \hline
+1 & WLOAD (col 0) & Load weight column 0 (4 INT8 values) \\ \hline
+2 & WLOAD (col 1) & Load weight column 1 \\ \hline
+3 & WLOAD (col 2) & Load weight column 2 \\ \hline
+4 & WLOAD (col 3) & Load weight column 3 \\ \hline
+5 & DLOAD (row 0) & Load activation row 0 (4 INT8 values) \\ \hline
+6 & DLOAD (row 1) & Load activation row 1 \\ \hline
+7 & DLOAD (row 2) & Load activation row 2 \\ \hline
+8 & DLOAD (row 3) & Load activation row 3 \\ \hline
+9 & COMP & Trigger parallel MAC across all 16 PEs \\ \hline
+10 & RSTAT & Read accumulated INT32 result \\ \hline
+\end{tabular}
+\end{table}
+
+The packed data format packs four INT8 values into one 32-bit word as shown in Figure~\ref{fig:3_5}.
 
 \begin{figure}[htbp]
 \centering
@@ -313,7 +342,7 @@ When relu\_en\_q is set (via the CFG instruction) and the result’s sign bit (b
 
 \subsection{Resource Estimation}
 
-The PE array resource footprint is dominated by the 16 MAC units. Table 3.5 provides the estimated FPGA resource utilization.
+The PE array resource footprint is dominated by the 16 MAC units. Table~\ref{tab:3_5} provides the estimated FPGA resource utilization.
 
 \begin{table}[htbp]
 \centering
@@ -402,7 +431,7 @@ The SoC provides UART0 (connected to GPIO16 for RX and GPIO17 for TX at 115200 b
 
 The FPGA bitstream construction follows a two-stage build process. In the first stage, the bare-metal software program is compiled using the RISC-V GNU toolchain and converted to Verilog hex format for ITCM/DTCM initialization. In the second stage, Vivado synthesizes, places, and routes the RTL design with the memory contents pre-loaded from the hex files.
 
-Figure 3.6 shows the complete build pipeline.
+Figure~\ref{fig:3_6} shows the complete build pipeline.
 
 \begin{figure}[htbp]
 \centering
@@ -459,7 +488,7 @@ The verification strategy employs a dual-track approach where RTL simulation and
 
 Simulation track (Icarus Verilog): The RTL design is verified with Icarus Verilog before any FPGA synthesis. The simulation testbench instantiates the SoC top module and drives the system clock and reset signals. A mock CPU testbench (tb\_cpu\_mock) provides standalone verification of the cnn\_nice\_core without requiring the full E203 processor, enabling faster iterations during accelerator development.
 
-The simulation validates: 1. Normal path: CLEAR, four WLOADs, four DLOADs, COMP, RSTAT — the expected result is 320 for a known test vector. 2. Error paths: COMP before loading all data, RSTAT before COMP. 3. Boundary conditions: Negative INT8 values (-128, -1), maximum positive values (127). 4. Reset behavior: Accumulators cleared after reset.
+The simulation validates: 1. Normal path: CLEAR, four WLOADs, four DLOADs, COMP, RSTAT — the expected result is verified for known test vectors. 2. Error paths: COMP before loading all data, RSTAT before COMP. 3. Boundary conditions: Negative INT8 values (-128, -1), maximum positive values (127). 4. Reset behavior: Accumulators cleared after reset.
 
 FPGA track (Vivado): After simulation passes, the design is synthesized for the Davinci Pro A7-100T FPGA (Artix-7 xc7a100t). The bring-up proceeds in stages:
 

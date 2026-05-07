@@ -78,7 +78,7 @@ These characteristics make custom instruction extensions particularly suitable f
 The Hummingbird E203 v2 is an open-source, low-power RISC-V processor core developed by Nuclei System Technology~\cite{NUCLEI_E203}. It implements the RV32IMAC instruction set and is designed for resource-constrained embedded applications. The E203 is widely used in both academic and industrial settings due to its small footprint, complete open-source availability, and the inclusion of the NICE (Nuclei Instruction Co-unit Extension) custom instruction interface~\cite{NUCLEI_NICE}, which is central to this work.
 
 
-The key parameters of the E203 core are summarized in Table 2.1.
+The key parameters of the E203 core are summarized in Table~\ref{tab:2_1}.
 
 
 Table 2.1: E203 Processor Core Parameters
@@ -98,7 +98,7 @@ Register File & 32 x 32-bit \\ \hline
 Address Width & 32 bits \\ \hline
 Debug Support & RISC-V Debug 0.11 \\ \hline
 Co-unit Interface & NICE (native) \\ \hline
-ITCM & 64 KB \\ \hline
+ITCM & 128 KB \\ \hline
 DTCM & 64 KB \\ \hline
 \end{tabular}
 \end{table}
@@ -116,7 +116,7 @@ The two stages are:
 The Instruction Fetch Unit (IFU) is responsible for generating the program counter (PC) sequence, fetching instructions from memory, and delivering them to the execution stage. The IFU module (e203\_ifu.v) interfaces with two memory subsystems via the Internal Chip Bus (ICB) protocol:
 
 
-ITCM (Instruction Tightly Coupled Memory): A 64 KB, 64-bit wide instruction memory mapped at address 0x8000\_0000. The ITCM provides single-cycle access latency for sequential instruction fetches. The IFU-to-ITCM interface uses the ICB command/response channel pair, with signals such as ifu2itcm\_icb\_cmd\_valid, ifu2itcm\_icb\_cmd\_addr, and ifu2itcm\_icb\_rsp\_rdata[63:0].
+ITCM (Instruction Tightly Coupled Memory): A 128 KB, 64-bit wide instruction memory mapped at address 0x8000\_0000. The ITCM provides single-cycle access latency for sequential instruction fetches. The IFU-to-ITCM interface uses the ICB command/response channel pair, with signals including \texttt{ifu2itcm\_icb\_\-cmd\_\-valid}, \texttt{ifu2itcm\_icb\_\-cmd\_\-addr}, and \texttt{ifu2itcm\_\-icb\_\-rsp\_\-rdata[63:0]}.
 
 
 System Memory Interface (BIU): For instruction fetches that miss the ITCM region, the IFU sends requests through the Bus Interface Unit (BIU). The external memory interface also uses the ICB protocol with signals ifu2biu\_icb\_cmd\_valid, ifu2biu\_icb\_cmd\_addr[31:0], and ifu2biu\_icb\_rsp\_rdata[31:0].
@@ -170,7 +170,7 @@ Pipeline flushes are coordinated through the pipe\_flush\_req / pipe\_flush\_ack
 The Load/Store Unit (LSU, e203\_lsu.v) handles all data memory accesses—load and store instructions—initiated by the EXU. The LSU receives requests from the Address Generation Unit (AGU) within the EXU and translates them into ICB bus transactions.
 
 
-The LSU supports a single outstanding memory transaction at any time (E203\_LSU\_OUTS\_NUM = 1), which simplifies control logic at the cost of throughput. The LSU write-back interface returns loaded data and completion status to the EXU via signals such as lsu\_o\_wbck\_wdat[31:0] and lsu\_o\_wbck\_err.
+The LSU supports a single outstanding memory transaction at any time (E203\_LSU\_OUTS\_NUM = 1), which simplifies control logic at the cost of throughput. The LSU write-back interface returns loaded data and completion status to the EXU via signals including \texttt{lsu\_o\_wbck\_\-wdat[31:0]} and \texttt{lsu\_o\_wbck\_\-err}.
 
 
 The E203 memory map is defined by compile-time configuration parameters in config.v:
@@ -186,7 +186,7 @@ Table 2.2: E203 Memory Map (Davinci A7-100T Configuration)
 \begin{tabular}{lccc}
 \hline
 Region & Base Address & Size & Description \\ \hline\hline
-ITCM & 0x8000\_0000 & 64 KB & Instruction Tightly Coupled Memory \\ \hline
+ITCM & 0x8000\_0000 & 128 KB & Instruction Tightly Coupled Memory \\ \hline
 DTCM & 0x9000\_0000 & 64 KB & Data Tightly Coupled Memory \\ \hline
 CLINT & 0x0200\_0000 & 64 KB & Core Local Interrupt Controller \\ \hline
 PLIC & 0x0C00\_0000 & 16 MB & Platform-Level Interrupt Ctrl \\ \hline
@@ -195,7 +195,7 @@ FIO & 0xF000\_0000 & 256 MB & Fast I/O Region (GPIO, QSPI, UART) \\ \hline
 \end{tabular}
 \end{table}
 
-The ITCM and DTCM are the primary memories for program code and data, respectively. The ITCM is 64 bits wide and provides a 64 KB address space (E203\_CFG\_ITCM\_ADDR\_WIDTH = 16). The DTCM is 32 bits wide and configured to 64 KB (E203\_CFG\_DTCM\_ADDR\_WIDTH = 16). Both TCMs use the ICB protocol for bus transactions.
+The ITCM and DTCM are the primary memories for program code and data, respectively. The ITCM is 64 bits wide and provides a 128 KB address space (\texttt{E203\_CFG\_ITCM\_\-ADDR\_\-WIDTH} = 16, resulting in $2^{16} \times 8$ bytes = 128 KB with 64-bit width). The DTCM is 32 bits wide and configured to 64 KB (\texttt{E203\_CFG\_DTCM\_\-ADDR\_\-WIDTH} = 16). Both TCMs use the ICB protocol for bus transactions.
 
 
 The E203 core supports two bus interconnect pathways: a high-speed TCM pathway for ITCM/DTCM access, and a system bus pathway routed through the BIU for all other address regions. This split-bus architecture allows the core to achieve deterministic low-latency access to critical memory while still supporting a wider memory map for peripherals.
@@ -284,7 +284,7 @@ Inside the E203 core, NICE instructions are decoded by the EXU decoder (detected
 
 Convolutional Neural Networks (CNNs), popularized by architectures such as LeNet-5~\cite{LENET} and AlexNet~\cite{ALEXNET}, have become the backbone of modern computer vision. The fundamental operation in a CNN is the 2D convolution.
 
-Convolutional neural networks (CNNs) are a class of deep neural networks designed for processing grid-structured data, most commonly images~\cite{SZE_SURVEY}. The fundamental building block of a CNN is the convolution layer, which applies a set of learnable filters (kernels) to the input feature map.
+The fundamental building block of a CNN is the convolution layer, which applies a set of learnable filters (kernels) to the input feature map.
 
 
 Formally, a 2D convolution operation computes:
@@ -295,7 +295,13 @@ O[y, x, k] = \sum_{c=0}^{C-1} \sum_{i=0}^{R-1} \sum_{j=0}^{S-1} I[y+i, x+j, c] \
 \]
 
 
-where: - (I) is the input feature map of dimensions (H W C) (height, width, channels), - (K) is the convolution kernel of dimensions (R S C K\_c) (kernel height, kernel width, input channels, output channels), - (O) is the output feature map, - (b\_k) is the bias term for output channel (k).
+where:
+\begin{itemize}
+\item \(I\) is the input feature map of dimensions \(H \times W \times C\) (height, width, channels),
+\item \(K\) is the convolution kernel of dimensions \(R \times S \times C \times K_c\) (kernel height, kernel width, input channels, output channels),
+\item \(O\) is the output feature map,
+\item \(b_k\) is the bias term for output channel \(k\).
+\end{itemize}
 
 
 Each output pixel is computed as the dot product between a kernel and a spatially corresponding window of the input feature map, summed across all input channels. For a 3x3 kernel applied to an RGB image, this requires 27 multiplications and 26 additions per output pixel (3 x 3 x 3 = 27 multiplications, one per channel element per spatial position).

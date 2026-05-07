@@ -27,18 +27,19 @@ plt.rcParams.update({
 # 1. fig3_2_instruction_format.png
 # ============================================================
 def gen_fig3_2():
-    fig, ax = plt.subplots(figsize=(12, 3.0))
+    fig, ax = plt.subplots(figsize=(12, 3.2))
     ax.set_xlim(0, 12)
     ax.set_ylim(0, 3.2)
     ax.axis('off')
 
+    # More saturated colors + darker border
     fields = [
-        (31, 25, 'funct7', '#E3F2FD'),
-        (24, 20, 'rs2', '#C8E6C9'),
-        (19, 15, 'rs1', '#C8E6C9'),
-        (14, 12, '{xd,xs1,xs2}', '#FFF3E0'),
-        (11, 7, 'rd', '#C8E6C9'),
-        (6, 0, 'opcode 0x0B', '#FFCDD2'),
+        (31, 25, 'funct7', '#BBDEFB'),
+        (24, 20, 'rs2', '#A5D6A7'),
+        (19, 15, 'rs1', '#A5D6A7'),
+        (14, 12, '{xd, xs1, xs2}\nfunct3 repurposed', '#FFE0B2'),
+        (11, 7, 'rd', '#A5D6A7'),
+        (6, 0, 'opcode\n0x0B (custom0)', '#EF9A9A'),
     ]
 
     bar_y, bar_h = 0.6, 1.6
@@ -47,19 +48,52 @@ def gen_fig3_2():
     for msb, lsb, label, color in fields:
         x = (31 - msb) * x_scale
         w = (msb - lsb + 1) * x_scale
+        # Sharp rectangle — no round corners
         rect = FancyBboxPatch((x, bar_y), w, bar_h,
-                              boxstyle="round,pad=0.06",
-                              facecolor=color, edgecolor='#333333', linewidth=1.2)
+                              boxstyle="square,pad=0",
+                              facecolor=color, edgecolor='#222222', linewidth=1.5)
         ax.add_patch(rect)
-        ax.text(x + w/2, bar_y + bar_h/2 + 0.25, label, ha='center', va='center',
-                fontsize=10, fontweight='bold')
-        ax.text(x + w/2, bar_y + bar_h/2 - 0.35, f'[{msb}:{lsb}]',
-                ha='center', fontsize=8, color='#555555')
 
-    # Bit numbers below bar — every 4 bits
+        lines = label.split('\n')
+        if len(lines) == 2:
+            # Two-line field label
+            ax.text(x + w/2, bar_y + bar_h/2 + 0.20, lines[0], ha='center', va='center',
+                    fontsize=9, fontweight='bold')
+            ax.text(x + w/2, bar_y + bar_h/2 - 0.05, lines[1], ha='center', va='center',
+                    fontsize=7.5, color='#333333')
+        else:
+            # Single-line field label
+            ax.text(x + w/2, bar_y + bar_h/2 + 0.10, label, ha='center', va='center',
+                    fontsize=10, fontweight='bold')
+
+        # Bit-range label below field label
+        bit_range_y = bar_y + bar_h/2 - 0.35 if len(lines) == 1 else bar_y + bar_h/2 - 0.40
+        ax.text(x + w/2, bit_range_y, f'[{msb}:{lsb}]',
+                ha='center', fontsize=9, color='#333333')
+
+    # Bit numbers + tick marks below bar at every 4th bit
     for i in range(0, 32, 4):
-        x = (31 - i) * x_scale + x_scale/2
-        ax.text(x, bar_y - 0.25, str(i), ha='center', fontsize=7, color='#666666')
+        cx = (31 - i) * x_scale + x_scale / 2
+        ax.text(cx, bar_y - 0.30, str(i), ha='center', fontsize=9, color='#333333')
+        # Major tick at left edge of this bit
+        tick_x = (31 - i) * x_scale
+        ax.plot([tick_x, tick_x], [bar_y - 0.05, bar_y - 0.20],
+                color='#333333', lw=1.2)
+
+    # Extra left edge tick (bit 31 boundary)
+    ax.plot([0, 0], [bar_y - 0.05, bar_y - 0.20], color='#333333', lw=1.2)
+
+    # Minor ticks at every bit boundary (skip positions already marked by major ticks)
+    for bit in range(1, 32):
+        tick_x = (31 - bit) * x_scale
+        if bit % 4 != 0:
+            ax.plot([tick_x, tick_x], [bar_y - 0.05, bar_y - 0.10],
+                    color='#999999', lw=0.5)
+
+    # Dashed line connecting {xd,xs1,xs2} field to annotation box
+    xd_cx = (31 - 14) * x_scale + (14 - 12 + 1) * x_scale / 2
+    ax.plot([xd_cx, xd_cx], [bar_y, 0.24],
+            dashes=[3, 2], color='#C62828', lw=1.0)
 
     # Legend notes
     notes = "xd=1: write rd   |   xs1=1: read rs1   |   xs2=1: read rs2"

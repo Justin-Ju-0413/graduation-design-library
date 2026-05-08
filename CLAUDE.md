@@ -84,11 +84,23 @@ bash build.sh all
 - 页边距 上下 1.5in / 左右 1.0in
 - Declaration/Abstract 官方文本
 
-## Current Status (2026-04-29)
-- Day 1 DONE: `soc_sysclk_ila` interpretation, `probe_pc` = IFU inspect PC
-- Day 2 DONE: CPU boot diagnostic ILA, no cgstop/halt, UART idle, IFU-to-ITCM zero
-- Day 3 BLOCKED: `hello_e203` bitstream OK, but board PC=0x00000000, IFU counters zero
-- Next: Add boot-vector/IFU-address/MROM-vs-ITCM diagnostic
+## Current Status (2026-05-08)
+
+**论文**: PDF 74页 (4.2MB), DOCX 3.9MB, 44引用, 编译通过
+**图表修复**: 交叉引用已添加, PDF/DOCX图表已统一, 严重overfull hbox已消除
+**Figure 4.2** (hello_e203 PC trace): 已添加ITCM Step Detail放大inset, PC步进可见
+**Figure 4.3** (NICE activity): PC Y轴已聚焦到0x80000000区域, 步进可见
+
+**Chapter 4 Figure 编号** (FPGA板子照片移入后已变化):
+- 4.1: FPGA板子照片 | 4.2: hello_e203 PC trace + ITCM inset | 4.3: NICE activity
+- 4.4: 资源饼图 | 4.5: 资源柱状图 | 4.6: 时序图 | UART输出图(无编号)
+
+**编译注意事项**:
+- 编译前关闭 WPS/PDF阅读器, 否则 xelatex 文件锁定失败
+- 不要加 `\usepackage{microtype}` (MiKTeX 未安装会挂起)
+- XeLaTeX 绝对路径: `/c/Users/16084/AppData/Local/Programs/MiKTeX/miktex/bin/x64/xelatex`
+
+**FPGA 上板**: Day 1-4 DONE, Day 5+ TODO
 
 ## Skills Available
 - `/new-ila-build` - Add a new ILA diagnostic FPGA build mode

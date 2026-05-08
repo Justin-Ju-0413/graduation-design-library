@@ -29,6 +29,16 @@ The initial ILA probe configuration monitored the ITCM-dedicated bus interface (
 
 The lesson for future ILA-based debugging is to include probes on all major bus interfaces during initial bring-up, rather than optimizing for the expected operational path.
 
+\subsection{E203 NICE Decoder Integration Constraint}\label{sec:5_1_4}
+
+A notable bring-up challenge encountered during NICE accelerator validation was the E203 decoder's dual interpretation of the rs2 instruction field~\cite{NUCLEI_NICE}. In the standard RISC-V ISA, the rs2 field serves a single purpose: it identifies a general-purpose register whose value is read from the register file. The E203 decoder optimizes this by skipping the register read when rs2 encodes x0, since x0 always returns zero.
+
+However, NICE custom instructions may repurpose the rs2 field as an immediate data operand rather than a register address. In the CNN accelerator's WLOAD and DLOAD instructions, rs2 encodes the PE array vector bank index (0--3). When the index is 0, the instruction's rs2 field is 5'b00000, which the decoder interprets as ``rs2~=~x0, skip the register read.'' The IFU retains a stale rs2 index from the preceding instruction, and the accelerator receives incorrect operand data.
+
+This behavior is not documented in the NICE specification, which describes the valid-ready handshake and instruction encoding but does not detail the decoder's internal register-fetch optimization. For future NICE coprocessor designs that repurpose the rs2 (or rs1) field as non-register data, the integration strategy should either (a) apply the one-line decoder patch described in Chapter~4 to unconditionally capture rs2 for NICE instructions, or (b) ensure at the software level that the encoded operand value never equals x0 (for example, by offsetting the index range to 1--4 instead of 0--3).
+
+The broader lesson is that when integrating custom coprocessors into a processor core originally designed for a fixed ISA, instruction-field semantics that are optimization-safe for the base ISA may become correctness-critical when fields are repurposed. A conservative integration policy—capture all operand fields unconditionally for custom instructions—avoids such latent issues and adds negligible hardware cost (one multiplexer control bit).
+
 
 \section{NICE CNN Accelerator Validation Status}\label{sec:5_2}
 

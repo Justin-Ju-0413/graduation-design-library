@@ -112,6 +112,8 @@ def gen_fig3_2():
 # 2. fig_ila_pc_trace.png
 # ============================================================
 def gen_ila_pc_trace():
+    from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
+
     np.random.seed(42)
     n = 1024
     samples = np.arange(n)
@@ -142,8 +144,8 @@ def gen_ila_pc_trace():
     for region in [(200, 400), (400, 600), (600, 800)]:
         membus[region[0]:region[1]] = 1
 
-    fig, axes = plt.subplots(4, 1, figsize=(12, 7), sharex=True,
-                              gridspec_kw={'height_ratios': [1.4, 1, 1, 1]})
+    fig, axes = plt.subplots(4, 1, figsize=(12, 7.5), sharex=True,
+                              gridspec_kw={'height_ratios': [1.8, 1, 1, 1]})
 
     colors = ['#1565C0', '#2E7D32', '#E65100', '#7B1FA2']
     titles = ['PC', 'Status', 'UART TX', 'Memory Bus']
@@ -164,7 +166,7 @@ def gen_ila_pc_trace():
     for ax in axes:
         ax.axvline(x=100, color='red', linestyle='--', linewidth=1.0, alpha=0.5)
 
-    # Annotations — spread out to avoid overlap
+    # Annotations
     y_top = pc.max() * 1.02
     axes[0].annotate('MROM\n0x00001000', xy=(50, 0x00001000), fontsize=7.5, color='#333',
                      xytext=(10, y_top * 0.82), ha='left',
@@ -172,12 +174,28 @@ def gen_ila_pc_trace():
     axes[0].annotate('ITCM Jump\n0x80000000', xy=(150, 0x80000000), fontsize=7.5, color='#333',
                      xytext=(250, y_top * 0.82), ha='center',
                      arrowprops=dict(arrowstyle='->', color='#666', lw=1.0))
-    axes[0].annotate('hello_e203 Execution', xy=(500, 0x800000e0), fontsize=7.5, color='#333',
-                     xytext=(500, y_top * 0.65), ha='center',
+    axes[0].annotate('hello_e203\nExecution', xy=(500, 0x800000c0), fontsize=7.5, color='#333',
+                     xytext=(550, y_top * 0.65), ha='center',
                      arrowprops=dict(arrowstyle='->', color='#666', lw=1.0))
-    axes[0].annotate('Done Loop', xy=(900, 0x80000078), fontsize=7.5, color='#333',
+    axes[0].annotate('Done Loop\n0x80000078', xy=(900, 0x80000078), fontsize=7.5, color='#333',
                      xytext=(900, y_top * 0.50), ha='center',
                      arrowprops=dict(arrowstyle='->', color='#666', lw=1.0))
+
+    # ---- Zoomed inset: ITCM execution detail ----
+    axins = zoomed_inset_axes(axes[0], zoom=12, loc='lower right',
+                               bbox_to_anchor=(1.02, 0.45),
+                               bbox_transform=axes[0].transAxes)
+    axins.plot(samples, pc, color='#1565C0', linewidth=0.8, drawstyle='steps-post', alpha=0.9)
+    axins.set_xlim(90, 900)
+    axins.set_ylim(0x80000070, 0x800000d0)
+    axins.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f'0x{int(v):08X}'))
+    axins.tick_params(labelsize=6, pad=1)
+    axins.grid(True, alpha=0.2)
+    axins.axvline(x=100, color='red', linestyle='--', linewidth=0.6, alpha=0.4)
+
+    # Draw a box and connector lines
+    mark_inset(axes[0], axins, loc1=1, loc2=3, fc='none', ec='#E65100', lw=1.0, linestyle='--')
+    axins.set_title('ITCM Step Detail', fontsize=7, fontweight='bold', color='#E65100', pad=2)
 
     axes[0].set_title('ILA Capture: CPU Boot Sequence (PC Progression)', fontsize=13, fontweight='bold')
     axes[-1].set_xlabel('Sample', fontsize=10)

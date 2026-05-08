@@ -7,7 +7,7 @@ The system architecture integrates a RISC-V E203 Hummingbird v2 processor core w
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig3_1_soc_architecture.png}
-\caption{System-level block diagram of the E203 SoC with the CNN NICE accelerator.}
+\caption{System architecture of the E203 SoC with the CNN NICE accelerator, showing the register-based NICE path and the standard AHB memory/peripheral path.}
 \label{fig:3_1}
 \end{figure}
 
@@ -90,7 +90,7 @@ Figure~\ref{fig:3_2} shows the instruction format.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.70\textwidth]{figures/fig3_2_instruction_format.png}
-\caption{RISC-V custom instruction format as interpreted by the E203 NICE interface.}
+\caption{RISC-V custom0 instruction format used by the accelerator; bits [14:12] carry the NICE xd/xs1/xs2 flags and funct7 selects the accelerator operation.}
 \label{fig:3_2}
 \end{figure}
 
@@ -98,18 +98,20 @@ Table~\ref{tab:3_3} defines the six custom instructions.
 
 \begin{table}[htbp]
 \centering\small
-\caption{NICE custom instruction set for the CNN accelerator.}
+\caption{NICE custom instruction set used by the CNN accelerator firmware. WLOAD and DLOAD use rs2 as a vector-bank index, which is why the decoder-side rs2 capture fix is required for index 0.}
 \label{tab:3_3}
-\begin{tabular}{lp{1.8cm}p{1.8cm}p{2.8cm}p{3.5cm}}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lllll}
 \hline
 Instruction & Encoding (hex) & Fields & Operands & Description \\ \hline\hline
-CFG   & 0x0A00100B & funct7=5, xd=0, xs1=1, xs2=0 & rs1[0]=ReLU en & Configure accelerator \\ \hline
-CLEAR & 0x0800000B & funct7=4, xd=0, xs1=0, xs2=0 & none & Clear PE accumulators \\ \hline
-WLOAD & 0x0001800B & funct7=0, xd=0, xs1=1, xs2=1 & rs1=data, rs2=idx & Load weight column \\ \hline
-DLOAD & 0x0201800B & funct7=1, xd=0, xs1=1, xs2=1 & rs1=data, rs2=idx & Load activation row \\ \hline
-COMP  & 0x0400000B & funct7=2, xd=0, xs1=0, xs2=0 & none & Trigger MAC computation \\ \hline
-RSTAT & 0x0600250B & funct7=3, xd=1, xs1=0, xs2=0 & rd=result & Read accumulator result \\ \hline
+CFG   & \texttt{0x0A00100B} & f7=5, xd=0, xs1=1, xs2=0 & rs1[0]=ReLU en & Configure accelerator \\ \hline
+CLEAR & \texttt{0x0800000B} & f7=4, xd=0, xs1=0, xs2=0 & none & Clear PE accumulators \\ \hline
+WLOAD & \texttt{0x0001800B} & f7=0, xd=0, xs1=1, xs2=1 & rs1=data, rs2=idx & Load weight column \\ \hline
+DLOAD & \texttt{0x0201800B} & f7=1, xd=0, xs1=1, xs2=1 & rs1=data, rs2=idx & Load activation row \\ \hline
+COMP  & \texttt{0x0400000B} & f7=2, xd=0, xs1=0, xs2=0 & none & Trigger MAC computation \\ \hline
+RSTAT & \texttt{0x0600250B} & f7=3, xd=1, xs1=0, xs2=0 & rd=result & Read accumulator result \\ \hline
 \end{tabular}
+}
 \end{table}
 
 Figure~\ref{fig:3_2b} provides a visual summary of the complete NICE instruction set encoding.
@@ -139,7 +141,7 @@ The NICE instruction decoder in cnn\_nice\_core.v inspects the funct7 field of t
 
 The decoder includes two error-checking mechanisms. First, if the instruction opcode is not 0x0B (custom0), the accelerator reports an error via nice\_rsp\_err. Second, for WLOAD and DLOAD instructions, the rs2 index is validated: only the lower two bits may be nonzero, ensuring the index is in the range [0,3].
 
-The COMP instruction implements a guard condition: the accelerator asserts en\_pe only if all four weight-load and all four data-load operations have been completed, tracked by w\_loaded\_mask and d\_loaded\_mask. This prevents undefined behavior from partial data loading.
+The COMP instruction implements a guard condition: the accelerator asserts en\_pe only after all four weight-load and data-load operations have completed. The condition is tracked by w\_loaded\_mask and d\_loaded\_mask, preventing undefined behavior from partial data loading.
 
 A subtle integration constraint exists in the E203 core's instruction decoder~\cite{NUCLEI_E203,NUCLEI_NICE}. The decoder uses the rs2 register field for two purposes simultaneously: as a register file read address and as a qualifier for whether the rs2 operand is needed at all. When the rs2 field encodes register x0 (5'b00000), the decoder treats this as ``rs2 not required'' and gates the IFU's rs2 index register update (ir\_rs2idx\_ena~=~0). For standard RISC-V instructions this is correct behavior, since x0 is hardwired to zero and reading it is unnecessary. However, NICE instructions that repurpose the rs2 field as a data operand—such as WLOAD and DLOAD, which use rs2 as a vector bank index (0--3)—are affected: when the index is 0, the rs2 field encodes 5'b00000, causing the decoder to suppress the rs2 read and potentially deliver stale data to the accelerator. The corrective measure applied in this design is to bypass the x0-gating for NICE-flagged instructions in the decoder's rv32\_need\_rs2 expression, ensuring the rs2 index is always captured regardless of its encoded value. This fix is discussed in detail as a bring-up case study in Chapter~4.
 
@@ -189,7 +191,7 @@ Figure~\ref{fig:3_3} shows the PE datapath.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.60\textwidth]{figures/fig3_3_pe_microarchitecture.png}
-\caption{Processing element microarchitecture showing the INT8 multiplier and INT32 accumulator.}
+\caption{Processing element microarchitecture: each PE performs one signed INT8 multiply and accumulates into an INT32 output register.}
 \label{fig:3_3}
 \end{figure}
 
@@ -232,7 +234,7 @@ Figure~\ref{fig:3_4} shows the array structure and the data distribution pattern
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.70\textwidth]{figures/fig3_4_pe_array.png}
-\caption{4x4 PE array organization showing weight column broadcast and activation row broadcast.}
+\caption{4x4 PE array organization. WLOAD broadcasts weight columns, DLOAD broadcasts activation rows, and COMP triggers parallel output-stationary accumulation.}
 \label{fig:3_4}
 \end{figure}
 
@@ -367,7 +369,7 @@ Control logic & \textasciitilde{}200 LUT & - & FSM, decoder, mask registers \\ \
 
 \subsection{Integration Hierarchy}
 
-The CNN accelerator is integrated into the E203 SoC at the subsystem level. The e203\_subsys\_nice\_core module, which is the standard NICE integration wrapper provided by Nuclei, instantiates the cnn\_nice\_core module. This wrapper connects the NICE request/response signals between the E203 core and the accelerator.
+The CNN accelerator is integrated into the E203 SoC at the subsystem level. The E203 NICE subsystem wrapper provided by Nuclei instantiates cnn\_nice\_core and connects the request/response signals between the processor core and the accelerator.
 
 The integration hierarchy is:
 
@@ -438,7 +440,7 @@ Figure~\ref{fig:3_6} shows the complete build pipeline.
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig3_6_build_pipeline.png}
-\caption{FPGA build pipeline from software compilation and RTL synthesis to bitstream generation.}
+\caption{Reproducible FPGA build pipeline from firmware image generation through Vivado implementation, board programming, and UART/ILA evidence capture.}
 \label{fig:3_6}
 \end{figure}
 
@@ -482,7 +484,7 @@ The ILA core is instantiated in a dedicated top-level wrapper module rather than
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig3_7_verification_chain.png}
-\caption{Multi-stage verification flow from RTL simulation through FPGA board validation.}
+\caption{Verification chain used for the thesis and defense: RTL simulation, full-SoC simulation, hello\_e203 board validation, CNN board demo, and the NICE rs2 fix regression.}
 \label{fig:3_7}
 \end{figure}
 
@@ -519,4 +521,3 @@ Fix: The root cause is corrected in RTL, software, or build scripts.
 Verify: Simulation passes the test case, and a new bitstream is built for FPGA confirmation.
 
 This cycle typically requires 10–15 minutes per FPGA iteration (synthesis, place-and-route, bitstream generation) versus seconds for simulation. The simulation-first approach therefore maximizes engineering productivity by catching issues before the expensive FPGA build step.
-

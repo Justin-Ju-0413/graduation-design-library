@@ -1,245 +1,203 @@
-"""
-Generate professional block diagrams for thesis — FIXED VERSION.
-- Fig 3.1: System Architecture (fixed line routing, bidirectional NICE arrow)
-- Fig 3.3: PE Microarchitecture (fixed ReLU placement, no text overlap)
-- Fig 3.4: PE Array
-"""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
+"""Generate thesis block diagrams with a consistent academic style."""
+from __future__ import annotations
+
 import os
 
-FIG_DIR = r"C:\Users\16084\Documents\Graduation_Design_Library\thesis_latex\figures"
+import matplotlib
 
-plt.rcParams.update({
-    'font.family': 'serif', 'font.size': 9,
-    'figure.dpi': 200, 'savefig.dpi': 200,
-    'savefig.bbox': 'tight', 'savefig.pad_inches': 0.05,
-})
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyArrowPatch, Rectangle
 
-def draw_block(ax, x, y, w, h, text, color, fontsize=8, fontweight='bold'):
-    rect = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.06",
-                          facecolor=color, edgecolor='#37474F', linewidth=1.0)
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIG_DIR = os.path.join(ROOT, "figures")
+
+COLORS = {
+    "ink": "#1F2933",
+    "muted": "#5B6773",
+    "line": "#64748B",
+    "blue": "#D7E8FF",
+    "blue_edge": "#2F6FB3",
+    "green": "#DDF4E7",
+    "green_edge": "#23835A",
+    "amber": "#FFF0C2",
+    "amber_edge": "#B7791F",
+    "violet": "#E9E2FF",
+    "violet_edge": "#6B46C1",
+    "gray": "#EEF2F6",
+    "gray_edge": "#64748B",
+    "red": "#FDE2E2",
+    "red_edge": "#B42318",
+}
+
+plt.rcParams.update(
+    {
+        "font.family": "DejaVu Serif",
+        "font.size": 10,
+        "figure.dpi": 220,
+        "savefig.dpi": 260,
+        "axes.edgecolor": COLORS["line"],
+        "text.color": COLORS["ink"],
+    }
+)
+
+
+def setup_ax(figsize=(9, 5.4), xlim=(0, 12), ylim=(0, 7.2)):
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.set_xlim(*xlim)
+    ax.set_ylim(*ylim)
+    ax.axis("off")
+    return fig, ax
+
+
+def box(ax, x, y, w, h, label, fc, ec=None, fs=9, weight="bold", lw=1.4):
+    ec = ec or COLORS["line"]
+    rect = Rectangle((x, y), w, h, facecolor=fc, edgecolor=ec, linewidth=lw)
     ax.add_patch(rect)
-    ax.text(x + w/2, y + h/2, text, ha='center', va='center',
-            fontsize=fontsize, fontweight=fontweight, color='#263238')
+    ax.text(x + w / 2, y + h / 2, label, ha="center", va="center", fontsize=fs, fontweight=weight)
     return rect
 
-def draw_label(ax, x, y, text, fontsize=7, color='#37474F', ha='center'):
-    ax.text(x, y, text, ha=ha, va='center', fontsize=fontsize, color=color)
 
-def draw_arrow(ax, x1, y1, x2, y2, color='#37474F', lw=1.0, style='->'):
-    ax.annotate('', xy=(x2, y2), xytext=(x1, y1),
-                arrowprops=dict(arrowstyle=style, color=color, lw=lw))
-
-# ================================================================
-# Fig 3.1: System Architecture (COMPLETELY REWRITTEN)
-# ================================================================
-print("Generating Fig 3.1: System Architecture...")
-
-fig, ax = plt.subplots(figsize=(8.5, 5.5))
-ax.set_xlim(0, 12)
-ax.set_ylim(0, 8)
-ax.axis('off')
-
-CPU_C = '#E3F2FD'; ACC_C = '#E8F5E9'; MEM_C = '#F3E5F5'; IO_C = '#ECEFF1'
-BUS_C = '#B0BEC5'; NICE_C = '#E65100'; LINE_C = '#546E7A'
-INNER_CPU = '#90CAF9'; INNER_ACC = '#A5D6A7'
-
-# ---- CPU Block (left) ----
-draw_block(ax, 0.4, 2.6, 3.2, 3.8, '', CPU_C)
-draw_block(ax, 0.6, 5.3, 2.8, 0.85, 'E203 RISC-V Core\n(RV32IMAC)', CPU_C, 9)
-draw_label(ax, 2.0, 5.05, '2-stage pipeline, Machine Mode', 6.5, '#37474F')
-draw_block(ax, 1.0, 4.1, 2.2, 0.55, 'IFU (Instruction Fetch)', INNER_CPU, 7)
-draw_block(ax, 1.0, 3.1, 2.2, 0.55, 'EXU (Execute + NICE)', INNER_CPU, 7)
-
-# ---- Accelerator Block (middle) ----
-draw_block(ax, 4.3, 2.6, 2.7, 3.8, '', ACC_C)
-draw_block(ax, 4.5, 5.3, 2.3, 0.85, 'CNN Accelerator', ACC_C, 9)
-draw_label(ax, 5.65, 5.05, 'NICE Interface', 6.5, '#1B5E20')
-draw_block(ax, 4.7, 4.1, 1.9, 0.55, 'NICE Decoder\n+ Control FSM', INNER_ACC, 7)
-draw_block(ax, 4.7, 3.1, 1.9, 0.55, '4x4 PE Array\n(INT8 MAC)', INNER_ACC, 7)
-
-# ---- Memory (right top) ----
-draw_block(ax, 7.7, 4.2, 2.5, 2.2, '', MEM_C)
-draw_block(ax, 7.85, 5.15, 2.2, 1.0, 'ITCM 128KB (64-bit)\n@ 0x8000_0000', MEM_C, 7.5)
-draw_block(ax, 7.85, 4.35, 2.2, 0.55, 'DTCM 64KB\n@ 0x9000_0000', '#CE93D8', 7)
-
-# ---- IO (right bottom) ----
-draw_block(ax, 7.7, 1.2, 2.5, 1.6, '', IO_C)
-draw_block(ax, 7.85, 2.05, 2.2, 0.50, 'UART0\n@ 0x1001_3000', IO_C, 7)
-draw_block(ax, 7.85, 1.35, 2.2, 0.45, 'GPIO (LED, UART pins)', '#CFD8DC', 6.5)
-
-# ---- AHB Bus (bottom) ----
-draw_block(ax, 0.4, 0.15, 10.5, 0.40, 'AHB Bus Fabric', BUS_C, 8, 'bold')
-
-# ---- Peripherals ABOVE bus with vertical drops ----
-peri_y = 0.75
-p_w, p_h = 1.6, 0.65
-draw_block(ax, 1.0, peri_y, p_w, p_h, 'CLINT\n@0x0200_0000', IO_C, 7)
-draw_block(ax, 3.2, peri_y, p_w, p_h, 'PLIC\n@0x0C00_0000', IO_C, 7)
-draw_block(ax, 5.3, peri_y, 2.2, p_h, 'Boot ROM (MROM)\n@0x0000_0000', IO_C, 7)
-
-# Peripheral → bus vertical drops
-for px in [1.8, 4.0, 6.4]:
-    draw_arrow(ax, px, peri_y - 0.05, px, 0.22, LINE_C, 2.5, "-")
-
-# ---- NICE arrow: bidirectional between CPU EXU and Acc ----
-# Gap between CPU (right edge x=3.6) and Acc (left edge x=4.3)
-ax.annotate('', xy=(4.25, 3.375), xytext=(3.65, 3.375),
-            arrowprops=dict(arrowstyle='<->', color=NICE_C, lw=5.0))
-draw_label(ax, 3.95, 3.85, 'NICE Req / Rsp', 9, NICE_C)
-
-# ---- Bus connections: route through gaps between peripherals ----
-# Gaps: left[0.4-1.0], CLINT-PLIC[2.6-3.2], PLIC-BootROM[4.8-5.3], right[7.5-10.9]
-# CPU → bus (through gap left of CLINT)
-draw_arrow(ax, 0.8, 2.6, 0.8, 0.22, LINE_C, 2.5, '-')
-# Acc → bus (through gap between PLIC and Boot ROM)
-draw_arrow(ax, 5.05, 2.6, 5.05, 0.22, LINE_C, 2.5, '-')
-# Memory → bus: horizontal stub from block edge, then vertical drop right of IO
-ax.plot([10.2, 10.4], [4.2, 4.2], '-', color=LINE_C, lw=2.5)
-draw_arrow(ax, 10.4, 4.2, 10.4, 0.22, LINE_C, 2.5, '-')
-# IO → bus (through gap right of Boot ROM, left of memory drop)
-draw_arrow(ax, 8.95, 1.2, 8.95, 0.22, LINE_C, 2.5, '-')
-
-# ---- Title ----
-draw_label(ax, 6.0, 7.6, 'E203 SoC with NICE CNN Accelerator — System Architecture', 11, '#263238')
-
-plt.tight_layout()
-out = os.path.join(FIG_DIR, 'fig3_1_soc_architecture.png')
-plt.savefig(out, bbox_inches='tight', dpi=200)
-plt.close()
-print(f"  Saved: {out}")
+def arrow(ax, start, end, color=None, lw=1.6, style="-|>", rad=0):
+    color = color or COLORS["line"]
+    ax.add_patch(
+        FancyArrowPatch(
+            start,
+            end,
+            arrowstyle=style,
+            mutation_scale=12,
+            linewidth=lw,
+            color=color,
+            connectionstyle=f"arc3,rad={rad}",
+            shrinkA=2,
+            shrinkB=2,
+        )
+    )
 
 
-# ================================================================
-# Fig 3.3: PE Microarchitecture (FIXED: ReLU outs Multiplier)
-# ================================================================
-print("Generating Fig 3.3: PE Microarchitecture...")
+def fig3_1_soc_architecture():
+    fig, ax = setup_ax(figsize=(9.5, 5.6), ylim=(0, 7.4))
 
-fig, ax = plt.subplots(figsize=(5.5, 4.5))
-ax.set_xlim(0, 11)
-ax.set_ylim(0, 8)
-ax.axis('off')
+    ax.text(0.15, 7.05, "E203 SoC with NICE CNN Accelerator", fontsize=15, fontweight="bold")
+    ax.text(0.15, 6.72, "Custom instructions carry control and operands; standard bus fabric connects memory and I/O.", fontsize=8.5, color=COLORS["muted"])
 
-# Layout (top to bottom): Input → Multiplier → ReLU → Accumulator → Result
-# Multiplier: y=4.5, h=1.0
-draw_block(ax, 3.0, 4.5, 4.5, 1.0,
-           'INT8 Multiplier\n  W[7:0] × D[7:0] → P[15:0]', '#E3F2FD', 7.5)
+    box(ax, 0.45, 3.2, 2.6, 2.65, "E203 Core\nRV32IMAC\n2-stage pipeline", COLORS["blue"], COLORS["blue_edge"], fs=9.5)
+    box(ax, 0.75, 4.35, 2.0, 0.42, "IFU", "#F8FBFF", COLORS["blue_edge"], fs=8)
+    box(ax, 0.75, 3.72, 2.0, 0.42, "EXU + NICE dispatch", "#F8FBFF", COLORS["blue_edge"], fs=8)
 
-# ReLU block: CLEARLY SEPARATE below multiplier
-draw_block(ax, 3.0, 3.5, 4.5, 0.65,
-           'ReLU (optional)\n  if en_relu && result < 0 then 0', '#FFEBEE', 7, 'normal')
+    box(ax, 4.15, 3.2, 2.6, 2.65, "CNN Accelerator\n4x4 INT8 PE array", COLORS["green"], COLORS["green_edge"], fs=9.5)
+    box(ax, 4.45, 4.42, 2.0, 0.42, "NICE decoder + FSM", "#FBFFFC", COLORS["green_edge"], fs=8)
+    box(ax, 4.45, 3.78, 2.0, 0.42, "Register-fed MAC array", "#FBFFFC", COLORS["green_edge"], fs=8)
 
-# Accumulator: below ReLU
-draw_block(ax, 3.0, 1.8, 4.5, 1.2,
-           'INT32 Accumulator\n  acc ≤ acc + P (signed)\n  (reset on acc_clr)', '#FFF8E1', 7.5)
+    box(ax, 8.0, 4.65, 2.75, 1.0, "ITCM 128 KB\n0x8000_0000", COLORS["violet"], COLORS["violet_edge"], fs=8.5)
+    box(ax, 8.0, 3.38, 2.75, 1.0, "DTCM 64 KB\n0x9000_0000", COLORS["violet"], COLORS["violet_edge"], fs=8.5)
+    box(ax, 8.0, 1.45, 2.75, 1.0, "UART0 + GPIO\nboard evidence output", COLORS["gray"], COLORS["gray_edge"], fs=8.5)
+    box(ax, 4.6, 1.45, 1.9, 1.0, "Boot ROM\n0x0000_0000", COLORS["gray"], COLORS["gray_edge"], fs=8.5)
+    box(ax, 0.7, 1.45, 2.2, 1.0, "CLINT / PLIC\ninterrupt system", COLORS["gray"], COLORS["gray_edge"], fs=8.5)
 
-# ---- Inputs ----
-# W input (top)
-draw_label(ax, 5.25, 7.5, 'W (INT8, 8-bit signed weight)', 8, '#1565C0')
-draw_arrow(ax, 5.25, 7.2, 5.25, 5.55, '#1565C0', 1.2)
+    box(ax, 0.45, 0.45, 10.3, 0.38, "AHB system bus fabric", "#D9E2EC", COLORS["gray_edge"], fs=8.5)
 
-# D input (left)
-draw_label(ax, 1.3, 5.0, 'D\n(INT8,\n8-bit\nactivation)', 7.5, '#2E7D32')
-draw_arrow(ax, 2.0, 5.3, 2.95, 5.0, '#2E7D32', 1.0)
+    arrow(ax, (3.08, 4.35), (4.10, 4.35), COLORS["amber_edge"], lw=3.0, style="<|-|>")
+    ax.text(3.59, 4.63, "NICE request / response", ha="center", fontsize=8.5, color=COLORS["amber_edge"], fontweight="bold")
 
-# ---- Internal data flow arrows ----
-# Multiplier → ReLU
-draw_arrow(ax, 5.25, 4.5, 5.25, 4.2, '#37474F', 1.0)
-# ReLU → Accumulator
-draw_arrow(ax, 5.25, 3.5, 5.25, 3.05, '#37474F', 1.0)
-# Accumulator → Result
-draw_arrow(ax, 5.25, 1.8, 5.25, 0.3, '#37474F', 1.2)
-draw_label(ax, 5.25, 0.15, 'Result (INT32)', 8, '#263238')
+    for x in [1.8, 5.55, 9.35]:
+        arrow(ax, (x, 1.42), (x, 0.86), COLORS["line"], style="-")
+    arrow(ax, (1.75, 3.17), (1.75, 0.86), COLORS["line"], style="-")
+    arrow(ax, (5.45, 3.17), (5.45, 0.86), COLORS["line"], style="-")
+    arrow(ax, (9.35, 3.35), (9.35, 0.86), COLORS["line"], style="-")
+    arrow(ax, (9.35, 1.42), (9.35, 0.86), COLORS["line"], style="-")
 
-# ---- Feedback loop ----
-ax.annotate('', xy=(8.5, 2.4), xytext=(8.5, 4.0),
-            arrowprops=dict(arrowstyle='->', color='#E65100', lw=1.5,
-                          connectionstyle='arc3,rad=0.6'))
-draw_label(ax, 9.35, 3.2, 'accumulate', 6.5, '#E65100')
-
-# ---- Control signals ----
-draw_label(ax, 1.5, 2.8, 'acc_clr', 7, '#C62828')
-draw_arrow(ax, 2.2, 2.8, 2.95, 2.4, '#C62828', 0.8)
-draw_label(ax, 1.5, 2.2, 'en', 7, '#546E7A')
-draw_arrow(ax, 2.4, 2.2, 2.95, 2.0, '#546E7A', 0.8)
-
-# ---- Title ----
-draw_label(ax, 5.5, 7.8, 'Processing Element (PE) Microarchitecture', 10, '#263238')
-
-plt.tight_layout()
-out = os.path.join(FIG_DIR, 'fig3_3_pe_microarchitecture.png')
-plt.savefig(out, bbox_inches='tight', dpi=200)
-plt.close()
-print(f"  Saved: {out}")
+    out = os.path.join(FIG_DIR, "fig3_1_soc_architecture.png")
+    fig.savefig(out, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    print(f"  saved {out}")
 
 
-# ================================================================
-# Fig 3.4: 4x4 PE Array
-# ================================================================
-print("Generating Fig 3.4: PE Array...")
+def fig3_3_pe_microarchitecture():
+    fig, ax = setup_ax(figsize=(7.0, 5.0), xlim=(0, 10), ylim=(0, 7.2))
 
-fig, ax = plt.subplots(figsize=(7, 5.5))
-ax.set_xlim(0, 12)
-ax.set_ylim(0, 8.5)
-ax.axis('off')
+    ax.text(0.2, 6.82, "Processing Element Microarchitecture", fontsize=15, fontweight="bold")
+    ax.text(0.2, 6.48, "Each PE multiplies one INT8 weight and activation, then accumulates into an INT32 output.", fontsize=8.5, color=COLORS["muted"])
 
-pe_w, pe_h = 1.4, 1.0
-grid_x0, grid_y0 = 2.5, 2.5
+    box(ax, 3.05, 4.75, 3.9, 0.72, "INT8 signed multiplier\nW[7:0] x D[7:0] -> P[15:0]", COLORS["blue"], COLORS["blue_edge"], fs=8.5)
+    box(ax, 3.05, 3.62, 3.9, 0.62, "Optional ReLU gate\napplied after accumulation path control", COLORS["red"], COLORS["red_edge"], fs=8)
+    box(ax, 3.05, 2.10, 3.9, 0.92, "INT32 accumulator\nacc <= acc + sign_extend(P)", COLORS["amber"], COLORS["amber_edge"], fs=8.5)
 
-for col in range(4):
-    for row in range(4):
-        x = grid_x0 + col * (pe_w + 0.2)
-        y = grid_y0 + (3 - row) * (pe_h + 0.2)
-        color = '#E8F5E9' if (col + row) % 2 == 0 else '#C8E6C9'
-        draw_block(ax, x, y, pe_w, pe_h, f'PE{row},{col}', color, 8.5)
+    ax.text(4.98, 6.0, "Weight W", ha="center", fontsize=8.5, color=COLORS["blue_edge"], fontweight="bold")
+    arrow(ax, (4.98, 5.92), (4.98, 5.49), COLORS["blue_edge"])
+    ax.text(1.24, 5.06, "Activation D", ha="center", fontsize=8.5, color=COLORS["green_edge"], fontweight="bold")
+    arrow(ax, (1.92, 5.06), (3.02, 5.06), COLORS["green_edge"])
+    arrow(ax, (4.98, 4.73), (4.98, 4.27), COLORS["line"])
+    arrow(ax, (4.98, 3.59), (4.98, 3.05), COLORS["line"])
+    arrow(ax, (4.98, 2.08), (4.98, 1.33), COLORS["line"])
+    ax.text(4.98, 1.06, "Result (INT32)", ha="center", fontsize=8.5, fontweight="bold")
 
-# Weight inputs (top) → flow DOWN (position ABOVE grid, not inside top row)
-for col in range(4):
-    x = grid_x0 + col * (pe_w + 0.2) + pe_w/2
-    grid_top = grid_y0 + 4*(pe_h+0.2) - 0.2
-    draw_label(ax, x, grid_top + 0.35, f'W[{col}]', 7.5, '#1565C0')
-    draw_arrow(ax, x, grid_top + 0.05, x, grid_top - 0.05, '#1565C0', 0.8)
+    arrow(ax, (7.03, 2.58), (8.05, 3.5), COLORS["amber_edge"], rad=0.28)
+    arrow(ax, (8.05, 3.5), (6.95, 4.05), COLORS["amber_edge"], rad=0.25)
+    ax.text(8.24, 3.25, "feedback\nfor MAC", fontsize=7.5, color=COLORS["amber_edge"], ha="center")
 
-# Weight broadcast arrows (along left of each column)
-for col in range(4):
-    x = grid_x0 + col * (pe_w + 0.2) + pe_w + 0.08
-    y_top = grid_y0 + 3*(pe_h+0.2) + pe_h
-    draw_arrow(ax, x, y_top, x, grid_y0 - 0.1, '#1565C0', 0.4, '-')
+    box(ax, 0.62, 2.0, 1.75, 1.08, "Control\nacc_clr\nen_relu\nen", "#F8FAFC", COLORS["gray_edge"], fs=8, weight="normal")
+    arrow(ax, (2.38, 2.55), (3.02, 2.55), COLORS["gray_edge"])
 
-# Activation inputs (left) → flow RIGHT
-for row in range(4):
-    y = grid_y0 + (3 - row) * (pe_h + 0.2) + pe_h/2
-    draw_label(ax, grid_x0 - 1.2, y, f'D[{row}]', 8, '#2E7D32')
-    draw_arrow(ax, grid_x0 - 0.3, y, grid_x0 - 0.05, y, '#2E7D32', 0.8)
+    out = os.path.join(FIG_DIR, "fig3_3_pe_microarchitecture.png")
+    fig.savefig(out, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    print(f"  saved {out}")
 
-# Activation flow arrows
-for row in range(4):
-    y = grid_y0 + (3 - row) * (pe_h + 0.2) + pe_h + 0.08
-    draw_arrow(ax, grid_x0 - 0.1, y, grid_x0 + 4*(pe_w+0.2), y, '#2E7D32', 0.4, '-')
 
-# Results → Tree adder
-tree_x = grid_x0 + 4*(pe_w+0.2) + 1.5
-tree_y = grid_y0 + 1.5*(pe_h+0.2)
-for col in range(4):
-    x = grid_x0 + col * (pe_w + 0.2) + pe_w/2
-    draw_arrow(ax, x, grid_y0 - 0.1, x, grid_y0 - 0.5, '#37474F', 0.6)
-    ax.plot([x, tree_x - 0.5], [grid_y0 - 0.5, grid_y0 - 0.5], '-', lw=0.4, color='#78909C')
-    ax.plot([tree_x - 0.5, tree_x - 0.5], [grid_y0 - 0.5, tree_y + 0.7], '-', lw=0.4, color='#78909C')
+def fig3_4_pe_array():
+    fig, ax = setup_ax(figsize=(8.2, 5.4), xlim=(0, 12), ylim=(0, 7.4))
 
-draw_block(ax, tree_x - 0.8, tree_y, 1.6, 0.7, 'Tree\nAdder', '#FFF3E0', 7.5)
-draw_arrow(ax, tree_x, tree_y, tree_x, tree_y - 0.5, '#37474F', 1.0)
-draw_label(ax, tree_x, tree_y - 0.7, 'Result (INT32)', 8, '#263238')
+    ax.text(0.2, 7.0, "4x4 Systolic PE Array", fontsize=15, fontweight="bold")
+    ax.text(0.2, 6.66, "Four WLOAD and four DLOAD instructions populate the array before COMP triggers parallel MACs.", fontsize=8.5, color=COLORS["muted"])
 
-draw_label(ax, 6, 8.2, '4×4 Systolic Processing Element Array', 10, '#263238')
-draw_label(ax, 6, 7.85, 'Output-Stationary Dataflow', 7.5, '#546E7A')
+    gx, gy = 3.05, 1.9
+    w, h, gap = 1.15, 0.72, 0.22
+    for r in range(4):
+        for c in range(4):
+            x = gx + c * (w + gap)
+            y = gy + (3 - r) * (h + gap)
+            fc = "#F8FFFB" if (r + c) % 2 else COLORS["green"]
+            box(ax, x, y, w, h, f"PE{r},{c}", fc, COLORS["green_edge"], fs=8)
 
-plt.tight_layout()
-out = os.path.join(FIG_DIR, 'fig3_4_pe_array.png')
-plt.savefig(out, bbox_inches='tight', dpi=200)
-plt.close()
-print(f"  Saved: {out}")
+    for c in range(4):
+        x = gx + c * (w + gap) + w / 2
+        ax.text(x, 6.02, f"W{c}", ha="center", fontsize=8.5, color=COLORS["blue_edge"], fontweight="bold")
+        arrow(ax, (x, 5.78), (x, 5.38), COLORS["blue_edge"])
+        ax.plot([x, x], [1.74, 5.34], color=COLORS["blue_edge"], linewidth=0.8, alpha=0.65)
 
-print("\nAll 3 diagrams regenerated!")
+    for r in range(4):
+        y = gy + (3 - r) * (h + gap) + h / 2
+        ax.text(1.82, y, f"D{r}", ha="center", va="center", fontsize=8.5, color=COLORS["green_edge"], fontweight="bold")
+        arrow(ax, (2.14, y), (2.98, y), COLORS["green_edge"])
+        ax.plot([2.98, 8.6], [y, y], color=COLORS["green_edge"], linewidth=0.8, alpha=0.6)
+
+    box(ax, 9.0, 2.88, 1.55, 1.05, "tree\nadder", COLORS["amber"], COLORS["amber_edge"], fs=8.5)
+    for c in range(4):
+        x = gx + c * (w + gap) + w / 2
+        ax.plot([x, x, 8.85], [1.78, 1.35 + c * 0.18, 3.40], color=COLORS["line"], linewidth=0.55, alpha=0.75)
+    arrow(ax, (10.55, 3.40), (11.28, 3.40), COLORS["line"])
+    ax.text(11.34, 3.40, "RSTAT", va="center", fontsize=8.5, fontweight="bold")
+
+    box(ax, 0.65, 4.75, 1.75, 0.78, "WLOAD x4\ncolumns", "#F8FBFF", COLORS["blue_edge"], fs=8, weight="normal")
+    box(ax, 0.65, 1.50, 1.75, 0.78, "DLOAD x4\nrows", "#FBFFFC", COLORS["green_edge"], fs=8, weight="normal")
+    box(ax, 8.75, 4.92, 2.2, 0.66, "Output-stationary\nINT32 accumulation", "#FFFDF7", COLORS["amber_edge"], fs=8, weight="normal")
+
+    out = os.path.join(FIG_DIR, "fig3_4_pe_array.png")
+    fig.savefig(out, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    print(f"  saved {out}")
+
+
+def main():
+    os.makedirs(FIG_DIR, exist_ok=True)
+    print("Generating academic block diagrams...")
+    fig3_1_soc_architecture()
+    fig3_3_pe_microarchitecture()
+    fig3_4_pe_array()
+    print("Done.")
+
+
+if __name__ == "__main__":
+    main()

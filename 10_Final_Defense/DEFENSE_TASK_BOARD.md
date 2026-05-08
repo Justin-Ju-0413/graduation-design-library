@@ -13,7 +13,7 @@ Current master roadmap:
 
 ### 2026-04-28 to 2026-05-05: Evidence Baseline
 
-- Status: In progress
+- Status: Done
 - Goal: Make sure every completed claim has evidence.
 - Output:
   - branch and commit table
@@ -23,22 +23,26 @@ Current master roadmap:
 
 ### 2026-05-06 to 2026-05-12: Board Runtime Evidence
 
-- Status: Not started
+- Status: Done
 - Goal: Collect hello_e203 and cnn_accel_demo board evidence if board access is available.
 - Output:
   - UART screenshots
   - LED record
   - ILA screenshots
   - benchmark table
+- Current evidence:
+  - `..\04_Experiments\Board_BringUp\2026-04-28_board_connection_check\hello_e203_board_artifacts\`
+  - `..\04_Experiments\Board_BringUp\2026-05-09_nice_rs2_fix_verification\`
+  - CNN v1 UART result: SW/HW/Expected all match, speedup 5.282x
 
 ### 2026-05-12 to 2026-05-18: Final PPT First Version
 
-- Status: Not started
+- Status: First draft created
 - Goal: Build the first complete final defense deck.
 - Output:
-  - first final PPT
-  - per-page script
-  - evidence package
+  - first final PPT: `..\05_Presentation\Final\FYP_Final_Defense_English_Draft.pptx`
+  - per-page speaker notes embedded in the PPTX
+  - evidence package: `Evidence_Package\EVIDENCE_INDEX.md`
 
 ### 2026-05-19 to 2026-05-24: Rehearsal and QA
 
@@ -52,7 +56,7 @@ Current master roadmap:
 
 ## Task 1: Final Storyline
 
-- Status: Not started
+- Status: First draft done
 - Goal: Lock the final narrative.
 - Output:
   - one-page defense storyline
@@ -61,7 +65,7 @@ Current master roadmap:
 
 ## Task 2: Final Slide Deck
 
-- Status: Not started
+- Status: First draft done
 - Goal: Build a complete defense deck.
 - Output:
   - final PPT
@@ -70,7 +74,7 @@ Current master roadmap:
 
 ## Task 3: Evidence Package
 
-- Status: Not started
+- Status: First draft done
 - Goal: Prepare screenshots, logs, diagrams, and branch records.
 - Output:
   - evidence folder

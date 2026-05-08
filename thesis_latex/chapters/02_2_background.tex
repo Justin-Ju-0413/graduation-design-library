@@ -170,7 +170,7 @@ Pipeline flushes are coordinated through the pipe\_flush\_req / pipe\_flush\_ack
 The Load/Store Unit (LSU, e203\_lsu.v) handles all data memory accesses—load and store instructions—initiated by the EXU. The LSU receives requests from the Address Generation Unit (AGU) within the EXU and translates them into ICB bus transactions.
 
 
-The LSU supports a single outstanding memory transaction at any time (E203\_LSU\_OUTS\_NUM = 1), which simplifies control logic at the cost of throughput. The LSU write-back interface returns loaded data and completion status to the EXU via signals including \texttt{lsu\_o\_wbck\_\-wdat[31:0]} and \texttt{lsu\_o\_wbck\_\-err}.
+The LSU supports one outstanding memory transaction at a time, configured by the E203 LSU outstanding-count parameter set to 1. This simplifies control logic at the cost of throughput. The LSU write-back interface returns loaded data and completion status to the EXU via signals such as \texttt{lsu\_o\_wbck\_\-wdat[31:0]} and \texttt{lsu\_o\_wbck\_\-err}.
 
 
 The E203 memory map is defined by compile-time configuration parameters in config.v:

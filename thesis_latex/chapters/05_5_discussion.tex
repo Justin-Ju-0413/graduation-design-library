@@ -24,7 +24,7 @@ The solution—a configurable-width hex format converter—highlights the import
 
 \subsection{ILA Probe Design Strategy}
 
-The initial ILA probe configuration monitored the ITCM-dedicated bus interface (ifu2itcm\_icb\_*), which was a natural choice given that the hello\_e203 program resides in ITCM. However, the CPU’s initial boot sequence begins in mask ROM (MROM), which is accessed through the BIU and system memory bus—not the ITCM interface. This mismatch caused the ILA to show no activity despite the CPU being active, leading to incorrect initial diagnosis.
+The initial ILA probe configuration monitored the ITCM-dedicated bus interface, which was a natural choice because the hello\_e203 program resides in ITCM. However, the CPU's initial boot sequence begins in mask ROM (MROM), accessed through the BIU and system memory bus rather than the ITCM interface. This mismatch caused the ILA to show no activity despite the CPU being active, leading to incorrect initial diagnosis.
 
 
 The lesson for future ILA-based debugging is to include probes on all major bus interfaces during initial bring-up, rather than optimizing for the expected operational path.
@@ -92,7 +92,7 @@ Build verification infrastructure first. The ILA probe system, simulation enviro
 Simulation is not optional for complex SoC bring-up. Even though the final target is FPGA hardware, the ability to reproduce board behavior in simulation was the single most important factor in resolving the boot failure.
 
 
-Document every configuration change. The interplay between E203\_\-FORCE\_\-BOOTROM\_\-BOOT, the prologue.tcl global defines, the fpga\_mem\_init.vh header, and the ITCM/DTCM hex file formats involved changes across multiple files in two repositories. Systematic documentation prevented confusion during iterative debugging.
+Document every configuration change. The interplay between the boot-ROM macro, the prologue.tcl global defines, the fpga\_mem\_init.vh header, and the ITCM/DTCM hex file formats involved changes across multiple files in two repositories. Systematic documentation prevented confusion during iterative debugging.
 
 
 Peripheral initialization order matters. The GPIO IOF configuration must precede UART initialization, and the UART baud rate divisor must be set before enabling the transmitter. These dependencies, while obvious in hindsight, caused several failed iterations when developing the NICE test program.

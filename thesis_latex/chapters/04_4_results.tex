@@ -166,7 +166,7 @@ probe1\_status & 0xd & sys\_rst\_n=1, mmcm\_locked=1 \\ \hline
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig4_1_ila_pc_trace.png}
-\caption{ILA capture showing PC progression during hello\_e203 execution on FPGA.}
+\caption{ILA capture from the hello\_e203 board run. The PC remains in the ITCM code region while status and UART probes confirm reset release, MMCM lock, and serial output activity.}
 \label{fig:4_1}
 \end{figure}
 
@@ -185,7 +185,7 @@ Four root causes were identified and resolved:
 Root Cause 1: Simulation DFF Clock Edge Issue In sirv\_gnrl\_dffs.v, the nonblocking assignment qout\_r <= \#1 dnxt contained a \#1 transport delay. Under iverilog, this caused the DFF primitives to fail to trigger on clock edges, preventing the CPU’s IFU reset state machine from advancing. Removing all \#1 delays resolved the issue for simulation.
 
 
-Root Cause 2: ITCM BRAM Initialization Format (64-bit) The E203 ITCM uses 64-bit wide block RAM (\texttt{E203\_ITCM\_DATA\_WIDTH}=64). The \texttt{riscv64-unknown-elf-objcopy}~\mbox{\texttt{-O verilog}} command produces byte-level hex files (e.g., ``17 01 01 10’’), but Vivado’s \texttt{\$readmemh} interprets each whitespace-separated token as a full memory word. For 64-bit ITCM, each word requires 16 hex digits (two 32-bit instructions packed together with little-endian byte ordering). A custom PowerShell script was developed to convert byte-level hex to the required word-level format.
+Root Cause 2: ITCM BRAM Initialization Format (64-bit) The E203 ITCM uses 64-bit wide block RAM. The objcopy command with the Verilog output option produces byte-level hex files, but Vivado's \texttt{\$readmemh} interprets each whitespace-separated token as a full memory word. For 64-bit ITCM, each word requires 16 hex digits: two 32-bit instructions packed with little-endian byte ordering. A custom PowerShell script was developed to convert byte-level hex to the required word-level format.
 
 
 Root Cause 3: DTCM BRAM Initialization Format (32-bit) The E203 DTCM uses 32-bit wide block RAM (\texttt{E203\_DTCM\_DATA\_WIDTH}=32), requiring 8 hex digits per word. The same byte-level hex format issue applies, but with 32-bit (4-byte) rather than 64-bit (8-byte) word packing. The conversion script supports configurable data width.
@@ -241,7 +241,7 @@ probe5\_nice\_hs & 0x4 & NICE handshake idle \\ \hline
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig4_2_ila_nice_activity.png}
-\caption{ILA capture showing CPU execution in the CNN program code region with active memory references. NICE CSR and handshake probes show idle state, indicating the capture window precedes the NICE instruction burst.}
+\caption{ILA capture from the CNN v1 board regression after the NICE rs2 fix. The CPU executes from the CNN firmware region with memory activity; the sampled NICE handshake window is stable at idle while UART output provides the pass/fail result.}
 \label{fig:4_2}
 \end{figure}
 
@@ -275,7 +275,9 @@ For NICE-flagged instructions, rv32\_need\_rs2 is set directly from nice\_need\_
 
 \subsubsection{Verification}
 
-The fix was verified at three levels. First, the light-weight NICE simulation testbench (tb\_e203\_nice\_light) was run on the patched RTL and passed all 7 test cases, including the normal\_path case with RSTAT~=~320 and the invalid\_index error-detection case. Second, the full FPGA bitstream was rebuilt (cnn\_sysclk\_ila mode) and achieved timing closure with WNS~=~13.512~ns and zero unrouted nets. Third, the CNN v1 accelerator demo was executed on the Davinci Pro A7-100T board, producing UART output that confirmed hardware-software agreement (HW output: 12~23~0~19, matching both the software reference and expected values) and the same 5.282$\times$ speedup (287 vs.\ 1516~cycles) measured before the fix. The ILA re-capture confirmed stable NICE handshake behavior with no regressions~\cite{XILINX_UG908}.
+The fix was verified at three levels. First, the lightweight NICE simulation testbench (\texttt{tb\_e203\_nice\_light}) was run on the patched RTL and passed all 7 test cases, including the \texttt{normal\_path} case with RSTAT~=~320 and the invalid-index error-detection case. Second, the full FPGA bitstream was rebuilt in \texttt{cnn\_sysclk\_ila} mode and achieved timing closure with WNS~=~13.512~ns and zero unrouted nets.
+
+Third, the CNN v1 accelerator demo was executed on the Davinci Pro A7-100T board. The UART output confirmed hardware-software agreement (HW output: 12~23~0~19, matching the software reference and expected values) and the same 5.282$\times$ speedup (287 vs.\ 1516~cycles) measured before the fix. The ILA re-capture confirmed stable NICE handshake behavior with no regressions~\cite{XILINX_UG908}.
 
 \subsection{CNN Software Verification}\label{sec:4_5_3}
 
@@ -287,7 +289,7 @@ The 5$\times$5-to-4$\times$4 kernel tiling was verified through a CPU reference 
 
 \subsubsection{FPGA Deployment Status}
 
-On the FPGA platform, the NICE instruction execution sequence was confirmed via ILA probe traces: the CPU successfully executes the complete NICE instruction flow (CLEAR, WLOAD$\times$4, DLOAD$\times$4, COMP, RSTAT) and reaches the program completion state. The full LeNet-5 inference pipeline was deployed and tested on 10 MNIST test images.
+On the FPGA platform, ILA probe traces confirmed the NICE instruction execution sequence. The CPU executes CLEAR, four WLOADs, four DLOADs, COMP, and RSTAT before reaching program completion. The full LeNet-5 inference pipeline was deployed and tested on 10 MNIST test images.
 
 \begin{figure}[htbp]
 \centering
@@ -311,22 +313,22 @@ The NICE-accelerated convolution was benchmarked against a pure software referen
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/fig4_3_speedup_bar.png}
-\caption{NICE-accelerated convolution performance: 5.28$\times$ speedup over CPU-only software execution (1,516 vs. 287 clock cycles for a 3$\times$3 convolution on 4$\times$4 input).}
+\caption{Measured convolution benchmark on the board demo: the NICE accelerator completes the test convolution in 287 cycles versus 1,516 cycles for the CPU reference, giving a 5.282$\times$ speedup.}
 \label{fig:4_3}
 \end{figure}
 
-This measurement covers the convolution operation only (CLEAR + WLOAD$\times$4 + DLOAD$\times$4 + COMP + RSTAT). The overall LeNet-5 inference time is dominated by the software FC layers, which perform approximately 50,000 multiply-accumulate operations per image at 16 MHz. The complete inference time per image is approximately 2--5 minutes in the current implementation, indicating that future work should target hardware acceleration of the FC layers, adoption of a Line Buffer architecture for pipelined data supply (as specified in the original task requirements), or migration to a reduced-precision FC datapath.
+This measurement covers the convolution operation only: CLEAR, four WLOADs, four DLOADs, COMP, and RSTAT. The overall LeNet-5 inference time is dominated by the software FC layers, which perform approximately 50,000 multiply-accumulate operations per image at 16 MHz. The complete inference time per image is approximately 2--5 minutes in the current implementation, indicating that future work should target hardware acceleration of the FC layers, adoption of a Line Buffer architecture for pipelined data supply (as specified in the original task requirements), or migration to a reduced-precision FC datapath.
 
 The measured 5.28$\times$ speedup (Figure~\ref{fig:4_3}) meets the design target of $\geq$5$\times$ acceleration for convolution operations.
 
 \section{Resource Utilization}\label{sec:4_6}
 
-The FPGA resource utilization for the bootvec\_sysclk\_ila build is summarized in Table~\ref{tab:4_6} and Figure~\ref{fig:4_4} (post-implementation, xc7a100tfgg484-2).
+The FPGA resource utilization for the complete E203 SoC with the CNN NICE accelerator is summarized in Table~\ref{tab:4_6} and Figure~\ref{fig:4_4} (post-implementation, xc7a100tfgg484-2).
 
 
 \begin{table}[htbp]
 \centering
-\caption[FPGA resource utilization for the complete SoC]{FPGA resource utilization for the complete SoC (post-implementation, bootvec\_sysclk\_ila build)}
+\caption[FPGA resource utilization for the complete SoC]{FPGA resource utilization for the complete SoC with CNN NICE accelerator (post-implementation)}
 \label{tab:4_6}
 \begin{tabular}{lcccc}
 \hline
@@ -347,20 +349,20 @@ These figures demonstrate that the complete E203 SoC with CNN accelerator fits c
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.70\textwidth]{figures/fig4_4_resource_pie.png}
-\caption{FPGA resource utilization distribution for the complete E203 SoC with CNN NICE accelerator (post-placement).}
+\caption{FPGA resource utilization distribution for the complete E203 SoC with CNN NICE accelerator, showing that the implementation fits comfortably in the A7-100T device.}
 \label{fig:4_4}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/fig4_5_utilization.png}
-\caption{FPGA resource utilization bar chart for the complete E203 SoC with CNN NICE accelerator (post-placement).}
+\caption{FPGA utilization by resource type for the complete SoC. LUT, FF, BRAM, DSP, and clock-buffer usage leave headroom for future accelerator expansion.}
 \label{fig:4_5}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.80\textwidth]{figures/fig4_6_timing.png}
-\caption{Timing closure summary across FPGA build configurations showing all constraints met with positive slack.}
+\caption{Timing closure summary across diagnostic and CNN board build configurations; all recorded builds meet setup and hold timing with positive slack.}
 \label{fig:4_6}
 \end{figure}

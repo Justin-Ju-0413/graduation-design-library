@@ -168,13 +168,13 @@ if __name__ == "__main__":
 
     print("Generating thesis figures...")
     if os.path.exists(csv_path):
-        plot_ila_pc_trace(csv_path, os.path.join(FIG_DIR, "fig_ila_pc_trace.png"))
-        plot_ila_nice_activity(csv_path, os.path.join(FIG_DIR, "fig_ila_nice_activity.png"))
+        plot_ila_pc_trace(csv_path, os.path.join(FIG_DIR, "fig4_1_ila_pc_trace.png"))
+        plot_ila_nice_activity(csv_path, os.path.join(FIG_DIR, "fig4_2_ila_nice_activity.png"))
     else:
         print(f"  WARNING: CSV not found at {csv_path}")
 
-    plot_speedup_bar(os.path.join(FIG_DIR, "fig_speedup_bar.png"))
-    plot_verification_flow(os.path.join(FIG_DIR, "fig_verification_chain.png"))
+    plot_speedup_bar(os.path.join(FIG_DIR, "fig4_3_speedup_bar.png"))
+    plot_verification_flow(os.path.join(FIG_DIR, "fig3_7_verification_chain.png"))
 
     print(f"\nAll figures saved to: {FIG_DIR}")
     print("Figures ready to insert into thesis docx.")

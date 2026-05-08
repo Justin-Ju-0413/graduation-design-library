@@ -86,14 +86,17 @@ bash build.sh all
 
 ## Current Status (2026-05-08)
 
-**论文**: PDF 74页 (4.2MB), DOCX 3.9MB, 44引用, 编译通过
-**图表修复**: 交叉引用已添加, PDF/DOCX图表已统一, 严重overfull hbox已消除
-**Figure 4.2** (hello_e203 PC trace): 已添加ITCM Step Detail放大inset, PC步进可见
-**Figure 4.3** (NICE activity): PC Y轴已聚焦到0x80000000区域, 步进可见
+**论文**: PDF 74页 (3.5MB), DOCX 3.9MB, 44引用, 编译通过
+**数据修复 (2026-05-08)**: 全部图表数据已替换为真实来源，零合成数据
+**Figure 4.1** (hello_e203 ILA): 真实 CSV 数据 — hello_e203_board_artifacts PC/Status/MemAddr probe
+**Figure 4.2** (CNN program entry): 真实 CSV 数据 — cnn_sysclk_ila PC/DataPtr/MemStatus probe; NICE CSR/HS 窗口缺失已如实标注
+**Figure 4.4/4.5** (资源): 真实 Vivado utilization_placed.rpt 数据 — LUT 20.8%, FF 10.1%, BRAM 26.3%
 
-**Chapter 4 Figure 编号** (FPGA板子照片移入后已变化):
-- 4.1: FPGA板子照片 | 4.2: hello_e203 PC trace + ITCM inset | 4.3: NICE activity
-- 4.4: 资源饼图 | 4.5: 资源柱状图 | 4.6: 时序图 | UART输出图(无编号)
+### 图片产物管理
+
+**Single Source of Truth**: `thesis_latex/figures/MANIFEST.md`
+
+所有图片的元数据（Figure 编号、LaTeX label、Caption、来源脚本、生成命令、文件大小）统一在 MANIFEST.md 中维护。修改图片后必须同步更新 MANIFEST.md。
 
 **编译注意事项**:
 - 编译前关闭 WPS/PDF阅读器, 否则 xelatex 文件锁定失败

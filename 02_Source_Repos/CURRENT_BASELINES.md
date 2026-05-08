@@ -45,8 +45,9 @@ The current project status should always be described using the active baselines
 
 - local RTL regression closed
 - software-driven full-SoC regression closed
-- board-side environment advanced to bring-up
-- **NICE rs2 index capture bug fixed (2026-05-09)** — E203 decode RTL fix + software defense
+- hello_e203 board validation closed with UART and ILA evidence
+- CNN/NICE board demo closed for the recorded CNN v1 test
+- **NICE rs2 index capture bug fixed and board-verified (2026-05-09)**: E203 decode RTL fix + software defense + CNN v1 board regression
 
 ## Latest Board-Build Commit Pair
 
@@ -184,6 +185,12 @@ instructions always capture rs2 when nice_need_rs2=1.
 - Files changed:
   - `e203_hbirdv2/rtl/e203/core/e203_exu_decode.v` (RTL fix)
   - `riscv_cnn_accelerator/sw/inc/custom_insn.h` (software defense)
-- Verification pending:
-  - RTL simulation (iverilog standalone + full SoC)
-  - FPGA bitstream rebuild + board ILA capture
+- Verification completed:
+  - FPGA `cnn_sysclk_ila` bitstream rebuild passed timing
+  - Board programming passed on Davinci Pro A7-100T
+  - ILA capture completed with stable NICE handshake idle state
+  - UART reported SW/HW/Expected outputs all matching and `CNN v1 DEMO PASSED`
+- Evidence:
+  - `..\04_Experiments\Board_BringUp\2026-05-09_nice_rs2_fix_verification\BOARD_VERIFICATION.md`
+  - `..\04_Experiments\Board_BringUp\2026-05-09_nice_rs2_fix_verification\ila_summary.txt`
+  - `..\04_Experiments\Board_BringUp\2026-05-09_nice_rs2_fix_verification\uart_output.txt`

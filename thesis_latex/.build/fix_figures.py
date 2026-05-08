@@ -1,388 +1,416 @@
+"""Generate report-ready thesis figures from real project evidence.
+
+All measured values are taken from existing logs, CSV exports, or recorded
+board output. This script intentionally avoids random or synthetic data.
 """
-Fix 5 thesis figures — READABILITY FIRST.
-Large fonts, no overlap, proper proportions.
-"""
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-from matplotlib.patches import FancyBboxPatch
-import numpy as np
+from __future__ import annotations
+
+import csv
 import os
+from pathlib import Path
+from textwrap import wrap
 
-FIG_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FIG_DIR = os.path.join(FIG_DIR, "figures")
-os.makedirs(FIG_DIR, exist_ok=True)
+import matplotlib
 
-plt.rcParams.update({
-    'font.family': 'serif',
-    'font.size': 11,
-    'axes.titlesize': 13,
-    'axes.labelsize': 11,
-    'figure.dpi': 200,
-})
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import numpy as np
 
 
-# ============================================================
-# 1. fig3_2_instruction_format.png
-# ============================================================
+ROOT = Path(__file__).resolve().parents[1]
+LIB = ROOT.parent
+FIG_DIR = ROOT / "figures"
+BOARD_0428 = LIB / "04_Experiments" / "Board_BringUp" / "2026-04-28_board_connection_check"
+BOARD_0509 = LIB / "04_Experiments" / "Board_BringUp" / "2026-05-09_nice_rs2_fix_verification"
+
+INK = "#1F2933"
+MUTED = "#5B6773"
+GRID = "#CBD5E1"
+BLUE = "#2F6FB3"
+GREEN = "#23835A"
+AMBER = "#B7791F"
+RED = "#B42318"
+VIOLET = "#6B46C1"
+LIGHT_BLUE = "#D7E8FF"
+LIGHT_GREEN = "#DDF4E7"
+LIGHT_AMBER = "#FFF0C2"
+LIGHT_GRAY = "#EEF2F6"
+
+plt.rcParams.update(
+    {
+        "font.family": "DejaVu Serif",
+        "font.size": 10,
+        "axes.titlesize": 13,
+        "axes.labelsize": 10,
+        "figure.dpi": 220,
+        "savefig.dpi": 260,
+        "axes.edgecolor": "#94A3B8",
+        "axes.labelcolor": INK,
+        "xtick.color": INK,
+        "ytick.color": INK,
+    }
+)
+
+
+def save(fig, name: str):
+    out = FIG_DIR / name
+    fig.savefig(out, bbox_inches="tight", facecolor="white")
+    plt.close(fig)
+    print(f"  saved {out}")
+
+
+def load_ila_csv(path: Path):
+    rows = []
+    with path.open("r", encoding="utf-8") as f:
+        reader = csv.reader(f)
+        header = next(reader)
+        next(reader)
+        rows.extend(row for row in reader if len(row) >= 3)
+    samples = np.arange(len(rows))
+    probes = {h.split("[")[0].strip(): np.zeros(len(rows), dtype=np.int64) for h in header[3:]}
+    trigger_idx = -1
+    for i, row in enumerate(rows):
+        if row[2] == "1":
+            trigger_idx = i
+        for j, name in enumerate(probes.keys()):
+            probes[name][i] = int(row[3 + j], 16)
+    return samples, probes, trigger_idx
+
+
+def label_panel(ax, text, loc=(0.01, 0.94), color=INK):
+    ax.text(
+        loc[0],
+        loc[1],
+        text,
+        transform=ax.transAxes,
+        ha="left",
+        va="top",
+        fontsize=8.5,
+        color=color,
+        bbox=dict(facecolor="white", edgecolor="#CBD5E1", boxstyle="square,pad=0.25", alpha=0.95),
+    )
+
+
 def gen_fig3_2():
-    fig, ax = plt.subplots(figsize=(12, 3.2))
-    ax.set_xlim(0, 12)
-    ax.set_ylim(0, 3.2)
-    ax.axis('off')
+    fig, ax = plt.subplots(figsize=(10.2, 3.0))
+    ax.set_xlim(0, 32)
+    ax.set_ylim(0, 4)
+    ax.axis("off")
+    ax.text(0, 3.72, "RISC-V custom0 encoding used by the NICE accelerator", fontsize=14, fontweight="bold")
+    ax.text(0, 3.38, "Instruction identity is carried by funct7; bits [14:12] are interpreted as xd/xs1/xs2 control flags.", fontsize=8.8, color=MUTED)
 
-    # More saturated colors + darker border
     fields = [
-        (31, 25, 'funct7', '#BBDEFB'),
-        (24, 20, 'rs2', '#A5D6A7'),
-        (19, 15, 'rs1', '#A5D6A7'),
-        (14, 12, '{xd, xs1, xs2}\nfunct3 repurposed', '#FFE0B2'),
-        (11, 7, 'rd', '#A5D6A7'),
-        (6, 0, 'opcode\n0x0B (custom0)', '#EF9A9A'),
+        (31, 25, "funct7\ninstruction ID", LIGHT_BLUE, BLUE),
+        (24, 20, "rs2\nindex/data", LIGHT_GREEN, GREEN),
+        (19, 15, "rs1\ndata", LIGHT_GREEN, GREEN),
+        (14, 12, "xd xs1 xs2\nNICE flags", LIGHT_AMBER, AMBER),
+        (11, 7, "rd\nresult", LIGHT_GREEN, GREEN),
+        (6, 0, "opcode\ncustom0=0x0B", "#FDE2E2", RED),
     ]
+    y, h = 1.25, 1.4
+    for msb, lsb, label, fc, ec in fields:
+        x = lsb
+        w = msb - lsb + 1
+        ax.add_patch(patches.Rectangle((x, y), w, h, facecolor=fc, edgecolor=ec, linewidth=1.5))
+        ax.text(x + w / 2, y + h / 2 + 0.12, label, ha="center", va="center", fontsize=8.4, fontweight="bold")
+        ax.text(x + w / 2, y - 0.20, f"[{msb}:{lsb}]", ha="center", va="top", fontsize=8, color=MUTED)
+    ax.set_xlim(32, 0)
+    ax.text(16, 0.28, "xs2=1 forces rs2 capture for WLOAD/DLOAD, including index 0 after the decoder fix.", ha="center", fontsize=8.6, color=RED)
+    save(fig, "fig3_2_instruction_format.png")
 
-    bar_y, bar_h = 0.6, 1.6
-    x_scale = 12.0 / 32.0
 
-    for msb, lsb, label, color in fields:
-        x = (31 - msb) * x_scale
-        w = (msb - lsb + 1) * x_scale
-        # Sharp rectangle — no round corners
-        rect = FancyBboxPatch((x, bar_y), w, bar_h,
-                              boxstyle="square,pad=0",
-                              facecolor=color, edgecolor='#222222', linewidth=1.5)
-        ax.add_patch(rect)
-
-        lines = label.split('\n')
-        if len(lines) == 2:
-            # Two-line field label
-            ax.text(x + w/2, bar_y + bar_h/2 + 0.20, lines[0], ha='center', va='center',
-                    fontsize=9, fontweight='bold')
-            ax.text(x + w/2, bar_y + bar_h/2 - 0.05, lines[1], ha='center', va='center',
-                    fontsize=7.5, color='#333333')
+def gen_fig3_2b_instruction_table():
+    rows = [
+        ("CFG", "0x0A00100B", "funct7=5", "rs1=config", "Set ReLU/config"),
+        ("CLEAR", "0x0800000B", "funct7=4", "-", "Clear accumulators"),
+        ("WLOAD", "0x0001800B", "funct7=0", "rs1=data, rs2=index", "Load one weight column"),
+        ("DLOAD", "0x0201800B", "funct7=1", "rs1=data, rs2=index", "Load one activation row"),
+        ("COMP", "0x0400000B", "funct7=2", "-", "Start 4x4 MAC"),
+        ("RSTAT", "0x0600250B", "funct7=3", "rd=result", "Read result/status"),
+    ]
+    fig, ax = plt.subplots(figsize=(10.2, 4.4))
+    ax.axis("off")
+    ax.text(0.0, 1.04, "NICE custom instruction set", transform=ax.transAxes, fontsize=14, fontweight="bold")
+    ax.text(0.0, 0.985, "Six custom0 instructions expose configuration, data loading, compute, and readback.", transform=ax.transAxes, fontsize=8.8, color=MUTED)
+    table = ax.table(
+        cellText=rows,
+        colLabels=["Instruction", "Encoding", "Selector", "Operands", "Role"],
+        cellLoc="left",
+        colLoc="left",
+        colWidths=[0.14, 0.19, 0.17, 0.24, 0.26],
+        bbox=[0, 0, 1, 0.90],
+    )
+    table.auto_set_font_size(False)
+    table.set_fontsize(8.8)
+    for (r, c), cell in table.get_celld().items():
+        cell.set_edgecolor("#CBD5E1")
+        cell.set_linewidth(0.7)
+        if r == 0:
+            cell.set_facecolor("#E2E8F0")
+            cell.set_text_props(fontweight="bold", color=INK)
+        elif r in (3, 4):
+            cell.set_facecolor("#F7FCFA")
         else:
-            # Single-line field label
-            ax.text(x + w/2, bar_y + bar_h/2 + 0.10, label, ha='center', va='center',
-                    fontsize=10, fontweight='bold')
-
-        # Bit-range label below field label
-        bit_range_y = bar_y + bar_h/2 - 0.35 if len(lines) == 1 else bar_y + bar_h/2 - 0.40
-        ax.text(x + w/2, bit_range_y, f'[{msb}:{lsb}]',
-                ha='center', fontsize=9, color='#333333')
-
-    # Bit numbers + tick marks below bar at every 4th bit
-    for i in range(0, 32, 4):
-        cx = (31 - i) * x_scale + x_scale / 2
-        ax.text(cx, bar_y - 0.30, str(i), ha='center', fontsize=9, color='#333333')
-        # Major tick at left edge of this bit
-        tick_x = (31 - i) * x_scale
-        ax.plot([tick_x, tick_x], [bar_y - 0.05, bar_y - 0.20],
-                color='#333333', lw=1.2)
-
-    # Extra left edge tick (bit 31 boundary)
-    ax.plot([0, 0], [bar_y - 0.05, bar_y - 0.20], color='#333333', lw=1.2)
-
-    # Minor ticks at every bit boundary (skip positions already marked by major ticks)
-    for bit in range(1, 32):
-        tick_x = (31 - bit) * x_scale
-        if bit % 4 != 0:
-            ax.plot([tick_x, tick_x], [bar_y - 0.05, bar_y - 0.10],
-                    color='#999999', lw=0.5)
-
-    # Dashed line connecting {xd,xs1,xs2} field to annotation box
-    xd_cx = (31 - 14) * x_scale + (14 - 12 + 1) * x_scale / 2
-    ax.plot([xd_cx, xd_cx], [bar_y, 0.24],
-            dashes=[3, 2], color='#C62828', lw=1.0)
-
-    # Legend notes
-    notes = "xd=1: write rd   |   xs1=1: read rs1   |   xs2=1: read rs2"
-    ax.text(6, 0.1, notes, ha='center', fontsize=8,
-            color='#C62828', style='italic',
-            bbox=dict(boxstyle='round', facecolor='#FFF9C4', edgecolor='#AAAAAA', alpha=0.9))
-
-    plt.tight_layout(pad=0.3)
-    out = os.path.join(FIG_DIR, 'fig3_2_instruction_format.png')
-    fig.savefig(out, bbox_inches='tight', dpi=200)
-    plt.close(fig)
-    print(f"  [1/5] {out}")
+            cell.set_facecolor("white")
+        if c == 0 and r > 0:
+            cell.set_text_props(fontweight="bold", color=BLUE)
+    save(fig, "fig3_2b_instruction_table.png")
 
 
-# ============================================================
-# 2. fig_ila_pc_trace.png
-# ============================================================
 def gen_ila_pc_trace():
-    from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
+    samples, probes, trigger_idx = load_ila_csv(BOARD_0428 / "hello_e203_board_artifacts" / "ila_capture.csv")
+    pc = probes["probe0_pc"]
+    status = probes["probe1_status"]
+    uart = probes["probe5_uart"]
 
-    np.random.seed(42)
-    n = 1024
-    samples = np.arange(n)
+    fig, axes = plt.subplots(3, 1, figsize=(11.2, 6.0), sharex=True, gridspec_kw={"height_ratios": [1.7, 1, 1]})
+    fig.suptitle("hello_e203 board execution observed by ILA", x=0.02, y=0.995, ha="left", fontsize=14, fontweight="bold")
+    axes[0].plot(samples, pc, color=BLUE, linewidth=1.0, drawstyle="steps-post")
+    axes[0].set_ylabel("PC")
+    axes[0].yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"0x{int(v):08X}"))
+    axes[0].set_yticks([pc.min(), pc.max()])
+    axes[0].grid(True, color=GRID, alpha=0.35)
+    label_panel(axes[0], "PC stays in ITCM code region\n0x800000a0-0x800000be", color=BLUE)
 
-    pc = np.zeros(n, dtype=np.int64)
-    pc[:100] = 0x00001000
-    pc[100:200] = 0x80000000
-    # Step-wise PC progression (constant segments, not smooth ramps)
-    for seg_start, seg_end, pc_val in [
-        (200, 250, 0x800000a0), (250, 300, 0x800000a4), (300, 350, 0x800000a8),
-        (350, 400, 0x800000ac), (400, 450, 0x800000b0), (450, 500, 0x800000b4),
-        (500, 550, 0x800000b8), (550, 600, 0x800000bc), (600, 650, 0x800000c0),
-        (650, 700, 0x800000c4), (700, 750, 0x800000c8), (750, 800, 0x800000cc),
-    ]:
-        pc[seg_start:seg_end] = pc_val
-    pc[800:] = 0x80000078
+    axes[1].plot(samples, status, color=GREEN, linewidth=0.9, drawstyle="steps-post")
+    axes[1].set_ylabel("Status")
+    axes[1].set_yticks(sorted(set(int(x) for x in status)))
+    axes[1].grid(True, color=GRID, alpha=0.35)
+    label_panel(axes[1], "reset released + MMCM locked", color=GREEN)
 
-    status = np.zeros(n, dtype=int)
-    status[:30] = 0x0; status[30:60] = 0x8; status[60:] = 0xD
+    axes[2].plot(samples, uart, color=AMBER, linewidth=0.9, drawstyle="steps-post")
+    axes[2].set_ylabel("UART")
+    axes[2].set_xlabel("Sample index (50 MHz ILA clock)")
+    axes[2].grid(True, color=GRID, alpha=0.35)
+    label_panel(axes[2], "UART TX activity detected", color=AMBER)
 
-    uart = np.full(n, 0xF, dtype=int)
-    for burst_start in [350, 500, 650]:
-        for bit_idx in range(20):
-            pos = burst_start + bit_idx * 3
-            if pos < n: uart[pos] = 0x7
-
-    membus = np.zeros(n, dtype=int)
-    for region in [(200, 400), (400, 600), (600, 800)]:
-        membus[region[0]:region[1]] = 1
-
-    fig, axes = plt.subplots(4, 1, figsize=(12, 7.5), sharex=True,
-                              gridspec_kw={'height_ratios': [1.8, 1, 1, 1]})
-
-    colors = ['#1565C0', '#2E7D32', '#E65100', '#7B1FA2']
-    titles = ['PC', 'Status', 'UART TX', 'Memory Bus']
-    data_list = [pc, status, uart, membus]
-
-    for ax, data, color, title in zip(axes, data_list, colors, titles):
-        ax.plot(samples, data, color=color, linewidth=0.8, drawstyle='steps-post', alpha=0.9)
-        ax.set_ylabel(title, fontsize=10, fontweight='bold')
-        ax.grid(True, alpha=0.15)
-        ax.set_ylim(data.min() - 0.5, data.max() * 1.05 + 0.5)
-        ax.tick_params(labelsize=8)
-
-    # Fix PC Y-axis to hex
-    axes[0].yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f'0x{int(v):08X}'))
-    axes[0].tick_params(labelsize=7)
-
-    # Trigger line
-    for ax in axes:
-        ax.axvline(x=100, color='red', linestyle='--', linewidth=1.0, alpha=0.5)
-
-    # Annotations
-    y_top = pc.max() * 1.02
-    axes[0].annotate('MROM\n0x00001000', xy=(50, 0x00001000), fontsize=7.5, color='#333',
-                     xytext=(10, y_top * 0.82), ha='left',
-                     arrowprops=dict(arrowstyle='->', color='#666', lw=1.0))
-    axes[0].annotate('ITCM Jump\n0x80000000', xy=(150, 0x80000000), fontsize=7.5, color='#333',
-                     xytext=(250, y_top * 0.82), ha='center',
-                     arrowprops=dict(arrowstyle='->', color='#666', lw=1.0))
-    axes[0].annotate('hello_e203\nExecution', xy=(500, 0x800000c0), fontsize=7.5, color='#333',
-                     xytext=(550, y_top * 0.65), ha='center',
-                     arrowprops=dict(arrowstyle='->', color='#666', lw=1.0))
-    axes[0].annotate('Done Loop\n0x80000078', xy=(900, 0x80000078), fontsize=7.5, color='#333',
-                     xytext=(900, y_top * 0.50), ha='center',
-                     arrowprops=dict(arrowstyle='->', color='#666', lw=1.0))
-
-    # ---- Zoomed inset: ITCM execution detail ----
-    axins = zoomed_inset_axes(axes[0], zoom=12, loc='lower right',
-                               bbox_to_anchor=(1.02, 0.45),
-                               bbox_transform=axes[0].transAxes)
-    axins.plot(samples, pc, color='#1565C0', linewidth=0.8, drawstyle='steps-post', alpha=0.9)
-    axins.set_xlim(90, 900)
-    axins.set_ylim(0x80000070, 0x800000d0)
-    axins.yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f'0x{int(v):08X}'))
-    axins.tick_params(labelsize=6, pad=1)
-    axins.grid(True, alpha=0.2)
-    axins.axvline(x=100, color='red', linestyle='--', linewidth=0.6, alpha=0.4)
-
-    # Draw a box and connector lines
-    mark_inset(axes[0], axins, loc1=1, loc2=3, fc='none', ec='#E65100', lw=1.0, linestyle='--')
-    axins.set_title('ITCM Step Detail', fontsize=7, fontweight='bold', color='#E65100', pad=2)
-
-    axes[0].set_title('ILA Capture: CPU Boot Sequence (PC Progression)', fontsize=13, fontweight='bold')
-    axes[-1].set_xlabel('Sample', fontsize=10)
-
-    plt.tight_layout()
-    out = os.path.join(FIG_DIR, 'fig_ila_pc_trace.png')
-    fig.savefig(out, bbox_inches='tight', dpi=200)
-    plt.close(fig)
-    print(f"  [2/5] {out}")
+    if trigger_idx >= 0:
+        for ax in axes:
+            ax.axvline(trigger_idx, color=RED, linestyle="--", linewidth=1.0, alpha=0.8)
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
+    save(fig, "fig4_1_ila_pc_trace.png")
 
 
-# ============================================================
-# 3. fig_ila_nice_activity.png
-# ============================================================
 def gen_ila_nice_activity():
-    np.random.seed(43)
-    n = 1024
-    samples = np.arange(n)
+    samples, probes, trigger_idx = load_ila_csv(BOARD_0509 / "ila_capture.csv")
+    pc = probes["probe0_pc"]
+    mem = probes["probe3_pc_activity"]
+    nice_hs = probes["probe5_nice_hs"]
+    mem_status = probes["probe6_mem_status"]
 
-    pc_base = np.zeros(n, dtype=np.int64)
-    # Step-wise PC: constant per instruction, no smooth ramps
-    regions = [
-        (0, 100, 0x80000000), (100, 200, 0x80000004), (200, 300, 0x80000008),
-        (300, 400, 0x8000000c), (400, 500, 0x80000010), (500, 600, 0x80000014),
-        (600, 700, 0x80000018), (700, 800, 0x8000001c), (800, 850, 0x80000020),
-        (850, 900, 0x80000024), (900, 950, 0x80000028), (950, 1024, 0x8000002c),
-    ]
-    for start, end, pc_val in regions:
-        pc_base[start:end] = pc_val
+    fig, axes = plt.subplots(4, 1, figsize=(11.2, 7.2), sharex=True, gridspec_kw={"height_ratios": [1.45, 1.0, 0.9, 0.9]})
+    fig.suptitle("CNN v1 board regression after NICE rs2 decoder fix", x=0.02, y=0.995, ha="left", fontsize=14, fontweight="bold")
+    axes[0].plot(samples, pc, color=BLUE, linewidth=0.8, drawstyle="steps-post")
+    axes[0].set_ylabel("PC")
+    axes[0].set_yticks([pc.min(), pc.max()])
+    axes[0].yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"0x{int(v):08X}"))
+    axes[0].grid(True, color=GRID, alpha=0.35)
+    label_panel(axes[0], "CPU executes CNN firmware in ITCM", color=BLUE)
 
-    nice_csr = np.zeros(n, dtype=int)
-    for instr_start in [200, 300, 400, 500, 600, 700, 800, 850, 900]:
-        nice_csr[instr_start:instr_start+20] = 0x050
+    axes[1].plot(samples, mem, color=AMBER, linewidth=0.8, drawstyle="steps-post")
+    axes[1].set_ylabel("Mem ref")
+    axes[1].yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f"0x{int(v):08X}"))
+    axes[1].grid(True, color=GRID, alpha=0.35)
+    label_panel(axes[1], "memory activity continues through the run", color=AMBER)
 
-    nice_hs = np.full(n, 0x4, dtype=int)
-    for instr_start in [100, 200, 300, 400, 500, 600, 700, 800, 850, 900, 950]:
-        nice_hs[instr_start:instr_start+3] = 0x5
-        nice_hs[instr_start+20:instr_start+23] = 0x5
+    axes[2].plot(samples, nice_hs, color=VIOLET, linewidth=0.9, drawstyle="steps-post")
+    axes[2].set_ylabel("NICE HS")
+    axes[2].set_yticks(sorted(set(int(x) for x in nice_hs)))
+    axes[2].grid(True, color=GRID, alpha=0.35)
+    label_panel(axes[2], "capture window shows stable idle handshake", color=VIOLET)
 
-    liveness = np.ones(n) * 0.5 + np.random.normal(0, 0.1, n) * 10
+    axes[3].plot(samples, mem_status, color=GREEN, linewidth=0.9, drawstyle="steps-post")
+    axes[3].set_ylabel("Bus")
+    axes[3].set_xlabel("Sample index (50 MHz ILA clock)")
+    axes[3].set_yticks(sorted(set(int(x) for x in mem_status)))
+    axes[3].grid(True, color=GRID, alpha=0.35)
+    label_panel(axes[3], "board run verified by UART output", color=GREEN)
 
-    fig, axes = plt.subplots(4, 1, figsize=(12, 7), sharex=True,
-                              gridspec_kw={'height_ratios': [1.4, 1, 1, 1]})
-
-    axes[0].plot(samples, pc_base, '#1565C0', linewidth=0.8, drawstyle='steps-post')
-    axes[0].set_ylabel('PC', fontsize=10, fontweight='bold')
-    axes[0].grid(True, alpha=0.15)
-    axes[0].yaxis.set_major_formatter(plt.FuncFormatter(lambda v, _: f'0x{int(v):08X}'))
-    axes[0].tick_params(labelsize=7)
-
-    axes[1].plot(samples, nice_csr, '#E65100', linewidth=0.8, drawstyle='steps-post')
-    axes[1].set_ylabel('NICE CSR', fontsize=10, fontweight='bold')
-    axes[1].grid(True, alpha=0.15)
-    axes[1].tick_params(labelsize=8)
-
-    axes[2].plot(samples, nice_hs, '#2E7D32', linewidth=0.8, drawstyle='steps-post')
-    axes[2].set_ylabel('NICE HS', fontsize=10, fontweight='bold')
-    axes[2].grid(True, alpha=0.15)
-    axes[2].tick_params(labelsize=8)
-
-    axes[3].plot(samples, liveness, '#7B1FA2', linewidth=0.5, alpha=0.4)
-    axes[3].set_ylabel('Liveness', fontsize=10, fontweight='bold')
-    axes[3].grid(True, alpha=0.15)
-    axes[3].tick_params(labelsize=8)
-
-    # Zoom Y-axis to PC range so step-wise progression is visible
-    pc_min = 0x80000000 - 0x10
-    pc_max = 0x80000030
-    axes[0].set_ylim(pc_min, pc_max)
-
-    # Annotations — above the chart area to avoid overlap
-    instructions = ['CLEAR', 'WLOAD0', 'WLOAD1', 'WLOAD2', 'WLOAD3',
-                    'DLOAD0', 'DLOAD1', 'DLOAD2', 'DLOAD3', 'COMP', 'RSTAT']
-    centers = [150, 250, 350, 450, 550, 650, 750, 825, 875, 925, 987]
-    for name, cx in zip(instructions, centers):
-        axes[0].text(cx, pc_max - 4, name, fontsize=6.5, color='#C62828',
-                     ha='center', va='bottom', rotation=45)
-
-    # Trigger
-    for ax in axes:
-        ax.axvline(x=95, color='red', linestyle='--', linewidth=1.0, alpha=0.5)
-    axes[0].set_title('ILA Capture: NICE Accelerator Instruction Execution', fontsize=13, fontweight='bold')
-    axes[-1].set_xlabel('Sample', fontsize=10)
-
-    plt.tight_layout()
-    out = os.path.join(FIG_DIR, 'fig_ila_nice_activity.png')
-    fig.savefig(out, bbox_inches='tight', dpi=200)
-    plt.close(fig)
-    print(f"  [3/5] {out}")
+    if trigger_idx >= 0:
+        for ax in axes:
+            ax.axvline(trigger_idx, color=RED, linestyle="--", linewidth=1.0, alpha=0.8)
+    fig.tight_layout(rect=[0, 0, 1, 0.96])
+    save(fig, "fig4_2_ila_nice_activity.png")
 
 
-# ============================================================
-# 4. fig_timing.png — dual Y-axis
-# ============================================================
-def gen_timing():
-    builds = ['hb_mmcm_ila', 'soc_ila', 'bootdiag', 'bootvec', 'hello', 'cnn_ila']
-    wns = [13.887, 13.515, 13.337, 13.677, 14.204, 12.468]
-    whs = [0.061, 0.058, 0.039, 0.061, 0.060, 0.057]
-
-    fig, ax1 = plt.subplots(figsize=(10, 5.5))
-    x = np.arange(len(builds))
-    width = 0.35
-
-    bars1 = ax1.bar(x - width/2, wns, width, color='#1565C0', label='WNS (Setup Slack)', zorder=3)
-    ax1.set_ylabel('Setup Slack WNS (ns)', fontsize=12, color='#1565C0', fontweight='bold')
-    ax1.tick_params(axis='y', labelcolor='#1565C0', labelsize=10)
-    ax1.set_ylim(0, max(wns) * 1.30)
-
-    for bar, val in zip(bars1, wns):
-        ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.4,
-                f'{val:.3f}', ha='center', fontsize=10, fontweight='bold', color='#1565C0')
-
-    ax2 = ax1.twinx()
-    bars2 = ax2.bar(x + width/2, whs, width, color='#E65100', label='WHS (Hold Slack)', zorder=3)
-    ax2.set_ylabel('Hold Slack WHS (ns)', fontsize=12, color='#E65100', fontweight='bold')
-    ax2.tick_params(axis='y', labelcolor='#E65100', labelsize=10)
-    ax2.set_ylim(0, max(whs) * 2.5)
-
-    for bar, val in zip(bars2, whs):
-        ax2.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.003,
-                f'{val:.3f}', ha='center', fontsize=10, fontweight='bold', color='#E65100')
-
-    ax1.set_xticks(x)
-    ax1.set_xticklabels(builds, rotation=15, ha='right', fontsize=10)
-    ax1.grid(axis='y', alpha=0.15)
-
-    lines1, labels1 = ax1.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, fontsize=9, loc='upper left')
-
-    ax1.set_title('Timing Closure Across FPGA Build Configurations', fontsize=14, fontweight='bold')
-    ax1.text(0.98, 0.85, 'All builds:\n0 failing\nendpoints',
-            transform=ax1.transAxes, fontsize=10,
-            ha='right', va='top',
-            bbox=dict(boxstyle='round', facecolor='#E8F5E9', edgecolor='#4CAF50', alpha=0.9))
-
-    plt.tight_layout()
-    out = os.path.join(FIG_DIR, 'fig_timing.png')
-    fig.savefig(out, bbox_inches='tight', dpi=200)
-    plt.close(fig)
-    print(f"  [4/5] {out}")
-
-
-# ============================================================
-# 5. fig_speedup_bar.png
-# ============================================================
 def gen_speedup():
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 4.5))
-
-    methods = ['CPU Only\n(Software)', 'NICE Accelerator\n(Hardware)']
-    cycles = [1516, 287]
-    colors = ['#90A4AE', '#1565C0']
-
-    bars = ax1.bar(methods, cycles, color=colors, width=0.5, edgecolor='white', linewidth=1.5)
-    ax1.set_ylabel('Clock Cycles', fontsize=10)
-    ax1.set_title('3x3 Convolution on 4x4 Input', fontsize=12, fontweight='bold')
-    for bar, val in zip(bars, cycles):
-        ax1.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 45,
-                 str(val), ha='center', fontsize=14, fontweight='bold', color='#333333')
-    ax1.set_ylim(0, max(cycles) * 1.35)
-    ax1.grid(axis='y', alpha=0.15)
-    ax1.tick_params(labelsize=10)
-
-    bar2 = ax2.bar(['NICE vs CPU'], [5.28], color='#1565C0', width=0.25, edgecolor='white', linewidth=1.5)
-    ax2.axhline(y=1.0, color='#333333', linestyle='--', linewidth=1.5, alpha=0.8)
-    ax2.text(0.22, 1.20, '1.0x (CPU baseline)', fontsize=10, color='#333333', va='bottom', fontweight='bold')
-    ax2.set_ylabel('Speedup Ratio', fontsize=10)
-    ax2.set_title('Acceleration', fontsize=12, fontweight='bold')
-    ax2.text(0, 5.28 + 0.20, '5.28x', ha='center', fontsize=16, fontweight='bold', color='#0D47A1')
-    ax2.set_ylim(0, 7.0)
-    ax2.grid(axis='y', alpha=0.15)
-    ax2.tick_params(labelsize=10)
-    ax2.set_xticklabels([''])
-
-    fig.suptitle('CNN Accelerator Performance Speedup', fontsize=14, fontweight='bold', y=1.02)
-    plt.tight_layout()
-    out = os.path.join(FIG_DIR, 'fig_speedup_bar.png')
-    fig.savefig(out, bbox_inches='tight', dpi=200)
-    plt.close(fig)
-    print(f"  [5/5] {out}")
+    fig, ax = plt.subplots(figsize=(8.0, 4.3))
+    labels = ["CPU reference", "NICE accelerator"]
+    values = [1516, 287]
+    bars = ax.bar(labels, values, color=["#94A3B8", BLUE], width=0.42)
+    ax.set_ylabel("Clock cycles")
+    ax.set_title("Convolution benchmark: 5.282x speedup", loc="left", fontsize=14, fontweight="bold")
+    ax.text(0.0, 1.02, "3x3 convolution on a 4x4 INT8 input; measured on the board demo.", transform=ax.transAxes, fontsize=8.8, color=MUTED)
+    for bar, val in zip(bars, values):
+        ax.text(bar.get_x() + bar.get_width() / 2, val + 45, f"{val:,}", ha="center", fontsize=11, fontweight="bold")
+    ax.annotate("5.282x faster", xy=(1, 287), xytext=(0.58, 1050), arrowprops=dict(arrowstyle="->", color=RED, lw=1.4), color=RED, fontsize=11, fontweight="bold")
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.grid(axis="y", color=GRID, alpha=0.35)
+    ax.set_ylim(0, 1750)
+    save(fig, "fig4_3_speedup_bar.png")
 
 
-if __name__ == '__main__':
-    print(f"Generating 5 thesis figures → {FIG_DIR}\n")
+def gen_resource_pie():
+    labels = ["LUT", "FF", "BRAM", "Other headroom"]
+    sizes = [20.8, 10.1, 26.3, 42.8]
+    colors = [BLUE, GREEN, AMBER, "#E2E8F0"]
+    fig, ax = plt.subplots(figsize=(6.8, 5.4))
+    wedges, texts, autotexts = ax.pie(
+        sizes,
+        colors=colors,
+        startangle=120,
+        counterclock=False,
+        autopct="%1.1f%%",
+        pctdistance=0.73,
+        wedgeprops=dict(width=0.42, edgecolor="white"),
+    )
+    ax.legend(wedges, labels, loc="center left", bbox_to_anchor=(0.98, 0.50), frameon=False, fontsize=9)
+    for t in autotexts:
+        t.set_fontsize(9)
+        t.set_fontweight("bold")
+        t.set_color(INK)
+    ax.text(0, 0.08, "A7-100T\nfit", ha="center", va="center", fontsize=18, fontweight="bold")
+    ax.text(0, -0.18, "post-placement", ha="center", va="center", fontsize=8.5, color=MUTED)
+    ax.set_title("Complete SoC resource footprint", loc="left", fontsize=14, fontweight="bold")
+    save(fig, "fig4_4_resource_pie.png")
+
+
+def gen_utilization():
+    resources = ["LUT", "LUTRAM", "FF", "BRAM", "DSP", "BUFG"]
+    pct = [20.8, 14.8, 10.1, 26.7, 0.0, 12.5]
+    used = ["13,187", "2,843", "12,807", "36", "0", "4"]
+    fig, ax = plt.subplots(figsize=(9.0, 4.8))
+    y = np.arange(len(resources))
+    bars = ax.barh(y, pct, color=[BLUE, BLUE, GREEN, AMBER, "#94A3B8", VIOLET], height=0.52)
+    ax.set_yticks(y)
+    ax.set_yticklabels(resources)
+    ax.invert_yaxis()
+    ax.set_xlim(0, 35)
+    ax.set_xlabel("Utilization (%)")
+    ax.set_title("FPGA utilization leaves headroom for future expansion", loc="left", fontsize=14, fontweight="bold")
+    ax.text(0.0, 1.02, "Post-implementation complete SoC on xc7a100tfgg484-2.", transform=ax.transAxes, fontsize=8.8, color=MUTED)
+    for bar, p, u in zip(bars, pct, used):
+        ax.text(max(p + 0.8, 1.0), bar.get_y() + bar.get_height() / 2, f"{p:.1f}%  ({u} used)", va="center", fontsize=9, fontweight="bold" if p > 0 else "normal")
+    ax.axvline(30, color=GRID, linestyle="--", linewidth=1.0)
+    ax.text(30.2, -0.55, "30% reference", fontsize=8, color=MUTED)
+    ax.spines[["top", "right", "left"]].set_visible(False)
+    ax.grid(axis="x", color=GRID, alpha=0.35)
+    save(fig, "fig4_5_utilization.png")
+
+
+def gen_timing():
+    builds = ["hb_mmcm", "soc_ila", "bootdiag", "bootvec", "hello", "cnn_ila"]
+    wns = [13.887, 13.515, 13.337, 13.677, 14.204, 13.512]
+    whs = [0.061, 0.058, 0.039, 0.061, 0.060, 0.056]
+    fig, ax = plt.subplots(figsize=(9.0, 4.8))
+    x = np.arange(len(builds))
+    ax.plot(x, wns, marker="o", color=BLUE, linewidth=2.0, label="WNS setup slack")
+    ax.set_ylabel("WNS (ns)", color=BLUE)
+    ax.tick_params(axis="y", labelcolor=BLUE)
+    ax.set_xticks(x)
+    ax.set_xticklabels(builds, rotation=15, ha="right")
+    ax.grid(axis="y", color=GRID, alpha=0.35)
+    ax2 = ax.twinx()
+    ax2.bar(x, whs, color=AMBER, alpha=0.35, width=0.42, label="WHS hold slack")
+    ax2.set_ylabel("WHS (ns)", color=AMBER)
+    ax2.tick_params(axis="y", labelcolor=AMBER)
+    for xi, val in zip(x, wns):
+        ax.text(xi, val + 0.18, f"{val:.2f}", ha="center", fontsize=8.2, color=BLUE)
+    ax.set_title("All FPGA build modes meet timing", loc="left", fontsize=14, fontweight="bold")
+    ax.text(0.0, 1.02, "Positive setup and hold slack across diagnostic and CNN board builds.", transform=ax.transAxes, fontsize=8.8, color=MUTED)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax2.spines[["top"]].set_visible(False)
+    save(fig, "fig4_6_timing.png")
+
+
+def gen_uart_output():
+    text_path = BOARD_0509 / "uart_output.txt"
+    lines = text_path.read_text(encoding="utf-8").strip().splitlines()
+    fig, ax = plt.subplots(figsize=(9.5, 5.2))
+    ax.axis("off")
+    ax.text(0.0, 1.02, "UART result summary: CNN v1 demo passed on FPGA", transform=ax.transAxes, fontsize=14, fontweight="bold")
+    ax.text(0.0, 0.965, "Rendered from recorded serial output; original terminal log is preserved in the evidence package.", transform=ax.transAxes, fontsize=8.8, color=MUTED)
+
+    ax.add_patch(patches.Rectangle((0.02, 0.12), 0.96, 0.75, transform=ax.transAxes, facecolor="#0B1220", edgecolor="#334155", linewidth=1.4))
+    y = 0.80
+    for line in lines:
+        color = "#D1FAE5" if "PASSED" in line else "#E5E7EB"
+        weight = "bold" if "PASSED" in line or "Speedup" in line or "HW output" in line else "normal"
+        if line.startswith("SW output") or line.startswith("HW output") or line.startswith("Expected"):
+            color = "#BFDBFE"
+        if line.startswith("Speedup"):
+            color = "#FDE68A"
+        ax.text(0.06, y, line, transform=ax.transAxes, fontfamily="DejaVu Sans Mono", fontsize=10.5, color=color, fontweight=weight)
+        y -= 0.055
+    ax.text(0.06, 0.065, "Key result: HW output = SW reference = expected values; measured speedup = 5.282x.", transform=ax.transAxes, fontsize=9.2, color=INK, fontweight="bold")
+    save(fig, "fig_uart_output.png")
+
+
+def gen_verification_chain():
+    fig, ax = plt.subplots(figsize=(10.5, 4.0))
+    ax.axis("off")
+    ax.text(0.0, 1.03, "Verification chain closed from RTL to board demo", transform=ax.transAxes, fontsize=14, fontweight="bold")
+    ax.text(0.0, 0.97, "Each stage is backed by a specific log, CSV capture, UART output, or commit pair.", transform=ax.transAxes, fontsize=8.8, color=MUTED)
+    stages = [
+        ("RTL", "NICE unit tests\npassed", BLUE),
+        ("Full-SoC", "SDK simulation\nclosed", BLUE),
+        ("hello_e203", "UART + ILA\nboard pass", GREEN),
+        ("CNN v1", "HW/SW match\n5.282x", GREEN),
+        ("rs2 fix", "decoder patch\nboard regression", RED),
+    ]
+    xs = np.linspace(0.09, 0.91, len(stages))
+    for i, (x, (title, body, color)) in enumerate(zip(xs, stages)):
+        ax.add_patch(patches.Circle((x, 0.56), 0.055, transform=ax.transAxes, facecolor=color, edgecolor="white", linewidth=2))
+        ax.text(x, 0.56, str(i + 1), transform=ax.transAxes, ha="center", va="center", color="white", fontweight="bold", fontsize=12)
+        ax.text(x, 0.38, title, transform=ax.transAxes, ha="center", va="center", fontsize=10.5, fontweight="bold")
+        ax.text(x, 0.26, body, transform=ax.transAxes, ha="center", va="center", fontsize=8.4, color=MUTED)
+        if i < len(stages) - 1:
+            ax.annotate("", xy=(xs[i + 1] - 0.06, 0.56), xytext=(x + 0.06, 0.56), xycoords=ax.transAxes, arrowprops=dict(arrowstyle="->", lw=1.5, color="#94A3B8"))
+    ax.text(0.5, 0.075, "Reporting line: completed results are separated from future work on FC acceleration and higher-frequency operation.", transform=ax.transAxes, ha="center", fontsize=8.6, color=INK)
+    save(fig, "fig3_7_verification_chain.png")
+
+
+def gen_build_pipeline():
+    fig, ax = plt.subplots(figsize=(10.2, 4.1))
+    ax.axis("off")
+    ax.text(0.0, 1.03, "Reproducible FPGA build pipeline", transform=ax.transAxes, fontsize=14, fontweight="bold")
+    ax.text(0.0, 0.97, "Software image, RTL, constraints, and ILA probes are assembled into a board-programmable bitstream.", transform=ax.transAxes, fontsize=8.8, color=MUTED)
+    stages = [
+        ("C / ASM\nfirmware", "ELF + map"),
+        ("Image\nconversion", "ITCM/DTCM\nword hex"),
+        ("RTL + NICE\nintegration", "E203 SoC\ncnn_nice_core"),
+        ("Vivado\nimplementation", "synth/place/route"),
+        ("Board\nprogramming", "system.bit\nsystem.ltx"),
+        ("Evidence\ncapture", "UART + ILA CSV"),
+    ]
+    xs = np.linspace(0.08, 0.92, len(stages))
+    for i, (x, (title, body)) in enumerate(zip(xs, stages)):
+        ax.add_patch(patches.Rectangle((x - 0.065, 0.42), 0.13, 0.25, transform=ax.transAxes, facecolor=[LIGHT_BLUE, LIGHT_AMBER, LIGHT_GREEN, LIGHT_GRAY, "#FDE2E2", "#E9E2FF"][i], edgecolor="#64748B", linewidth=1.2))
+        ax.text(x, 0.575, title, transform=ax.transAxes, ha="center", va="center", fontsize=8.5, fontweight="bold")
+        ax.text(x, 0.475, body, transform=ax.transAxes, ha="center", va="center", fontsize=7.6, color=MUTED)
+        if i < len(stages) - 1:
+            ax.annotate("", xy=(xs[i + 1] - 0.073, 0.545), xytext=(x + 0.073, 0.545), xycoords=ax.transAxes, arrowprops=dict(arrowstyle="->", lw=1.2, color="#64748B"))
+    ax.text(0.5, 0.20, "Diagnostic modes: soc_sysclk_ila, bootdiag, bootvec, hello, cnn_sysclk_ila", transform=ax.transAxes, ha="center", fontsize=8.6, color=INK)
+    save(fig, "fig3_6_build_pipeline.png")
+
+
+def main():
+    FIG_DIR.mkdir(parents=True, exist_ok=True)
+    print(f"Generating unified report figures into {FIG_DIR}")
     gen_fig3_2()
+    gen_fig3_2b_instruction_table()
+    gen_build_pipeline()
+    gen_verification_chain()
     gen_ila_pc_trace()
     gen_ila_nice_activity()
-    gen_timing()
+    gen_uart_output()
     gen_speedup()
-    print(f"\nDone. All 5 figures saved.")
+    gen_resource_pie()
+    gen_utilization()
+    gen_timing()
+    print("Done.")
+
+
+if __name__ == "__main__":
+    main()

@@ -6,7 +6,7 @@
 This project has successfully designed, implemented, and validated a lightweight CNN accelerator integrated with a RISC-V E203 processor~\cite{NUCLEI_E203} through the NICE custom instruction interface~\cite{NUCLEI_NICE} on an FPGA platform. The principal contributions are:
 
 
-CNN Accelerator Design: A 4×4 systolic PE array supporting INT8 quantized convolution was implemented with six custom NICE instructions (CFG, CLEAR, WLOAD, DLOAD, COMP, RSTAT). The design was verified through RTL simulation achieving correct RSTAT results for validated test vectors.
+CNN Accelerator Design: A 4$\times$4 systolic PE array supporting INT8 quantized convolution was implemented with six custom NICE instructions (CFG, CLEAR, WLOAD, DLOAD, COMP, RSTAT). The design was verified through RTL simulation achieving correct RSTAT results for validated test vectors.
 
 
 Complete FPGA Bring-up Pipeline: A reproducible build flow was established from RTL source through Vivado synthesis, place-and-route, and bitstream generation for the Davinci Pro A7-100T development board. Six ILA diagnostic build modes were created to support progressive hardware debugging. All builds achieved clean timing closure (WNS > 12 ns, WHS > 0.05 ns).
@@ -18,7 +18,7 @@ Hello World Board Validation: The hello\_e203 bare-metal program was successfull
 Systematic Root Cause Analysis: Four critical root causes preventing CPU boot were identified and resolved through a systematic ILA-based debugging methodology: simulation DFF transport delay, ITCM/DTCM hex format incompatibility, and macro visibility in Vivado synthesis. The simulation environment was demonstrated to exactly reproduce FPGA board behavior, enabling rapid diagnosis.
 
 
-NICE Accelerator Board Testing: Custom NICE test programs confirmed that the CNN accelerator instructions execute correctly on the FPGA, with ILA evidence documenting the complete instruction execution sequence. An end-to-end LeNet-5 inference pipeline was validated on the FPGA, achieving correct classification on all 10 of 10 MNIST test images, with 98.34\% accuracy on the full MNIST test set (10,000 images). The INT8-quantized inference accuracy is within 1.7\% of the FP32 baseline, well under the project's 5\% accuracy loss target.
+NICE Accelerator Board Testing: Custom NICE test programs confirmed that the CNN accelerator instructions execute correctly on the FPGA, with ILA evidence documenting CPU execution and memory activity. The final CNN v1 board regression shows hardware/software agreement for a 3$\times$3 INT8 convolution and reports a measured 5.282$\times$ speedup over the CPU reference.
 
 
 \section{Key Technical Findings}\label{sec:6_2}
@@ -29,10 +29,10 @@ The project yielded several findings of general relevance to RISC-V SoC prototyp
 ITCM/DTCM initialization format is a critical compatibility point between the RISC-V toolchain (objcopy -O verilog) and FPGA synthesis tools (\$readmemh). The byte-level hex format produced by objcopy is not directly compatible with word-level memory initialization for BRAM widths greater than 8 bits.
 
 
-Macro visibility in Vivado’s Verilog compilation differs from standard Verilog simulators. Macros defined in header files may not be visible to modules that do not explicitly include them, even when all files are compiled in the same project.
+Macro visibility in Vivado's Verilog compilation differs from standard Verilog simulators. Macros defined in header files may not be visible to modules that do not explicitly include them, even when all files are compiled in the same project.
 
 
-ILA probe placement requires understanding of the complete bus architecture. Monitoring only the expected operational path (ITCM interface) can miss activity during boot sequences that use different bus paths (BIU → system memory bus).
+ILA probe placement requires understanding of the complete bus architecture. Monitoring only the expected operational path (ITCM interface) can miss activity during boot sequences that use different bus paths (BIU to system memory bus).
 
 
 \section{Future Work}\label{sec:6_3}
@@ -43,7 +43,7 @@ Several directions for extending this work are identified:
 Hardware RSTAT Optimization: Optimize the multi-tile RSTAT readback path at the hardware level to reduce per-tile overhead, further improving convolution throughput for kernels larger than 4$\times$4.
 
 
-Accuracy Optimization: Explore quantization-aware training to close the remaining 1.7\% accuracy gap between the INT8 FPGA inference pipeline and the FP32 baseline.
+Accuracy Optimization: Complete a separately recorded full-network MNIST/LeNet-5 board validation flow, then explore quantization-aware training if the measured accuracy gap exceeds the project target.
 
 
 FC Layer Acceleration: Extend hardware acceleration to the fully-connected layers, which currently dominate end-to-end inference latency in software (approximately 50,000 MAC operations per image at 16 MHz).
@@ -60,5 +60,5 @@ Formal Verification: Apply formal verification methods to the NICE interface pro
 
 \section{Closing Remarks}\label{sec:6_4}
 
-This project has demonstrated that a RISC-V-based CNN accelerator can be successfully prototyped on a commercial FPGA development board using open-source RISC-V IP and standard FPGA design tools. The systematic debugging methodology developed during this work—combining ILA-based hardware observation, RTL simulation correlation, and progressive root cause isolation—provides a reusable framework for similar SoC bring-up efforts. The evidence chain established from RTL simulation through board-level UART output represents a complete and verifiable engineering contribution.
+This project has demonstrated that a RISC-V-based CNN accelerator can be successfully prototyped on a commercial FPGA development board using open-source RISC-V IP and standard FPGA design tools. The systematic debugging methodology developed during this work---combining ILA-based hardware observation, RTL simulation correlation, and progressive root cause isolation---provides a reusable framework for similar SoC bring-up efforts. The evidence chain established from RTL simulation through board-level UART output represents a complete and verifiable engineering contribution.
 

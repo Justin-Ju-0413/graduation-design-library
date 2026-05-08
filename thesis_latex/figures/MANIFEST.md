@@ -1,191 +1,86 @@
-# Figure Manifest — 产物清单（Single Source of Truth）
+# Thesis Figure Manifest
 
-> 所有图片数据均来自真实实验。无合成数据。  
-> 修改图片后必须更新此文件。
+This file is the figure asset source of truth. Report figures are regenerated
+from scripts and recorded project evidence; raw screenshots, UART logs, ILA CSV
+captures, and Vivado reports remain in the evidence package.
 
-## Chapter 3 — Methodology
+## Regeneration
 
-### Fig 3.1 — SoC Architecture
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_1_soc_architecture.png` |
-| **LaTeX label** | `fig:3_1` |
-| **来源** | 用户手绘 (dark-mode), SVG: `3.1.svg` |
-| **类型** | 手动制图 |
-| **大小** | 124 KB |
-
-### Fig 3.2 — Instruction Format
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_2_instruction_format.png` |
-| **LaTeX label** | `fig:3_2` |
-| **来源** | `.build/fix_figures.py` → `gen_fig3_2()` (硬编码位域布局) |
-| **类型** | 自动生成 |
-| **大小** | 50 KB |
-
-### Fig 3.2b — Instruction Table
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_2b_instruction_table.png` |
-| **LaTeX label** | `fig:3_2b` |
-| **来源** | 用户手绘 |
-| **类型** | 手动制图 |
-| **大小** | 60 KB |
-
-### Fig 3.3 — PE Microarchitecture
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_3_pe_microarchitecture.png` |
-| **LaTeX label** | `fig:3_3` |
-| **来源** | 用户手绘 (dark-mode), SVG: `3.3.svg` |
-| **类型** | 手动制图 |
-| **大小** | 70 KB |
-
-### Fig 3.4 — PE Array
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_4_pe_array.png` |
-| **LaTeX label** | `fig:3_4` |
-| **来源** | `.build/gen_block_diagrams.py` |
-| **类型** | 自动生成 |
-| **大小** | 70 KB |
-
-### Fig 3.5 — Packed Data Format
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_5_packed_format.png` |
-| **LaTeX label** | `fig:3_5` |
-| **来源** | 用户手绘 (dark-mode) |
-| **类型** | 手动制图 |
-| **大小** | 891 KB |
-
-### Fig 3.6 — Build Pipeline
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_6_build_pipeline.png` |
-| **LaTeX label** | `fig:3_6` |
-| **来源** | Vivado 截图 |
-| **类型** | 截图 |
-| **大小** | 1.1 MB |
-
-### Fig 3.7 — Verification Chain
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig3_7_verification_chain.png` |
-| **LaTeX label** | `fig:3_7` |
-| **来源** | 截图 |
-| **类型** | 截图 |
-| **大小** | 878 KB |
-
----
-
-## Chapter 4 — Results
-
-### FPGA Board Photo (unnumbered)
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig_fpga_board.jpg` |
-| **LaTeX label** | `fig:fpga_board` |
-| **来源** | 照片 |
-| **类型** | 照片 |
-| **大小** | 327 KB |
-
-### Fig 4.1 — hello_e203 ILA PC Trace
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig4_1_ila_pc_trace.png` |
-| **LaTeX label** | `fig:4_1` |
-| **数据源** | `04_Experiments/.../hello_e203_board_artifacts/ila_capture.csv` |
-| **来源** | `.build/fix_figures.py` → `gen_ila_pc_trace()` |
-| **Probes** | probe0_pc (6 unique ITCM addresses), probe1_status (0xc/0xd), probe3_mem_addr (GPIOA 0x10012008) |
-| **真实性** | 100% 真实 Vivado ILA CSV 数据 |
-| **最近修改** | 2026-05-08 — 全部替换为真实 CSV 数据 |
-
-### Fig 4.2 — CNN Program CPU Activity
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig4_2_ila_nice_activity.png` |
-| **LaTeX label** | `fig:4_2` |
-| **数据源** | `04_Experiments/.../cnn_sysclk_ila_ila_capture/ila_capture.csv` |
-| **来源** | `.build/fix_figures.py` → `gen_ila_nice_activity()` |
-| **Probes** | probe0_pc (6 unique CNN code addresses), probe3_pc_activity (memory ref counter), probe6_mem_status (bus active) |
-| **已知局限** | NICE CSR 全程为 0，HS 全程为 4（ILA 未抓到 NICE 指令窗口）。Caption 如实说明。 |
-| **真实性** | 100% 真实 Vivado ILA CSV 数据 |
-| **最近修改** | 2026-05-08 — 全部替换为真实 CSV 数据 |
-
-### UART Output (unnumbered)
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig_uart_output.png` |
-| **LaTeX label** | `fig:uart_output` |
-| **来源** | PuTTY 截图 |
-| **类型** | 截图 |
-| **大小** | 43 KB |
-
-### Fig 4.3 — Speedup Bar Chart
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig4_3_speedup_bar.png` |
-| **LaTeX label** | `fig:4_3` |
-| **数据源** | 实验测量：CPU 1516 cycles, NICE 287 cycles, speedup 5.28x |
-| **来源** | `.build/fix_figures.py` → `gen_speedup()` |
-| **真实性** | 真实实验 cycle count |
-
-### Fig 4.4 — Resource Pie Chart
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig4_4_resource_pie.png` |
-| **LaTeX label** | `fig:4_4` |
-| **数据源** | Vivado `system_utilization_placed.rpt` (cnn_sysclk_ila, post-placement) |
-| **数值** | LUTs: 13,209/63,400 (20.8%), Regs: 12,752/126,800 (10.1%), BRAM: 35.5/135 tiles (26.3%) |
-| **来源** | `.build/fix_figures.py` → `gen_resource_pie()` |
-| **真实性** | 100% Vivado 报告数据 |
-
-### Fig 4.5 — Utilization Bar Chart
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig4_5_utilization.png` |
-| **LaTeX label** | `fig:4_5` |
-| **数据源** | 同上 Vivado `system_utilization_placed.rpt` |
-| **来源** | `.build/fix_figures.py` → `gen_utilization()` |
-| **真实性** | 100% Vivado 报告数据 |
-
-### Fig 4.6 — Timing Closure
-| 字段 | 值 |
-|------|-----|
-| **文件** | `fig4_6_timing.png` |
-| **LaTeX label** | `fig:4_6` |
-| **数据源** | Vivado timing summary (各 build 的 WNS/WHS) |
-| **来源** | `.build/fix_figures.py` → `gen_timing()` |
-| **真实性** | 匹配 Table 4.3 真实时序数据 |
-
----
-
-## 产物统计
-
-| 类型 | 数量 | 说明 |
-|------|------|------|
-| 手动制图 | 4 | Fig 3.1, 3.2b, 3.3, 3.5 |
-| 真实 ILA CSV | 2 | Fig 4.1, 4.2 |
-| 真实 Vivado 数据 | 3 | Fig 4.4, 4.5, 4.6 |
-| 真实实验数据 | 1 | Fig 4.3 |
-| 位域布局 | 1 | Fig 3.2 |
-| 截图 | 3 | Fig 3.6, 3.7, UART |
-| 照片 | 1 | FPGA Board |
-| **合计** | **16** | **100% 真实数据，无合成数据** |
-
-## 生成命令
-
-```bash
-cd thesis_latex
-python .build/fix_figures.py          # 全部 7 张自动生成图
-python .build/gen_block_diagrams.py   # Fig 3.4
-bash build.sh all                     # PDF + DOCX
+```powershell
+cd C:\Users\16084\Documents\Graduation_Design_Library\thesis_latex
+& C:\Users\16084\AppData\Local\Programs\Python\Python313\python.exe .build\gen_block_diagrams.py
+& C:\Users\16084\AppData\Local\Programs\Python\Python313\python.exe .build\fix_figures.py
 ```
 
-## 修改规则
+QA outputs:
 
-- 手动制图 → 改 SVG/PPT 源 → 重新导出 PNG → 更新本文件
-- ILA CSV 数据 → 重新上板抓取 → 覆盖 CSV → `python .build/fix_figures.py` → 更新本文件
-- Vivado 资源数据 → 重新跑 Vivado → 更新 RPT 路径 → `python .build/fix_figures.py` → 更新本文件
-- **禁止：** 直接修改 PNG/JPG、手动编辑 CSV 数据、使用合成/随机数据
+- `thesis_latex/.build/figure_qa/all_figures_contact_sheet.png`
+- `thesis_latex/.build/figure_qa/figure_data_provenance.json`
+
+## Chapter 3 Figures
+
+| Figure | File | LaTeX label | Source | Evidence boundary |
+|---|---|---|---|---|
+| Fig 3.1 SoC architecture | `fig3_1_soc_architecture.png` | `fig:3_1` | `.build/gen_block_diagrams.py` | Academic redraw of project architecture; not a measurement chart. |
+| Fig 3.2 instruction format | `fig3_2_instruction_format.png` | `fig:3_2` | `.build/fix_figures.py` | Encodes the implemented custom0/NICE field interpretation. |
+| Fig 3.2b instruction table | `fig3_2b_instruction_table.png` | `fig:3_2b` | `.build/fix_figures.py` | Instruction encodings are documented constants, not sampled data. |
+| Fig 3.3 PE microarchitecture | `fig3_3_pe_microarchitecture.png` | `fig:3_3` | `.build/gen_block_diagrams.py` | Academic redraw of RTL datapath intent. |
+| Fig 3.4 PE array | `fig3_4_pe_array.png` | `fig:3_4` | `.build/gen_block_diagrams.py` | Academic redraw of implemented 4x4 PE dataflow. |
+| Fig 3.5 packed format | `fig3_5_packed_format.png` | `fig:3_5` | `.build/fix_figures.py` | Bit-packing diagram for WLOAD/DLOAD operands. |
+| Fig 3.6 build pipeline | `fig3_6_build_pipeline.png` | `fig:3_6` | `.build/fix_figures.py` | Redrawn workflow; raw build logs remain in `04_Experiments/`. |
+| Fig 3.7 verification chain | `fig3_7_verification_chain.png` | `fig:3_7` | `.build/fix_figures.py` | Redrawn evidence chain from RTL to board regression. |
+
+## Chapter 4 Figures
+
+| Figure | File | LaTeX label | Source | Evidence boundary |
+|---|---|---|---|---|
+| FPGA board photo | `fig_fpga_board.jpg` | `fig:fpga_board` | Original photo | Visual hardware context only. |
+| Fig 4.1 hello ILA | `fig4_1_ila_pc_trace.png` | `fig:4_1` | `.build/fix_figures.py` | Redrawn from `04_Experiments/Board_BringUp/2026-04-28_board_connection_check/hello_e203_board_artifacts/ila_capture.csv`. |
+| Fig 4.2 CNN ILA | `fig4_2_ila_nice_activity.png` | `fig:4_2` | `.build/fix_figures.py` | Redrawn from `04_Experiments/Board_BringUp/2026-05-09_nice_rs2_fix_verification/ila_capture.csv`; sampled NICE window is stable idle, with pass/fail from UART. |
+| UART output | `fig_uart_output.png` | `fig:uart_output` | `.build/fix_figures.py` | Rendered from `04_Experiments/Board_BringUp/2026-05-09_nice_rs2_fix_verification/uart_output.txt`; proves CNN v1 reduced-convolution HW/SW/expected agreement and 5.282x speedup. |
+| Fig 4.3 speedup | `fig4_3_speedup_bar.png` | `fig:4_3` | `.build/fix_figures.py` | Uses UART cycle counts: CPU 1516 cycles, NICE 287 cycles, speedup 5.282x. |
+| Fig 4.4 resource fit | `fig4_4_resource_pie.png` | `fig:4_4` | `.build/fix_figures.py` | Legacy filename retained for LaTeX compatibility; content is not a pie chart. It shows per-resource used/headroom bars using recorded Vivado utilization values. |
+| Fig 4.5 utilization | `fig4_5_utilization.png` | `fig:4_5` | `.build/fix_figures.py` | Shows the same recorded Vivado utilization percentages on a single percentage scale with a 30% reference. |
+| Fig 4.6 timing | `fig4_6_timing.png` | `fig:4_6` | `.build/fix_figures.py` | Uses recorded timing values from Vivado reports/summaries; Table 4.3 must match the values in `figure_data_provenance.json`. |
+
+## Data Values
+
+Measured UART result:
+
+| Metric | Value |
+|---|---:|
+| CPU reference cycles | 1516 |
+| NICE accelerator cycles | 287 |
+| Speedup | 5.282x |
+| SW output | `12 23 0 19` |
+| HW output | `12 23 0 19` |
+| Expected output | `12 23 0 19` |
+
+Resource values:
+
+| Resource | Used | Available | Utilization |
+|---|---:|---:|---:|
+| LUT | 13,187 | 63,400 | 20.8% |
+| LUTRAM | 2,843 | 19,200 | 14.8% |
+| FF | 12,807 | 126,800 | 10.1% |
+| BRAM | 36 | 135 | 26.7% |
+| DSP | 0 | 240 | 0.0% |
+| BUFG | 4 | 32 | 12.5% |
+
+Timing values:
+
+| Build | WNS (ns) | WHS (ns) |
+|---|---:|---:|
+| heartbeat_mmcm_sysclk_ila | 13.887 | 0.058 |
+| soc_sysclk_ila | 13.515 | 0.058 |
+| soc_bootdiag_sysclk_ila | 13.337 | 0.039 |
+| bootvec_sysclk_ila | 13.677 | 0.061 |
+| hello_sysclk_ila | 14.204 | 0.060 |
+| cnn_sysclk_ila | 12.472 | 0.057 |
+
+## Rules
+
+- Do not manually edit generated PNGs.
+- Do not hand-edit ILA CSV, UART log, or Vivado report values.
+- If evidence changes, update the source evidence path or constants in the
+  generation scripts, regenerate figures, and re-run visual/PDF QA.

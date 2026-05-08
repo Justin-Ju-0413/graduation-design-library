@@ -16,7 +16,7 @@ All thesis figures are maintained as report-ready English assets. Raw evidence r
 | Fig 4.2 CNN ILA | Thesis | CSV-redrawn evidence chart | `04_Experiments/.../2026-05-09_nice_rs2_fix_verification/ila_capture.csv` |
 | UART output | Thesis + PPT | Redrawn terminal summary | `04_Experiments/.../2026-05-09_nice_rs2_fix_verification/uart_output.txt` |
 | Fig 4.3 speedup | Thesis + PPT | Redrawn measured bar chart | `uart_output.txt`: 1516 vs 287 cycles |
-| Fig 4.4 resource pie | Thesis | Redrawn summary chart | recorded Vivado utilization values |
+| Fig 4.4 resource fit | Thesis | Redrawn used/headroom capacity chart; legacy filename is kept only for LaTeX compatibility | recorded Vivado utilization values |
 | Fig 4.5 utilization | Thesis | Redrawn horizontal utilization chart | recorded Vivado utilization values |
 | Fig 4.6 timing | Thesis | Redrawn timing chart | recorded Vivado timing values |
 | FPGA board photo | Thesis | Original photo retained | `fig_fpga_board.jpg` |

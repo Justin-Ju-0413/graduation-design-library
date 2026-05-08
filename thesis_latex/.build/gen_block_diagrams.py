@@ -1,7 +1,11 @@
-"""Generate thesis block diagrams with a consistent academic style."""
+"""Generate clean architecture diagrams for the thesis.
+
+The diagrams are intentionally rebuilt from primitives instead of edited as
+bitmaps. This keeps labels legible and makes line routing explicit.
+"""
 from __future__ import annotations
 
-import os
+from pathlib import Path
 
 import matplotlib
 
@@ -10,40 +14,43 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, Rectangle
 
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FIG_DIR = os.path.join(ROOT, "figures")
+ROOT = Path(__file__).resolve().parents[1]
+FIG_DIR = ROOT / "figures"
 
-COLORS = {
-    "ink": "#1F2933",
-    "muted": "#5B6773",
-    "line": "#64748B",
-    "blue": "#D7E8FF",
-    "blue_edge": "#2F6FB3",
-    "green": "#DDF4E7",
-    "green_edge": "#23835A",
-    "amber": "#FFF0C2",
-    "amber_edge": "#B7791F",
-    "violet": "#E9E2FF",
-    "violet_edge": "#6B46C1",
-    "gray": "#EEF2F6",
-    "gray_edge": "#64748B",
-    "red": "#FDE2E2",
-    "red_edge": "#B42318",
-}
+INK = "#1F2933"
+MUTED = "#64748B"
+LINE = "#64748B"
+BLUE = "#2F6FB3"
+GREEN = "#23835A"
+AMBER = "#B7791F"
+RED = "#B42318"
+VIOLET = "#6B46C1"
+FILL_BLUE = "#DCEBFF"
+FILL_GREEN = "#DDF4E7"
+FILL_AMBER = "#FFF1C7"
+FILL_GRAY = "#EEF2F6"
+FILL_VIOLET = "#EDE7FF"
+FILL_RED = "#FDE2E2"
 
 plt.rcParams.update(
     {
-        "font.family": "DejaVu Serif",
-        "font.size": 10,
+        "font.family": "DejaVu Sans",
+        "font.size": 11,
         "figure.dpi": 220,
-        "savefig.dpi": 260,
-        "axes.edgecolor": COLORS["line"],
-        "text.color": COLORS["ink"],
+        "savefig.dpi": 300,
+        "text.color": INK,
     }
 )
 
 
-def setup_ax(figsize=(9, 5.4), xlim=(0, 12), ylim=(0, 7.2)):
+def save(fig, name: str):
+    out = FIG_DIR / name
+    fig.savefig(out, bbox_inches="tight", facecolor="white", pad_inches=0.08)
+    plt.close(fig)
+    print(f"  saved {out}")
+
+
+def setup(figsize=(11, 6), xlim=(0, 16), ylim=(0, 9)):
     fig, ax = plt.subplots(figsize=figsize)
     ax.set_xlim(*xlim)
     ax.set_ylim(*ylim)
@@ -51,148 +58,163 @@ def setup_ax(figsize=(9, 5.4), xlim=(0, 12), ylim=(0, 7.2)):
     return fig, ax
 
 
-def box(ax, x, y, w, h, label, fc, ec=None, fs=9, weight="bold", lw=1.4):
-    ec = ec or COLORS["line"]
+def box(ax, x, y, w, h, title, body=None, fc=FILL_GRAY, ec=LINE, fs=11, lw=1.4):
     rect = Rectangle((x, y), w, h, facecolor=fc, edgecolor=ec, linewidth=lw)
     ax.add_patch(rect)
-    ax.text(x + w / 2, y + h / 2, label, ha="center", va="center", fontsize=fs, fontweight=weight)
+    if body:
+        ax.text(x + w / 2, y + h * 0.62, title, ha="center", va="center", fontsize=fs, fontweight="bold")
+        ax.text(x + w / 2, y + h * 0.30, body, ha="center", va="center", fontsize=fs - 1, color=MUTED, linespacing=1.25)
+    else:
+        ax.text(x + w / 2, y + h / 2, title, ha="center", va="center", fontsize=fs, fontweight="bold", linespacing=1.25)
     return rect
 
 
-def arrow(ax, start, end, color=None, lw=1.6, style="-|>", rad=0):
-    color = color or COLORS["line"]
+def single_label_box(ax, x, y, w, h, lines, fc=FILL_GRAY, ec=LINE, fs=10.5, lw=1.4):
+    rect = Rectangle((x, y), w, h, facecolor=fc, edgecolor=ec, linewidth=lw)
+    ax.add_patch(rect)
+    ax.text(x + w / 2, y + h / 2, lines, ha="center", va="center", fontsize=fs, fontweight="bold", linespacing=1.25)
+    return rect
+
+
+def arrow(ax, xy1, xy2, color=LINE, lw=1.5, both=False, rad=0.0):
+    style = "<|-|>" if both else "-|>"
     ax.add_patch(
         FancyArrowPatch(
-            start,
-            end,
+            xy1,
+            xy2,
             arrowstyle=style,
-            mutation_scale=12,
+            mutation_scale=13,
             linewidth=lw,
             color=color,
             connectionstyle=f"arc3,rad={rad}",
-            shrinkA=2,
-            shrinkB=2,
+            shrinkA=3,
+            shrinkB=3,
         )
     )
 
 
+def title(ax, main, sub):
+    ax.text(0.3, 8.55, main, fontsize=18, fontweight="bold", ha="left")
+    ax.text(0.3, 8.18, sub, fontsize=10.5, color=MUTED, ha="left")
+
+
 def fig3_1_soc_architecture():
-    fig, ax = setup_ax(figsize=(9.5, 5.6), ylim=(0, 7.4))
+    fig, ax = setup(figsize=(11.3, 6.2), xlim=(0, 16), ylim=(0, 9))
+    title(ax, "E203 SoC with NICE CNN accelerator", "Custom instructions carry operands through NICE; memory and I/O stay on the system bus.")
 
-    ax.text(0.15, 7.05, "E203 SoC with NICE CNN Accelerator", fontsize=15, fontweight="bold")
-    ax.text(0.15, 6.72, "Custom instructions carry control and operands; standard bus fabric connects memory and I/O.", fontsize=8.5, color=COLORS["muted"])
+    # Top compute path.
+    box(ax, 0.7, 4.55, 3.0, 2.55, "E203 core", "RV32IMAC\nIFU / EXU / LSU", FILL_BLUE, BLUE, fs=12)
+    box(ax, 5.35, 4.55, 3.35, 2.55, "NICE CNN accelerator", "decoder + FSM\n4x4 INT8 PE array", FILL_GREEN, GREEN, fs=12)
+    arrow(ax, (3.76, 5.58), (5.30, 5.58), AMBER, lw=2.4, both=True)
+    ax.text(
+        4.53,
+        6.12,
+        "NICE\nreq/resp",
+        ha="center",
+        va="center",
+        fontsize=9.0,
+        linespacing=1.0,
+        color=AMBER,
+        fontweight="bold",
+        bbox=dict(facecolor="white", edgecolor="none", pad=1.2),
+    )
 
-    box(ax, 0.45, 3.2, 2.6, 2.65, "E203 Core\nRV32IMAC\n2-stage pipeline", COLORS["blue"], COLORS["blue_edge"], fs=9.5)
-    box(ax, 0.75, 4.35, 2.0, 0.42, "IFU", "#F8FBFF", COLORS["blue_edge"], fs=8)
-    box(ax, 0.75, 3.72, 2.0, 0.42, "EXU + NICE dispatch", "#F8FBFF", COLORS["blue_edge"], fs=8)
+    # Memory and peripheral blocks.
+    box(ax, 10.0, 6.10, 3.4, 0.85, "ITCM", "128 KB, 0x8000_0000", FILL_VIOLET, VIOLET, fs=10.5)
+    box(ax, 10.0, 4.90, 3.4, 0.85, "DTCM", "64 KB, 0x9000_0000", FILL_VIOLET, VIOLET, fs=10.5)
+    box(ax, 10.0, 3.00, 3.4, 0.85, "UART0 + GPIO", "board evidence output", FILL_GRAY, LINE, fs=10.5)
+    box(ax, 5.3, 3.00, 2.6, 0.85, "Boot ROM", "0x0000_0000", FILL_GRAY, LINE, fs=10.5)
+    box(ax, 0.9, 3.00, 2.7, 0.85, "CLINT / PLIC", "interrupt subsystem", FILL_GRAY, LINE, fs=10.5)
 
-    box(ax, 4.15, 3.2, 2.6, 2.65, "CNN Accelerator\n4x4 INT8 PE array", COLORS["green"], COLORS["green_edge"], fs=9.5)
-    box(ax, 4.45, 4.42, 2.0, 0.42, "NICE decoder + FSM", "#FBFFFC", COLORS["green_edge"], fs=8)
-    box(ax, 4.45, 3.78, 2.0, 0.42, "Register-fed MAC array", "#FBFFFC", COLORS["green_edge"], fs=8)
+    # Bus rail. All drops avoid text areas and are routed orthogonally.
+    bus_y = 1.55
+    box(ax, 0.7, bus_y, 12.7, 0.45, "AHB system bus fabric", fc="#D9E2EC", ec=LINE, fs=10)
+    for x, y0 in [(2.2, 4.55), (6.6, 4.55), (11.7, 6.10), (11.7, 4.90), (11.7, 3.00), (6.6, 3.00), (2.25, 3.00)]:
+        ax.plot([x, x], [bus_y + 0.45, y0], color=LINE, linewidth=1.15, zorder=0)
 
-    box(ax, 8.0, 4.65, 2.75, 1.0, "ITCM 128 KB\n0x8000_0000", COLORS["violet"], COLORS["violet_edge"], fs=8.5)
-    box(ax, 8.0, 3.38, 2.75, 1.0, "DTCM 64 KB\n0x9000_0000", COLORS["violet"], COLORS["violet_edge"], fs=8.5)
-    box(ax, 8.0, 1.45, 2.75, 1.0, "UART0 + GPIO\nboard evidence output", COLORS["gray"], COLORS["gray_edge"], fs=8.5)
-    box(ax, 4.6, 1.45, 1.9, 1.0, "Boot ROM\n0x0000_0000", COLORS["gray"], COLORS["gray_edge"], fs=8.5)
-    box(ax, 0.7, 1.45, 2.2, 1.0, "CLINT / PLIC\ninterrupt system", COLORS["gray"], COLORS["gray_edge"], fs=8.5)
-
-    box(ax, 0.45, 0.45, 10.3, 0.38, "AHB system bus fabric", "#D9E2EC", COLORS["gray_edge"], fs=8.5)
-
-    arrow(ax, (3.08, 4.35), (4.10, 4.35), COLORS["amber_edge"], lw=3.0, style="<|-|>")
-    ax.text(3.59, 4.63, "NICE request / response", ha="center", fontsize=8.5, color=COLORS["amber_edge"], fontweight="bold")
-
-    for x in [1.8, 5.55, 9.35]:
-        arrow(ax, (x, 1.42), (x, 0.86), COLORS["line"], style="-")
-    arrow(ax, (1.75, 3.17), (1.75, 0.86), COLORS["line"], style="-")
-    arrow(ax, (5.45, 3.17), (5.45, 0.86), COLORS["line"], style="-")
-    arrow(ax, (9.35, 3.35), (9.35, 0.86), COLORS["line"], style="-")
-    arrow(ax, (9.35, 1.42), (9.35, 0.86), COLORS["line"], style="-")
-
-    out = os.path.join(FIG_DIR, "fig3_1_soc_architecture.png")
-    fig.savefig(out, bbox_inches="tight", facecolor="white")
-    plt.close(fig)
-    print(f"  saved {out}")
+    ax.text(0.7, 0.62, "Design boundary: accelerator control uses NICE; firmware, memories, UART, and GPIO remain observable through the SoC bus.", fontsize=10.2, color=INK)
+    save(fig, "fig3_1_soc_architecture.png")
 
 
 def fig3_3_pe_microarchitecture():
-    fig, ax = setup_ax(figsize=(7.0, 5.0), xlim=(0, 10), ylim=(0, 7.2))
+    fig, ax = setup(figsize=(8.8, 6.2), xlim=(0, 12), ylim=(0, 9))
+    title(ax, "Processing element microarchitecture", "One PE performs signed INT8 multiply-accumulate into an INT32 output register.")
 
-    ax.text(0.2, 6.82, "Processing Element Microarchitecture", fontsize=15, fontweight="bold")
-    ax.text(0.2, 6.48, "Each PE multiplies one INT8 weight and activation, then accumulates into an INT32 output.", fontsize=8.5, color=COLORS["muted"])
+    box(ax, 4.1, 6.10, 3.8, 0.95, "INT8 signed multiplier", "W[7:0] x D[7:0] -> P[15:0]", FILL_BLUE, BLUE, fs=11)
+    box(ax, 4.1, 4.55, 3.8, 0.90, "Control gate", "enable / clear / optional ReLU", FILL_RED, RED, fs=11)
+    box(ax, 4.1, 2.85, 3.8, 1.05, "INT32 accumulator", "acc <= acc + sign_extend(P)", FILL_AMBER, AMBER, fs=11)
 
-    box(ax, 3.05, 4.75, 3.9, 0.72, "INT8 signed multiplier\nW[7:0] x D[7:0] -> P[15:0]", COLORS["blue"], COLORS["blue_edge"], fs=8.5)
-    box(ax, 3.05, 3.62, 3.9, 0.62, "Optional ReLU gate\napplied after accumulation path control", COLORS["red"], COLORS["red_edge"], fs=8)
-    box(ax, 3.05, 2.10, 3.9, 0.92, "INT32 accumulator\nacc <= acc + sign_extend(P)", COLORS["amber"], COLORS["amber_edge"], fs=8.5)
+    ax.text(6.0, 7.80, "weight W", ha="center", fontsize=10.5, color=BLUE, fontweight="bold")
+    arrow(ax, (6.0, 7.58), (6.0, 7.08), BLUE, lw=1.6)
+    ax.text(1.45, 6.55, "activation D", ha="center", fontsize=10.5, color=GREEN, fontweight="bold")
+    arrow(ax, (2.25, 6.55), (4.05, 6.55), GREEN, lw=1.6)
+    arrow(ax, (6.0, 6.08), (6.0, 5.48), LINE)
+    arrow(ax, (6.0, 4.52), (6.0, 3.92), LINE)
+    arrow(ax, (6.0, 2.82), (6.0, 2.10), LINE)
+    ax.text(6.0, 1.78, "result (INT32)", ha="center", fontsize=10.5, fontweight="bold")
 
-    ax.text(4.98, 6.0, "Weight W", ha="center", fontsize=8.5, color=COLORS["blue_edge"], fontweight="bold")
-    arrow(ax, (4.98, 5.92), (4.98, 5.49), COLORS["blue_edge"])
-    ax.text(1.24, 5.06, "Activation D", ha="center", fontsize=8.5, color=COLORS["green_edge"], fontweight="bold")
-    arrow(ax, (1.92, 5.06), (3.02, 5.06), COLORS["green_edge"])
-    arrow(ax, (4.98, 4.73), (4.98, 4.27), COLORS["line"])
-    arrow(ax, (4.98, 3.59), (4.98, 3.05), COLORS["line"])
-    arrow(ax, (4.98, 2.08), (4.98, 1.33), COLORS["line"])
-    ax.text(4.98, 1.06, "Result (INT32)", ha="center", fontsize=8.5, fontweight="bold")
+    single_label_box(ax, 0.9, 3.35, 2.1, 1.45, "PE control\nacc_clr\nen_relu\nen", "#F8FAFC", LINE, fs=9.8)
+    arrow(ax, (3.05, 4.05), (4.05, 4.05), LINE)
 
-    arrow(ax, (7.03, 2.58), (8.05, 3.5), COLORS["amber_edge"], rad=0.28)
-    arrow(ax, (8.05, 3.5), (6.95, 4.05), COLORS["amber_edge"], rad=0.25)
-    ax.text(8.24, 3.25, "feedback\nfor MAC", fontsize=7.5, color=COLORS["amber_edge"], ha="center")
+    # Feedback path is routed outside the processing boxes.
+    ax.plot([8.02, 9.35, 9.35, 8.02], [3.38, 3.38, 6.55, 6.55], color=AMBER, linewidth=1.6)
+    arrow(ax, (9.35, 6.55), (8.02, 6.55), AMBER, lw=1.6)
+    ax.text(9.62, 4.95, "MAC\nfeedback", ha="center", va="center", fontsize=9.5, color=AMBER, fontweight="bold")
 
-    box(ax, 0.62, 2.0, 1.75, 1.08, "Control\nacc_clr\nen_relu\nen", "#F8FAFC", COLORS["gray_edge"], fs=8, weight="normal")
-    arrow(ax, (2.38, 2.55), (3.02, 2.55), COLORS["gray_edge"])
-
-    out = os.path.join(FIG_DIR, "fig3_3_pe_microarchitecture.png")
-    fig.savefig(out, bbox_inches="tight", facecolor="white")
-    plt.close(fig)
-    print(f"  saved {out}")
+    save(fig, "fig3_3_pe_microarchitecture.png")
 
 
 def fig3_4_pe_array():
-    fig, ax = setup_ax(figsize=(8.2, 5.4), xlim=(0, 12), ylim=(0, 7.4))
+    fig, ax = setup(figsize=(10.4, 6.5), xlim=(0, 15), ylim=(0, 10))
+    title(ax, "4x4 PE array datapath", "WLOAD broadcasts columns, DLOAD broadcasts rows, and COMP triggers parallel output-stationary MACs.")
 
-    ax.text(0.2, 7.0, "4x4 Systolic PE Array", fontsize=15, fontweight="bold")
-    ax.text(0.2, 6.66, "Four WLOAD and four DLOAD instructions populate the array before COMP triggers parallel MACs.", fontsize=8.5, color=COLORS["muted"])
-
-    gx, gy = 3.05, 1.9
-    w, h, gap = 1.15, 0.72, 0.22
+    gx, gy = 4.0, 2.3
+    cell_w, cell_h, gap = 1.15, 0.76, 0.28
+    centers = {}
     for r in range(4):
         for c in range(4):
-            x = gx + c * (w + gap)
-            y = gy + (3 - r) * (h + gap)
-            fc = "#F8FFFB" if (r + c) % 2 else COLORS["green"]
-            box(ax, x, y, w, h, f"PE{r},{c}", fc, COLORS["green_edge"], fs=8)
+            x = gx + c * (cell_w + gap)
+            y = gy + (3 - r) * (cell_h + gap)
+            centers[(r, c)] = (x + cell_w / 2, y + cell_h / 2)
+            box(ax, x, y, cell_w, cell_h, f"PE{r},{c}", fc=FILL_GREEN if (r + c) % 2 == 0 else "#F8FFFB", ec=GREEN, fs=9.5)
 
+    # Column weight routes.
     for c in range(4):
-        x = gx + c * (w + gap) + w / 2
-        ax.text(x, 6.02, f"W{c}", ha="center", fontsize=8.5, color=COLORS["blue_edge"], fontweight="bold")
-        arrow(ax, (x, 5.78), (x, 5.38), COLORS["blue_edge"])
-        ax.plot([x, x], [1.74, 5.34], color=COLORS["blue_edge"], linewidth=0.8, alpha=0.65)
+        x = centers[(0, c)][0]
+        ax.text(x, 7.42, f"W{c}", ha="center", fontsize=10, color=BLUE, fontweight="bold")
+        arrow(ax, (x, 7.20), (x, 6.72), BLUE, lw=1.4)
+        ax.plot([x, x], [2.05, 6.68], color=BLUE, linewidth=0.9, alpha=0.45, zorder=0)
 
+    # Row activation routes stay outside labels.
     for r in range(4):
-        y = gy + (3 - r) * (h + gap) + h / 2
-        ax.text(1.82, y, f"D{r}", ha="center", va="center", fontsize=8.5, color=COLORS["green_edge"], fontweight="bold")
-        arrow(ax, (2.14, y), (2.98, y), COLORS["green_edge"])
-        ax.plot([2.98, 8.6], [y, y], color=COLORS["green_edge"], linewidth=0.8, alpha=0.6)
+        y = centers[(r, 0)][1]
+        ax.text(2.68, y, f"D{r}", ha="center", va="center", fontsize=10, color=GREEN, fontweight="bold")
+        arrow(ax, (3.05, y), (3.95, y), GREEN, lw=1.4)
+        ax.plot([3.95, 9.75], [y, y], color=GREEN, linewidth=0.9, alpha=0.45, zorder=0)
 
-    box(ax, 9.0, 2.88, 1.55, 1.05, "tree\nadder", COLORS["amber"], COLORS["amber_edge"], fs=8.5)
+    box(ax, 0.85, 6.00, 2.10, 0.92, "WLOAD x4", "load columns", "#F8FBFF", BLUE, fs=10)
+    box(ax, 0.85, 0.92, 2.10, 0.92, "DLOAD x4", "load rows", "#FBFFFC", GREEN, fs=10)
+
+    # Output routes are drawn below the array and collected at the right side,
+    # so the readback wiring never crosses PE labels.
+    merge_x = 11.15
+    collector_x = 10.55
+    single_label_box(ax, merge_x, 3.83, 1.95, 1.30, "reduction\nreadback", FILL_AMBER, AMBER, fs=10.3)
     for c in range(4):
-        x = gx + c * (w + gap) + w / 2
-        ax.plot([x, x, 8.85], [1.78, 1.35 + c * 0.18, 3.40], color=COLORS["line"], linewidth=0.55, alpha=0.75)
-    arrow(ax, (10.55, 3.40), (11.28, 3.40), COLORS["line"])
-    ax.text(11.34, 3.40, "RSTAT", va="center", fontsize=8.5, fontweight="bold")
+        x0 = centers[(3, c)][0]
+        y0 = 1.40 - c * 0.18
+        ax.plot([x0, x0, collector_x], [2.22, y0, y0], color=LINE, linewidth=0.8, alpha=0.75, zorder=0)
+    ax.plot([collector_x, collector_x, merge_x], [0.86, 4.48, 4.48], color=LINE, linewidth=0.9, alpha=0.75, zorder=0)
+    arrow(ax, (13.12, 4.48), (13.85, 4.48), LINE, lw=1.4)
+    ax.text(13.98, 4.48, "RSTAT", va="center", fontsize=10.5, fontweight="bold")
+    box(ax, 10.35, 6.10, 3.3, 0.88, "COMP", "parallel INT32 accumulation", "#FFFDF7", AMBER, fs=10)
 
-    box(ax, 0.65, 4.75, 1.75, 0.78, "WLOAD x4\ncolumns", "#F8FBFF", COLORS["blue_edge"], fs=8, weight="normal")
-    box(ax, 0.65, 1.50, 1.75, 0.78, "DLOAD x4\nrows", "#FBFFFC", COLORS["green_edge"], fs=8, weight="normal")
-    box(ax, 8.75, 4.92, 2.2, 0.66, "Output-stationary\nINT32 accumulation", "#FFFDF7", COLORS["amber_edge"], fs=8, weight="normal")
-
-    out = os.path.join(FIG_DIR, "fig3_4_pe_array.png")
-    fig.savefig(out, bbox_inches="tight", facecolor="white")
-    plt.close(fig)
-    print(f"  saved {out}")
+    save(fig, "fig3_4_pe_array.png")
 
 
 def main():
-    os.makedirs(FIG_DIR, exist_ok=True)
-    print("Generating academic block diagrams...")
+    FIG_DIR.mkdir(parents=True, exist_ok=True)
+    print("Generating clean architecture diagrams...")
     fig3_1_soc_architecture()
     fig3_3_pe_microarchitecture()
     fig3_4_pe_array()

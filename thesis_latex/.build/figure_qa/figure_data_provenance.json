@@ -1,0 +1,97 @@
+{
+  "uart": {
+    "source": "04_Experiments\\Board_BringUp\\2026-05-09_nice_rs2_fix_verification\\uart_output.txt",
+    "cpu_cycles": 1516,
+    "accelerator_cycles": 287,
+    "speedup": 5.282,
+    "sw_output": "12 23 0 19",
+    "hw_output": "12 23 0 19",
+    "expected": "12 23 0 19"
+  },
+  "resources": [
+    {
+      "name": "LUT",
+      "used": 13187,
+      "available": 63400,
+      "unit": "cells",
+      "pct": 20.8
+    },
+    {
+      "name": "LUTRAM",
+      "used": 2843,
+      "available": 19200,
+      "unit": "cells",
+      "pct": 14.807
+    },
+    {
+      "name": "FF",
+      "used": 12807,
+      "available": 126800,
+      "unit": "regs",
+      "pct": 10.1
+    },
+    {
+      "name": "BRAM",
+      "used": 36,
+      "available": 135,
+      "unit": "tiles",
+      "pct": 26.667
+    },
+    {
+      "name": "DSP",
+      "used": 0,
+      "available": 240,
+      "unit": "slices",
+      "pct": 0.0
+    },
+    {
+      "name": "BUFG",
+      "used": 4,
+      "available": 32,
+      "unit": "buffers",
+      "pct": 12.5
+    }
+  ],
+  "timing": [
+    {
+      "build": "hb_mmcm",
+      "wns_ns": 13.887,
+      "whs_ns": 0.058,
+      "source": "heartbeat_mmcm_sysclk_ila timing report"
+    },
+    {
+      "build": "soc_ila",
+      "wns_ns": 13.515,
+      "whs_ns": 0.058,
+      "source": "soc_sysclk_ila timing report"
+    },
+    {
+      "build": "bootdiag",
+      "wns_ns": 13.337,
+      "whs_ns": 0.039,
+      "source": "soc_bootdiag_sysclk_ila timing report"
+    },
+    {
+      "build": "bootvec",
+      "wns_ns": 13.677,
+      "whs_ns": 0.061,
+      "source": "bootvec timing_summary.txt"
+    },
+    {
+      "build": "hello",
+      "wns_ns": 14.204,
+      "whs_ns": 0.06,
+      "source": "hello_sysclk_ila timing report"
+    },
+    {
+      "build": "cnn_ila",
+      "wns_ns": 12.472,
+      "whs_ns": 0.057,
+      "source": "cnn_sysclk_ila system_timing_summary_routed.rpt"
+    }
+  ],
+  "ila": {
+    "hello_csv": "04_Experiments\\Board_BringUp\\2026-04-28_board_connection_check\\hello_e203_board_artifacts\\ila_capture.csv",
+    "cnn_csv": "04_Experiments\\Board_BringUp\\2026-05-09_nice_rs2_fix_verification\\ila_capture.csv"
+  }
+}

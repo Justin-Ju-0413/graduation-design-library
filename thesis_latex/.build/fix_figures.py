@@ -288,7 +288,7 @@ def gen_build_pipeline():
         ax.text(x, 0.492, body, transform=ax.transAxes, ha="center", va="center", fontsize=8.3, color=MUTED, linespacing=1.1)
         if i < len(stages) - 1:
             ax.annotate("", xy=(xs[i + 1] - 0.073, 0.575), xytext=(x + 0.073, 0.575), xycoords=ax.transAxes, arrowprops=dict(arrowstyle="->", lw=1.3, color=LINE))
-    ax.text(0.5, 0.19, "Build modes: soc_sysclk_ila, bootdiag, bootvec, hello, cnn_sysclk_ila", transform=ax.transAxes, ha="center", fontsize=9.3, color=INK)
+    ax.text(0.5, 0.19, "Build modes: soc_sysclk_ila, bootdiag, bootvec, hello, cnn_sysclk_ila, heartbeat_mmcm", transform=ax.transAxes, ha="center", fontsize=9.3, color=INK)
     save(fig, "fig3_6_build_pipeline.png")
 
 
@@ -477,26 +477,7 @@ def gen_uart_output():
 
 
 def gen_lenet5_uart_output():
-    lines = [
-        "LeNet-5 MNIST on E203 + NICE Accelerator",
-        "Version: v8 (row-packing + Conv2 ReLU fix)",
-        "Dataset: MNIST test images 0-9",
-        "",
-        "Img 0  pred=7  exp=7  OK",
-        "Img 1  pred=2  exp=2  OK",
-        "Img 2  pred=1  exp=1  OK",
-        "Img 3  pred=0  exp=0  OK",
-        "Img 4  pred=4  exp=4  OK",
-        "Img 5  pred=1  exp=1  OK",
-        "Img 6  pred=4  exp=4  OK",
-        "Img 7  pred=9  exp=9  OK",
-        "Img 8  pred=5  exp=5  OK",
-        "Img 9  pred=9  exp=9  OK",
-        "",
-        "Result: 10/10 correct",
-        "Accuracy: 100%",
-        ">>> LENET-5 FPGA INFERENCE PASSED <<<",
-    ]
+    lines = (BOARD_0509 / "lenet5_uart_output.txt").read_text(encoding="utf-8").strip().splitlines()
 
     fig, ax = plt.subplots(figsize=(10.6, 5.15))
     ax.axis("off")
@@ -626,7 +607,7 @@ def gen_resource_fit():
     ax.legend(loc="lower right", frameon=False)
     clean_axes(ax, "x")
     fig.tight_layout()
-    save(fig, "fig4_7_resource_pie.png")
+    save(fig, "fig4_7_resource_fit.png")
 
 
 def gen_utilization():
@@ -652,30 +633,31 @@ def gen_utilization():
 
 
 def gen_timing():
-    fig, ax = plt.subplots(figsize=(10.2, 5.4))
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10.2, 5.8), sharex=True)
     builds = [b[0] for b in TIMING_BUILDS]
     wns = [b[1] for b in TIMING_BUILDS]
     whs = [b[2] for b in TIMING_BUILDS]
     x = np.arange(len(builds))
-    ax.plot(x, wns, marker="o", color=BLUE, linewidth=2.0, label="WNS setup slack")
-    ax.set_ylabel("WNS setup slack (ns)", color=BLUE)
-    ax.tick_params(axis="y", labelcolor=BLUE)
-    ax.set_xticks(x)
-    ax.set_xticklabels(builds, rotation=20, ha="right")
-    ax.set_ylim(12.0, 14.7)
+
+    ax1.plot(x, wns, marker="o", color=BLUE, linewidth=2.0, label="WNS setup slack")
+    ax1.set_ylabel("WNS setup slack (ns)", color=BLUE)
+    ax1.tick_params(axis="y", labelcolor=BLUE)
+    ax1.set_ylim(12.0, 14.7)
     for xi, val in zip(x, wns):
-        ax.text(xi, val + 0.09, f"{val:.2f}", ha="center", fontsize=9.2, color=BLUE)
-    ax2 = ax.twinx()
+        ax1.text(xi, val + 0.09, f"{val:.2f}", ha="center", fontsize=9.2, color=BLUE)
+    ax1.legend(loc="upper left", frameon=False)
+    clean_axes(ax1, "y")
+    add_title(ax1, "Timing closure across FPGA build modes", "All recorded builds have positive setup and hold slack; no failing endpoints.")
+
     ax2.bar(x, whs, color=AMBER, alpha=0.38, width=0.42, label="WHS hold slack")
     ax2.set_ylabel("WHS hold slack (ns)", color=AMBER)
     ax2.tick_params(axis="y", labelcolor=AMBER)
     ax2.set_ylim(0, 0.08)
-    add_title(ax, "Timing closure across FPGA build modes", "All recorded builds have positive setup and hold slack; no failing endpoints.")
-    clean_axes(ax, "y")
-    ax2.spines[["top"]].set_visible(False)
-    lines, labels = ax.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax.legend(lines + lines2, labels + labels2, loc="upper left", frameon=False)
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(builds, rotation=20, ha="right")
+    ax2.legend(loc="upper left", frameon=False)
+    clean_axes(ax2, "y")
+
     fig.tight_layout()
     save(fig, "fig4_9_timing.png")
 
@@ -726,7 +708,7 @@ def make_contact_sheet():
         "fig4_4_uart_cnn_v1.png",
         "fig4_5_uart_lenet5.png",
         "fig4_6_speedup_bar.png",
-        "fig4_7_resource_pie.png",
+        "fig4_7_resource_fit.png",
         "fig4_8_utilization_bar.png",
         "fig4_9_timing.png",
     ]

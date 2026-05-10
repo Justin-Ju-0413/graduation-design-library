@@ -42,7 +42,7 @@ QA outputs:
 | Fig 4.6 speedup | `fig4_6_speedup_bar.png` | `fig:speedup` | `.build/fix_figures.py` | Uses UART cycle counts: CPU 1516 cycles, NICE 287 cycles, speedup 5.282x. |
 | Fig 4.7 resource fit | `fig4_7_resource_fit.png` | `fig:resource_fit` | `.build/fix_figures.py` | Shows per-resource used/headroom bars using recorded Vivado utilization values. |
 | Fig 4.8 utilization | `fig4_8_utilization_bar.png` | `fig:utilization` | `.build/fix_figures.py` | Shows the same recorded Vivado utilization percentages on a single percentage scale with a 30% reference. |
-| Fig 4.9 timing | `fig4_9_timing.png` | `fig:timing` | `.build/fix_figures.py` | Uses recorded timing values from Vivado reports/summaries; Table 4.3 must match the values in `figure_data_provenance.json`. |
+| Fig 4.9 timing | `fig4_9_timing.png` | `fig:timing` | `.build/fix_figures.py` | Uses recorded timing values from Vivado reports/summaries. WNS and WHS shown in separate subplots with independent scales to avoid visual distortion. |
 
 ## Data Values
 

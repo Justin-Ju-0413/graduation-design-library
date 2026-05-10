@@ -37,7 +37,7 @@ A processor must implement at least the base I extension to be considered RISC-V
 RISC-V defines a fixed-length 32-bit instruction format for the base ISA (the C extension additionally supports 16-bit compressed instructions). The major instruction formats are R-type (register-register), I-type (immediate), S-type (store), B-type (branch), U-type (upper immediate), and J-type (jump). All formats share a common 7-bit opcode field located in bits [6:0].
 
 
-The RISC-V specification reserves four opcode spaces for custom extensions, designated as custom0 (opcode 0x0b), custom1, custom2, and custom3. These opcode spaces allow designers to define their own instruction semantics without conflicting with standard or future RISC-V instructions. Each custom opcode provides a complete instruction encoding space of up to ( 2\textasciicircum{}\{25\} ) unique instructions, as the remaining 25 bits (after the 7-bit opcode) are fully available for user-defined operand fields and function selectors.
+The RISC-V specification reserves four opcode spaces for custom extensions, designated as custom0 (opcode 0x0b), custom1, custom2, and custom3. These opcode spaces allow designers to define their own instruction semantics without conflicting with standard or future RISC-V instructions. Each custom opcode provides a complete instruction encoding space of up to $2^{25}$ unique instructions, as the remaining 25 bits (after the 7-bit opcode) are fully available for user-defined operand fields and function selectors.
 
 
 The standard R-type encoding for a custom instruction is structured as follows:

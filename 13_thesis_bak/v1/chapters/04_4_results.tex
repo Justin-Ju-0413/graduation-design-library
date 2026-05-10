@@ -146,7 +146,7 @@ This confirms the complete boot chain: mask ROM execution (0x00001000), ITCM jum
 
 \subsection{ILA Evidence}
 
-The ILA capture (1024 samples at 50 MHz, ALWAYS trigger mode) showed the CPU executing in the ITCM code region. Key probe values are listed in Table~\ref{tab:4_4} and the PC progression is captured in Figure~\ref{fig:4_1}.
+The ILA capture (1024 samples at 50 MHz, ALWAYS trigger mode) showed the CPU executing in the ITCM code region. Key probe values are listed in Table~\ref{tab:4_4} and the PC progression is captured in Figure~\ref{fig:ila_hello}.
 
 
 \begin{table}[htbp]
@@ -167,7 +167,7 @@ probe1\_status & 0xd & sys\_rst\_n=1, mmcm\_locked=1 \\ \hline
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig4_2_ila_pc_trace.png}
 \caption{ILA capture from the hello\_e203 board run. The PC remains in the ITCM code region while status and UART probes confirm reset release, MMCM lock, and serial output activity.}
-\label{fig:4_1}
+\label{fig:ila_hello}
 \end{figure}
 
 \section{CPU Boot Debugging and Root Cause Analysis}\label{sec:4_4}
@@ -220,7 +220,7 @@ Lights LED0 if PASS, leaves it off if FAIL
 
 \subsection{ILA Evidence}
 
-The ILA capture (Figure~\ref{fig:4_2}) shows the CPU executing in the CNN program code region with active memory references. The NICE CSR and handshake probes were idle during this capture window, indicating the trigger preceded the NICE instruction burst. Key probe values are listed in Table~\ref{tab:4_5}:
+The ILA capture (Figure~\ref{fig:ila_cnn}) shows the CPU executing in the CNN program code region with active memory references. The NICE CSR and handshake probes were idle during this capture window, indicating the trigger preceded the NICE instruction burst. Key probe values are listed in Table~\ref{tab:4_5}:
 
 
 \begin{table}[htbp]
@@ -242,7 +242,7 @@ probe5\_nice\_hs & 0x4 & NICE handshake idle \\ \hline
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig4_3_ila_nice_activity.png}
 \caption{ILA capture from the CNN v1 board regression after the NICE rs2 fix. The CPU executes from the CNN firmware region with memory activity; the sampled NICE handshake window is stable at idle while UART output provides the pass/fail result.}
-\label{fig:4_2}
+\label{fig:ila_cnn}
 \end{figure}
 
 The ILA evidence confirms that: (1) the ITCM was correctly loaded with the test program; (2) the MROM boot sequence executed correctly; (3) the CPU jumped to ITCM and executed through GPIO configuration, NICE instruction sequence, and result comparison; and (4) the program reached its intended completion state.
@@ -307,13 +307,13 @@ The complete LeNet-5 firmware (v8) was deployed on the FPGA board using the \lin
 \item \textbf{UART baud-rate divisor (v6$\to$v8):} The UART divisor was initially set to 27 (16~MHz / 28 = 571,428~baud) instead of the correct value 138 (16~MHz / 139 $\approx$ 115,200~baud), causing intermittent serial corruption.
 \end{itemize}
 
-After these corrections, the v8 firmware produced the UART output shown in Figure~\ref{fig:4_7}. The LeNet-5 network classified all 10 MNIST test images correctly (10/10 = 100\%), with predictions matching the ground-truth labels for digits 7, 2, 1, 0, 4, 1, 4, 9, 5, and 9. This result confirms end-to-end correctness of the NICE-accelerated convolution pipeline on FPGA hardware.
+After these corrections, the v8 firmware produced the UART output shown in Figure~\ref{fig:uart_lenet5}. The LeNet-5 network classified all 10 MNIST test images correctly (10/10 = 100\%), with predictions matching the ground-truth labels for digits 7, 2, 1, 0, 4, 1, 4, 9, 5, and 9. This result confirms end-to-end correctness of the NICE-accelerated convolution pipeline on FPGA hardware.
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.85\textwidth]{figures/fig4_5_uart_lenet5.png}
 \caption[UART terminal output from the LeNet-5 FPGA inference]{UART terminal output from the LeNet-5 MNIST inference running on the FPGA (v8, row-packing fix). All 10 test images are classified correctly (Img 0--9: 7, 2, 1, 0, 4, 1, 4, 9, 5, 9), demonstrating end-to-end correctness of the NICE-accelerated convolution pipeline.}
-\label{fig:4_7}
+\label{fig:uart_lenet5}
 \end{figure}
 
 The board evidence therefore supports three claims: (1) the custom-instruction accelerator produces the correct convolution result matching the CPU reference; (2) the measured kernel execution is 5.282$\times$ faster than the software baseline; and (3) the end-to-end LeNet-5 inference pipeline operates correctly on FPGA hardware.
@@ -325,23 +325,23 @@ The NICE-accelerated convolution was benchmarked against a pure software referen
 \begin{itemize}
 \item CPU-only (software): 1,516 clock cycles
 \item NICE-accelerated (hardware): 287 clock cycles
-\item Speedup: 5.28$\times$
+\item Speedup: 5.282$\times$
 \end{itemize}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/fig4_6_speedup_bar.png}
 \caption{Measured convolution benchmark on the board demo: the NICE accelerator completes the test convolution in 287 cycles versus 1,516 cycles for the CPU reference, giving a 5.282$\times$ speedup.}
-\label{fig:4_3}
+\label{fig:speedup}
 \end{figure}
 
 This measurement covers the convolution operation only: CLEAR, four WLOADs, four DLOADs, COMP, and RSTAT. The overall LeNet-5 inference time is dominated by the software FC layers, which perform approximately 50,000 multiply-accumulate operations per image at 16 MHz. The complete inference time per image is approximately 2--5 minutes in the current implementation, indicating that future work should target hardware acceleration of the FC layers, adoption of a Line Buffer architecture for pipelined data supply (as specified in the original task requirements), or migration to a reduced-precision FC datapath.
 
-The measured 5.28$\times$ speedup (Figure~\ref{fig:4_3}) meets the design target of $\geq$5$\times$ acceleration for convolution operations.
+The measured 5.282$\times$ speedup (Figure~\ref{fig:speedup}) meets the design target of $\geq$5$\times$ acceleration for convolution operations.
 
 \section{Resource Utilization}\label{sec:4_6}
 
-The FPGA resource utilization for the complete E203 SoC with the CNN NICE accelerator is summarized in Table~\ref{tab:4_6} and Figure~\ref{fig:4_4} (post-implementation, \mbox{xc7a100t}).
+The FPGA resource utilization for the complete E203 SoC with the CNN NICE accelerator is summarized in Table~\ref{tab:4_6} and Figure~\ref{fig:resource_fit} (post-implementation, \mbox{xc7a100t}).
 
 
 \begin{table}[htbp]
@@ -366,21 +366,21 @@ These figures demonstrate that the complete E203 SoC with CNN accelerator fits c
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.70\textwidth]{figures/fig4_7_resource_pie.png}
+\includegraphics[width=0.70\textwidth]{figures/fig4_7_resource_fit.png}
 \caption{FPGA resource-capacity fit for the complete E203 SoC with CNN NICE accelerator. Each horizontal bar is scaled against its own Vivado resource capacity, showing that the implementation fits comfortably in the A7-100T device.}
-\label{fig:4_4}
+\label{fig:resource_fit}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.75\textwidth]{figures/fig4_8_utilization_bar.png}
 \caption{FPGA utilization by resource type for the complete SoC. LUT, FF, BRAM, DSP, and clock-buffer usage leave headroom for future accelerator expansion.}
-\label{fig:4_5}
+\label{fig:utilization}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.80\textwidth]{figures/fig4_9_timing.png}
 \caption{Timing closure summary across diagnostic and CNN board build configurations; all recorded builds meet setup and hold timing with positive slack.}
-\label{fig:4_6}
+\label{fig:timing}
 \end{figure}

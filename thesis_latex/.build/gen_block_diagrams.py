@@ -223,7 +223,8 @@ def fig3_4_pe_array():
 def main():
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     print("Generating clean architecture diagrams...")
-    # Figures 3.1 and 3.3 are maintained from the author's SVG drawings.
+    fig3_1_soc_architecture()
+    fig3_3_pe_microarchitecture()
     fig3_4_pe_array()
     print("Done.")
 

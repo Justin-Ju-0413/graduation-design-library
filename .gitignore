@@ -8,12 +8,30 @@
 *.rpx
 *.pb
 
-# Large generated files
+# Large generated files (all formats)
 *.pdf
 *.pptx
 *.docx
 *.zip
 *.xls
+*.png
+*.jpg
+*.jpeg
+*.svg
+
+# But ALLOW specific essential files
+!thesis_latex/figures/*.png
+!thesis_latex/figures/*.jpg
+!thesis_latex/figures/*.svg
+!DASHBOARD.html
+
+# MNIST dataset (very large ~65MB)
+04_Experiments/mnist_data_20260506/
+mnist_data/
+
+# AI prompts cache (large generated images)
+thesis_latex/.build/ai_prompts/
+ai_prompts/
 
 # Python cache
 __pycache__/
@@ -52,3 +70,8 @@ thesis_latex/media/
 *_copy*.sqlite
 *_tmp.sqlite
 *.synctex*
+
+# Screenshots
+ScreenShot_*.png
+Screenshot_*.png
+*.ScreenShot.*

@@ -1,0 +1,196 @@
+\documentclass[12pt,a4paper,twoside]{report}
+
+\usepackage[top=1.5in, bottom=1.5in, left=1in, right=1in, headheight=15pt]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\emergencystretch}{2em}
+
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{float}
+\graphicspath{{figures/}}
+
+\usepackage{booktabs,tabularx,array,longtable,multirow}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{subcaption}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{#1}}{}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\usepackage{xurl}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue]{hyperref}
+\usepackage[titles]{tocloft}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+\usepackage{listings,xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{verilog}{
+    language=Verilog, basicstyle=\footnotesize\ttfamily, numbers=left,
+    numberstyle=\tiny\color{codegray}, stepnumber=1, numbersep=5pt,
+    backgroundcolor=\color{backcolour}, frame=single, breaklines=true,
+    tabsize=2, captionpos=b,
+}
+\lstdefinestyle{cstyle}{
+    language=C, basicstyle=\footnotesize\ttfamily, numbers=left,
+    numberstyle=\tiny\color{codegray}, stepnumber=1, numbersep=5pt,
+    backgroundcolor=\color{backcolour}, frame=single, breaklines=true,
+    tabsize=2, captionpos=b,
+}
+\lstdefinestyle{ascii}{
+    basicstyle=\footnotesize\ttfamily, frame=single, breaklines=true,
+}
+\lstset{style=verilog}
+
+\usepackage{bytefield}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning,calc,fit,shadows}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage[backend=biber,style=ieee,sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+\newcommand{\code}[1]{\texttt{#1}}
+\newcommand{\reg}[1]{\texttt{#1}}
+
+% Title page info
+\newcommand{\projectcode}{[Proposal Code]}
+\newcommand{\studentname}{JU JIAXING}
+\newcommand{\homeuniversity}{City University of Hong Kong}
+\newcommand{\studentid}{2501026}
+\newcommand{\supervisor}{[Supervisor Name]}
+\newcommand{\assessor}{[Assessor Name]}
+\newcommand{\major}{Computer Engineering}
+\newcommand{\programme}{BEng Computer Engineering}
+
+\begin{document}
+
+%===============================================================================
+% TITLE PAGE — matching FYP template (Appendix III)
+%===============================================================================
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{center}
+
+\vspace*{1cm}
+
+{\large\textbf{CityUHK Qingdao Research Institute}}
+
+\vspace{0.8cm}
+
+{\Large\textbf{FINAL YEAR PROJECT REPORT}}
+
+\vspace{0.5cm}
+
+{\large 2025/26 -- \projectcode}
+
+\vspace{1.5cm}
+
+{\Huge\textbf{RISC-V Custom Instruction Based \\[0.3cm] Lightweight CNN Accelerator \\[0.3cm] FPGA Prototype Validation}}
+
+\vspace{2cm}
+
+\begin{tabular}{rl}
+\textbf{Student Name:} & \studentname \\
+\textbf{Home University:} & \homeuniversity \\
+\textbf{Student ID:} & \studentid \\
+\textbf{Supervisor:} & \supervisor \\
+\textbf{Assessor:} & \assessor \\
+\textbf{Major:} & \major \\
+\textbf{Programme:} & \programme \\
+\end{tabular}
+
+\vspace{2cm}
+
+{\large\textbf{Department of Computer Science}\\[0.3cm]
+\large\textbf{City University of Hong Kong}}
+
+\vfill
+
+{\large May 2026}
+
+\end{center}
+\end{titlepage}
+
+%===============================================================================
+% FRONT MATTER — lowercase roman page numbering
+%===============================================================================
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% --- Declaration ---
+\chapter*{Declaration}
+\addcontentsline{toc}{chapter}{Declaration}
+\input{chapters/00_declaration.tex}
+\newpage
+
+% --- Abstract ---
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\input{chapters/00_abstract.tex}
+\newpage
+
+% --- Acknowledgements ---
+\chapter*{Acknowledgements}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+\input{chapters/00_acknowledgements.tex}
+\newpage
+
+% --- Table of Contents ---
+\tableofcontents
+\newpage
+
+% --- List of Figures ---
+\listoffigures
+\addcontentsline{toc}{chapter}{List of Figures}
+
+% --- List of Tables ---
+\listoftables
+\addcontentsline{toc}{chapter}{List of Tables}
+\newpage
+
+%===============================================================================
+% MAIN TEXT — arabic page numbering, starting at 1
+%===============================================================================
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\chapter{Introduction}
+\input{chapters/01_1_introduction.tex}
+
+\chapter{Background}
+\input{chapters/02_2_background.tex}
+
+\chapter{Methodology}
+\input{chapters/03_3_methodology.tex}
+
+\chapter{Results}
+\input{chapters/04_4_results.tex}
+
+\chapter{Discussion}
+\input{chapters/05_5_discussion.tex}
+
+\chapter{Conclusion}
+\input{chapters/06_6_conclusion.tex}
+
+%===============================================================================
+% BACK MATTER
+%===============================================================================
+\printbibliography[heading=bibintoc, title=References]
+
+\end{document}

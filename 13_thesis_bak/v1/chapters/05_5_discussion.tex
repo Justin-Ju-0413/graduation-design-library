@@ -1,0 +1,113 @@
+% Chapter 5: Chapter 5. Discussion
+
+
+\section{FPGA Bring-up Challenges and Resolution}\label{sec:5_1}
+
+The FPGA bring-up process for the E203-based CNN accelerator system revealed several non-trivial engineering challenges that are not typically encountered in pure RTL simulation environments. These challenges and their resolutions provide valuable insights for similar SoC prototyping efforts.
+
+
+\subsection{Simulation-to-Hardware Gap}
+
+A significant finding was that the RTL simulation, once properly configured, exactly reproduced the FPGA board behavior. When the CPU failed to boot (PC=0x00000000), this behavior was observed identically in both iverilog simulation and Vivado hardware. This correlation was instrumental in enabling rapid root cause analysis, as simulation iterations take seconds compared to the 10-minute FPGA build cycle.
+
+
+The key factors that caused the simulation-to-hardware gap were not related to timing, clock domain crossing, or synthesis optimization---the usual suspects in FPGA debugging. Instead, they were related to file format compatibility, macro visibility, and transport delay behavior in simulation primitives. This finding underscores the importance of establishing a verified simulation environment before committing to hardware builds.
+
+
+\subsection{ITCM/DTCM Initialization Complexity}
+
+A key discovery was that both Vivado's synthesis-time \texttt{\$readmemh} and iverilog's simulation-time \texttt{\$readmemh} interpret whitespace-separated hex tokens as full memory words. Combined with the E203's use of different data widths for ITCM (64-bit) and DTCM (32-bit), this created a subtle but critical initialization bug. The RISC-V \texttt{objcopy} command with \mbox{\texttt{-O verilog}} output produces byte-level hex, incompatible with word-level \texttt{\$readmemh} for memories wider than 8 bits.
+
+
+The solution---a configurable-width hex format converter---highlights the importance of understanding the specific requirements of each tool in the build chain. This issue would not manifest in an ASIC flow where memory initialization is handled through different mechanisms.
+
+
+\subsection{ILA Probe Design Strategy}
+
+The initial ILA probe configuration monitored the ITCM-dedicated bus interface, which was a natural choice because the hello\_e203 program resides in ITCM. However, the CPU's initial boot sequence begins in mask ROM (MROM), accessed through the BIU and system memory bus rather than the ITCM interface. This mismatch caused the ILA to show no activity despite the CPU being active, leading to incorrect initial diagnosis.
+
+
+The lesson for future ILA-based debugging is to include probes on all major bus interfaces during initial bring-up, rather than optimizing for the expected operational path.
+
+\subsection{E203 NICE Decoder Integration Constraint}\label{sec:5_1_4}
+
+A notable bring-up challenge encountered during NICE accelerator validation was the E203 decoder's dual interpretation of the rs2 instruction field~\cite{NUCLEI_NICE}. In the standard RISC-V ISA, the rs2 field serves a single purpose: it identifies a general-purpose register whose value is read from the register file. The E203 decoder optimizes this by skipping the register read when rs2 encodes x0, since x0 always returns zero.
+
+However, NICE custom instructions may repurpose the rs2 field as an immediate data operand rather than a register address. In the CNN accelerator's WLOAD and DLOAD instructions, rs2 encodes the PE array vector bank index (0--3). When the index is 0, the instruction's rs2 field is 5'b00000, which the decoder interprets as ``rs2~=~x0, skip the register read.'' The IFU retains a stale rs2 index from the preceding instruction, and the accelerator receives incorrect operand data.
+
+This behavior is not documented in the NICE specification, which describes the valid-ready handshake and instruction encoding but does not detail the decoder's internal register-fetch optimization. For future NICE coprocessor designs that repurpose the rs2 (or rs1) field as non-register data, the integration strategy should either (a) apply the one-line decoder patch described in Chapter~4 to unconditionally capture rs2 for NICE instructions, or (b) ensure at the software level that the encoded operand value never equals x0 (for example, by offsetting the index range to 1--4 instead of 0--3).
+
+The broader lesson is that when integrating custom coprocessors into a processor core originally designed for a fixed ISA, instruction-field semantics that are optimization-safe for the base ISA may become correctness-critical when fields are repurposed. A conservative integration policy---capture all operand fields unconditionally for custom instructions---avoids such latent issues and adds negligible hardware cost (one multiplexer control bit).
+
+
+\section{NICE CNN Accelerator Validation Status}\label{sec:5_2}
+
+The NICE CNN accelerator test program successfully demonstrated the complete NICE instruction execution path~\cite{NUCLEI_NICE} on FPGA hardware:
+
+
+The CPU correctly decodes and dispatches custom-0 opcode (0x0B) instructions to the NICE coprocessor.
+
+
+The NICE interface correctly handles the four-channel handshake protocol (request, response, memory, CSR).
+
+
+The PE array receives weight and activation data through the WLOAD and DLOAD instructions and responds to the COMP trigger.
+
+
+All NICE instructions complete without bus errors, pipeline stalls, or exception traps, as confirmed by ILA probe traces showing the CPU progressing through the full instruction sequence.
+
+
+The board-level CNN regression used a reduced 3$\times$3 INT8 convolution over a 4$\times$4 INT8 input. Its UART transcript shows that the NICE hardware output exactly matches both the CPU reference and the expected result (12, 23, 0, 19), and the same run reports a 5.282$\times$ kernel speedup. This test exercises the custom instruction path, PE array datapath, result readback, and rs2 decoder fix.
+
+The full LeNet-5 MNIST inference flow was then validated on the FPGA using the v8 firmware. The UART transcript records all 10 sampled MNIST images classified correctly (10/10 = 100\%), with predictions matching the expected labels 7, 2, 1, 0, 4, 1, 4, 9, 5, and 9. This extends the validation from a reduced convolution kernel to an end-to-end inference run while preserving the reduced CNN regression as the cycle-count comparison point.
+
+
+\section{Comparison with Project Objectives}\label{sec:5_3}
+
+Table~\ref{tab:5_1} summarizes the achievement status of each project objective.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Project objective status summary}
+\label{tab:5_1}
+\begin{tabularx}{\textwidth}{l>{\centering\arraybackslash}p{2cm}X}
+\hline
+Objective & Status & Evidence \\ \hline\hline
+Design 4$\times$4 PE array with NICE interface & Achieved & RTL simulation RSTAT=19 \\ \hline
+Integrate with E203 SoC & Achieved & Full-SoC simulation + FPGA build \\ \hline
+FPGA bring-up pipeline & Achieved & 6 build modes, all timing-clean \\ \hline
+hello\_e203 board validation & Achieved & UART output + ILA evidence \\ \hline
+NICE accelerator board testing & Achieved & ILA-confirmed instruction execution + CNN v1 UART regression \\ \hline
+Convolution speedup ($\geq$5$\times$ target) & Achieved & 5.282$\times$ measured (287 vs.\ 1516 cycles) \\ \hline
+Full-network accuracy validation & Achieved & LeNet-5 UART transcript reports 10/10 correct MNIST samples \\ \hline
+\end{tabularx}
+\end{table}
+
+\section{Engineering Lessons Learned}\label{sec:5_4}
+
+Build verification infrastructure first. The ILA probe system, simulation environment, and hex format converter were essential enablers for all subsequent debugging. Without them, the four root causes would have been extremely difficult to isolate.
+
+
+Simulation is not optional for complex SoC bring-up. Even though the final target is FPGA hardware, the ability to reproduce board behavior in simulation was the single most important factor in resolving the boot failure.
+
+
+Document every configuration change. The interplay between the boot-ROM macro, the prologue.tcl global defines, the fpga\_mem\_init.vh header, and the ITCM/DTCM hex file formats involved changes across multiple files in two repositories. Systematic documentation prevented confusion during iterative debugging.
+
+
+Peripheral initialization order matters. The GPIO IOF configuration must precede UART initialization, and the UART baud rate divisor must be set before enabling the transmitter. These dependencies, while obvious in hindsight, caused several failed iterations when developing the NICE test program.
+
+
+\section{Limitations}\label{sec:5_5}
+
+Several limitations of the current prototype are acknowledged:
+
+\textbf{Operating Frequency.} The SoC core currently operates at 16 MHz, derived from the 50 MHz board oscillator via an MMCM divider. This clock frequency was selected to match the E203 reference design's default power-on configuration (hfextclk = 16 MHz, PLL bypass mode), simplifying the initial bring-up by avoiding PLL configuration complexity. Static timing analysis confirms substantial positive slack at 16 MHz (WNS = 24.328 ns on the clk\_16M domain). The ILA sampling logic, operating directly on the 50 MHz sys\_clk domain, achieves clean timing closure (WNS = 12.472 ns, zero failing endpoints across 3,730 paths), demonstrating that the Artix-7 -2 speed grade is fully capable of 50 MHz operation for the FPGA fabric. Migrating the SoC core to a higher frequency would require adjusting the MMCM output divider and verifying timing closure across the expanded core clock domain.
+
+\textbf{Inference Accuracy.} The recorded LeNet-5 UART transcript validates 10/10 sampled MNIST classifications on the FPGA. This is sufficient for the thesis demonstration, but it is not a statistically complete MNIST benchmark. A larger board-level test set and quantization-aware training would be appropriate next steps for reporting dataset-scale accuracy.
+
+\textbf{Accelerator Coverage.} Only the convolutional layers (Conv1 and Conv2) are executed on the NICE accelerator. The pooling and fully-connected layers run in software on the E203 core, which dominates the end-to-end inference latency (approximately 2--5 minutes per image at 16 MHz). Hardware acceleration of the FC layers would significantly improve throughput.
+
+
+These limitations are clearly scoped and do not undermine the core contributions of the project: the complete FPGA bring-up pipeline, the systematic debugging methodology, the demonstrated execution of NICE custom instructions on FPGA hardware, the recorded CNN v1 board regression with hardware/software result agreement and measured convolution speedup, and the LeNet-5 board transcript showing 100\% accuracy on the 10-image MNIST sample.
+

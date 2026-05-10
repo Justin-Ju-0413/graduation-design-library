@@ -56,14 +56,23 @@ This file records the current working state after taking over the graduation des
   - `[Proposal Code]`
   - `[Supervisor Name]`
   - `[Assessor Name]`
-- `build.sh` expects Bash. On the current PowerShell environment, use direct commands or run from a shell that provides `bash`.
-- `FYP_FINAL.docx` should still be regenerated after each future thesis source change.
-- PPT needs a real PowerPoint visual pass before submission because the automated preview does not guarantee PowerPoint text/layout parity.
-- The working tree already contained uncommitted figure/script/document changes before this takeover. Do not revert them without explicit instruction.
+- PPT needs a real PowerPoint visual pass before submission.
+- Plagiarism check not yet submitted.
 
-## Immediate Next Work
+## Completed Since Takeover (2026-05-10)
 
-1. Fill title page metadata once proposal code, supervisor, and assessor names are confirmed.
-2. Open the PPTX in PowerPoint and do a human visual pass on the actual deck.
-3. Decide whether the final defense deck should remain minimal or receive a second visual-design pass with larger figures.
-4. Commit or archive the generated deliverables once the title metadata is confirmed.
+- Figure naming aligned: all fig4_X filenames match thesis numbering
+- Table 4.6 resource data corrected to Vivado report values (LUTRAM 2843→219, FF 12807→12752, BRAM 36→35.5, BUFG 4→5)
+- LeNet-5 board result (10/10 accuracy) added to Ch4 with PuTTY screenshot
+- UART Y-axis fixed from float to integer ticks
+- Dashboard updated: rstat_result, performance_data, accuracy_verify → done
+- Workspace cleaned: ~300 temp/duplicate files deleted, old tracking plans archived
+- 75-page PDF compiled, cross-references verified
+
+## Remaining Before Submission (May 20)
+
+1. Fill title page metadata (Proposal Code / Supervisor / Assessor).
+2. PowerPoint visual pass on defense deck.
+3. Plagiarism check + originality report.
+4. QA preparation + rehearsal for oral defense.
+5. Final `bash build.sh all` for PDF + DOCX.

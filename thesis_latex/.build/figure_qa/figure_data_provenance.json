@@ -11,31 +11,31 @@
   "resources": [
     {
       "name": "LUT",
-      "used": 13187,
+      "used": 13188,
       "available": 63400,
       "unit": "cells",
-      "pct": 20.8
+      "pct": 20.801
     },
     {
       "name": "LUTRAM",
-      "used": 2843,
-      "available": 19200,
+      "used": 219,
+      "available": 19000,
       "unit": "cells",
-      "pct": 14.807
+      "pct": 1.153
     },
     {
       "name": "FF",
-      "used": 12807,
+      "used": 12752,
       "available": 126800,
       "unit": "regs",
-      "pct": 10.1
+      "pct": 10.057
     },
     {
       "name": "BRAM",
-      "used": 36,
+      "used": 35.5,
       "available": 135,
       "unit": "tiles",
-      "pct": 26.667
+      "pct": 26.296
     },
     {
       "name": "DSP",
@@ -46,10 +46,10 @@
     },
     {
       "name": "BUFG",
-      "used": 4,
+      "used": 5,
       "available": 32,
       "unit": "buffers",
-      "pct": 12.5
+      "pct": 15.625
     }
   ],
   "timing": [

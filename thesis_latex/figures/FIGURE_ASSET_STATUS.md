@@ -19,7 +19,7 @@ All thesis figures are maintained as report-ready English assets. Raw evidence r
 | Fig 4.4 resource fit | Thesis | Redrawn used/headroom capacity chart; legacy filename is kept only for LaTeX compatibility | recorded Vivado utilization values |
 | Fig 4.5 utilization | Thesis | Redrawn horizontal utilization chart | recorded Vivado utilization values |
 | Fig 4.6 timing | Thesis | Redrawn timing chart | recorded Vivado timing values |
-| FPGA board photo | Thesis | Original photo retained | `fig_fpga_board.jpg` |
+| FPGA board photo | Thesis | Original photo retained | `fig4_1_fpga_board.jpg` |
 
 ## Regeneration
 

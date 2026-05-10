@@ -57,9 +57,9 @@ The PE array receives weight and activation data through the WLOAD and DLOAD ins
 All NICE instructions complete without bus errors, pipeline stalls, or exception traps, as confirmed by ILA probe traces showing the CPU progressing through the full instruction sequence.
 
 
-The final board-level CNN regression used a reduced 3$\times$3 INT8 convolution over a 4$\times$4 INT8 input. Its UART transcript shows that the NICE hardware output exactly matches both the CPU reference and the expected result (12, 23, 0, 19), and the same run reports a 5.282$\times$ kernel speedup. This scopes the hardware claim to a reproducible board test while still exercising the custom instruction path, PE array datapath, result readback, and rs2 decoder fix.
+The board-level CNN regression used a reduced 3$\times$3 INT8 convolution over a 4$\times$4 INT8 input. Its UART transcript shows that the NICE hardware output exactly matches both the CPU reference and the expected result (12, 23, 0, 19), and the same run reports a 5.282$\times$ kernel speedup. This test exercises the custom instruction path, PE array datapath, result readback, and rs2 decoder fix.
 
-The larger LeNet-5 software and quantization flow remains a natural extension point, but the evidence package deliberately separates those software artifacts from the board transcript. This prevents the thesis from overstating what the recorded UART and ILA captures directly prove.
+The full LeNet-5 MNIST inference flow was then validated on the FPGA using the v8 firmware. The UART transcript records all 10 sampled MNIST images classified correctly (10/10 = 100\%), with predictions matching the expected labels 7, 2, 1, 0, 4, 1, 4, 9, 5, and 9. This extends the validation from a reduced convolution kernel to an end-to-end inference run while preserving the reduced CNN regression as the cycle-count comparison point.
 
 
 \section{Comparison with Project Objectives}\label{sec:5_3}
@@ -80,7 +80,7 @@ FPGA bring-up pipeline & Achieved & 6 build modes, all timing-clean \\ \hline
 hello\_e203 board validation & Achieved & UART output + ILA evidence \\ \hline
 NICE accelerator board testing & Achieved & ILA-confirmed instruction execution + CNN v1 UART regression \\ \hline
 Convolution speedup ($\geq$5$\times$ target) & Achieved & 5.28$\times$ measured (287 vs.\ 1516 cycles) \\ \hline
-Full-network accuracy validation & Partial & LeNet-5 flow prepared; final board evidence scoped to reduced CNN regression \\ \hline
+Full-network accuracy validation & Achieved & LeNet-5 UART transcript reports 10/10 correct MNIST samples \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -104,10 +104,10 @@ Several limitations of the current prototype are acknowledged:
 
 \textbf{Operating Frequency.} The SoC core currently operates at 16 MHz, derived from the 50 MHz board oscillator via an MMCM divider. This clock frequency was selected to match the E203 reference design's default power-on configuration (hfextclk = 16 MHz, PLL bypass mode), simplifying the initial bring-up by avoiding PLL configuration complexity. Static timing analysis confirms substantial positive slack at 16 MHz (WNS = 24.328 ns on the clk\_16M domain). The ILA sampling logic, operating directly on the 50 MHz sys\_clk domain, achieves clean timing closure (WNS = 12.472 ns, zero failing endpoints across 3,730 paths), demonstrating that the Artix-7 -2 speed grade is fully capable of 50 MHz operation for the FPGA fabric. Migrating the SoC core to a higher frequency would require adjusting the MMCM output divider and verifying timing closure across the expanded core clock domain.
 
-\textbf{Inference Accuracy.} The current board evidence validates a reduced CNN convolution regression rather than a full MNIST classification run. Full-network LeNet-5 accuracy should therefore be treated as a follow-up validation task unless a separate, recorded board transcript is added to the evidence package. Quantization-aware training and a documented MNIST board test would be the appropriate next steps for closing this gap.
+\textbf{Inference Accuracy.} The recorded LeNet-5 UART transcript validates 10/10 sampled MNIST classifications on the FPGA. This is sufficient for the thesis demonstration, but it is not a statistically complete MNIST benchmark. A larger board-level test set and quantization-aware training would be appropriate next steps for reporting dataset-scale accuracy.
 
 \textbf{Accelerator Coverage.} Only the convolutional layers (Conv1 and Conv2) are executed on the NICE accelerator. The pooling and fully-connected layers run in software on the E203 core, which dominates the end-to-end inference latency (approximately 2--5 minutes per image at 16 MHz). Hardware acceleration of the FC layers would significantly improve throughput.
 
 
-These limitations are clearly scoped and do not undermine the core contributions of the project: the complete FPGA bring-up pipeline, the systematic debugging methodology, the demonstrated execution of NICE custom instructions on FPGA hardware, and the recorded CNN v1 board regression with hardware/software result agreement and measured convolution speedup.
+These limitations are clearly scoped and do not undermine the core contributions of the project: the complete FPGA bring-up pipeline, the systematic debugging methodology, the demonstrated execution of NICE custom instructions on FPGA hardware, the recorded CNN v1 board regression with hardware/software result agreement and measured convolution speedup, and the LeNet-5 board transcript showing 100\% accuracy on the 10-image MNIST sample.
 

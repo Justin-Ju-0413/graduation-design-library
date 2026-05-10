@@ -34,14 +34,15 @@ QA outputs:
 
 | Figure | File | LaTeX label | Source | Evidence boundary |
 |---|---|---|---|---|
-| FPGA board photo | `fig_fpga_board.jpg` | `fig:fpga_board` | Original photo | Visual hardware context only. |
-| Fig 4.1 hello ILA | `fig4_1_ila_pc_trace.png` | `fig:4_1` | `.build/fix_figures.py` | Redrawn from `04_Experiments/Board_BringUp/2026-04-28_board_connection_check/hello_e203_board_artifacts/ila_capture.csv`. |
-| Fig 4.2 CNN ILA | `fig4_2_ila_nice_activity.png` | `fig:4_2` | `.build/fix_figures.py` | Redrawn from `04_Experiments/Board_BringUp/2026-05-09_nice_rs2_fix_verification/ila_capture.csv`; sampled NICE window is stable idle, with pass/fail from UART. |
-| UART output | `fig_uart_output.png` | `fig:uart_output` | `.build/fix_figures.py` | Rendered from `04_Experiments/Board_BringUp/2026-05-09_nice_rs2_fix_verification/uart_output.txt`; proves CNN v1 reduced-convolution HW/SW/expected agreement and 5.282x speedup. |
-| Fig 4.3 speedup | `fig4_3_speedup_bar.png` | `fig:4_3` | `.build/fix_figures.py` | Uses UART cycle counts: CPU 1516 cycles, NICE 287 cycles, speedup 5.282x. |
-| Fig 4.4 resource fit | `fig4_4_resource_pie.png` | `fig:4_4` | `.build/fix_figures.py` | Legacy filename retained for LaTeX compatibility; content is not a pie chart. It shows per-resource used/headroom bars using recorded Vivado utilization values. |
-| Fig 4.5 utilization | `fig4_5_utilization.png` | `fig:4_5` | `.build/fix_figures.py` | Shows the same recorded Vivado utilization percentages on a single percentage scale with a 30% reference. |
-| Fig 4.6 timing | `fig4_6_timing.png` | `fig:4_6` | `.build/fix_figures.py` | Uses recorded timing values from Vivado reports/summaries; Table 4.3 must match the values in `figure_data_provenance.json`. |
+| FPGA board photo | `fig4_1_fpga_board.jpg` | `fig:fpga_board` | Original photo | Visual hardware context only. |
+| Fig 4.1 hello ILA | `fig4_2_ila_pc_trace.png` | `fig:4_1` | `.build/fix_figures.py` | Redrawn from `04_Experiments/Board_BringUp/2026-04-28_board_connection_check/hello_e203_board_artifacts/ila_capture.csv`. |
+| Fig 4.2 CNN ILA | `fig4_3_ila_nice_activity.png` | `fig:4_2` | `.build/fix_figures.py` | Redrawn from `04_Experiments/Board_BringUp/2026-05-09_nice_rs2_fix_verification/ila_capture.csv`; sampled NICE window is stable idle, with pass/fail from UART. |
+| Fig 4.4 CNN v1 UART | `fig4_4_uart_cnn_v1.png` | `fig:uart_output` | `.build/fix_figures.py` | Rendered from `04_Experiments/Board_BringUp/2026-05-09_nice_rs2_fix_verification/uart_output.txt`; proves CNN v1 reduced-convolution HW/SW/expected agreement and 5.282x speedup. |
+| Fig 4.5 LeNet-5 UART | `fig4_5_uart_lenet5.png` | `fig:4_7` | `.build/fix_figures.py` | Rendered from the recorded LeNet-5 v8 board result: 10 MNIST test images classified correctly (10/10 = 100%). |
+| Fig 4.6 speedup | `fig4_6_speedup_bar.png` | `fig:4_3` | `.build/fix_figures.py` | Uses UART cycle counts: CPU 1516 cycles, NICE 287 cycles, speedup 5.282x. |
+| Fig 4.7 resource fit | `fig4_7_resource_pie.png` | `fig:4_4` | `.build/fix_figures.py` | Shows per-resource used/headroom bars using recorded Vivado utilization values. |
+| Fig 4.8 utilization | `fig4_8_utilization_bar.png` | `fig:4_5` | `.build/fix_figures.py` | Shows the same recorded Vivado utilization percentages on a single percentage scale with a 30% reference. |
+| Fig 4.9 timing | `fig4_9_timing.png` | `fig:4_6` | `.build/fix_figures.py` | Uses recorded timing values from Vivado reports/summaries; Table 4.3 must match the values in `figure_data_provenance.json`. |
 
 ## Data Values
 
@@ -56,16 +57,25 @@ Measured UART result:
 | HW output | `12 23 0 19` |
 | Expected output | `12 23 0 19` |
 
+LeNet-5 UART result:
+
+| Metric | Value |
+|---|---:|
+| Correct MNIST samples | 10 / 10 |
+| Accuracy | 100% |
+| Expected labels | `7 2 1 0 4 1 4 9 5 9` |
+| Predicted labels | `7 2 1 0 4 1 4 9 5 9` |
+
 Resource values:
 
 | Resource | Used | Available | Utilization |
 |---|---:|---:|---:|
-| LUT | 13,187 | 63,400 | 20.8% |
-| LUTRAM | 2,843 | 19,200 | 14.8% |
-| FF | 12,807 | 126,800 | 10.1% |
-| BRAM | 36 | 135 | 26.7% |
+| LUT | 13,188 | 63,400 | 20.8% |
+| LUTRAM | 219 | 19,000 | 1.2% |
+| FF | 12,752 | 126,800 | 10.1% |
+| BRAM | 35.5 | 135 | 26.3% |
 | DSP | 0 | 240 | 0.0% |
-| BUFG | 4 | 32 | 12.5% |
+| BUFG | 5 | 32 | 15.6% |
 
 Timing values:
 

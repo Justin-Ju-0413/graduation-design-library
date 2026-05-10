@@ -4,10 +4,7 @@
 
 Build the final defense around the same evidence chain used in the thesis.
 
-Current master roadmap:
-
-- `..\08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan\MASTER_PLAN.md`
-- `..\08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan\FINAL_DEFENSE_PLAN.md`
+Current master roadmap: `..\08_Todo_And_Notes\2026-05-09_Codex_Takeover_Status.md`
 
 ## Final Defense Countdown
 
@@ -23,17 +20,19 @@ Current master roadmap:
 
 ### 2026-05-06 to 2026-05-12: Board Runtime Evidence
 
-- Status: Done
-- Goal: Collect hello_e203 and cnn_accel_demo board evidence if board access is available.
+- Status: **Done**
+- Goal: Collect hello_e203 and cnn_accel_demo board evidence.
 - Output:
   - UART screenshots
   - LED record
   - ILA screenshots
   - benchmark table
-- Current evidence:
-  - `..\04_Experiments\Board_BringUp\2026-04-28_board_connection_check\hello_e203_board_artifacts\`
-  - `..\04_Experiments\Board_BringUp\2026-05-09_nice_rs2_fix_verification\`
-  - CNN v1 UART result: SW/HW/Expected all match, speedup 5.282x
+- Evidence collected:
+  - `hello_e203_board_artifacts/` — UART + ILA
+  - `2026-05-09_nice_rs2_fix_verification/` — CNN v1 regression after rs2 fix
+  - CNN v1 UART: SW/HW/Expected all match, speedup 5.282x
+  - LeNet-5 UART: 10/10 accuracy on FPGA (v8, Conv2 ReLU fix)
+  - NICE rs2 index capture fix verified on board
 
 ### 2026-05-12 to 2026-05-18: Final PPT First Version
 

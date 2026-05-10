@@ -21,9 +21,9 @@
     "hello_e203_board": "done",
     "cpu_boot_debug": "done",
     "nice_ila_confirm": "done",
-    "rstat_result": "debugging",
-    "performance_data": "pending",
-    "accuracy_verify": "pending"
+    "rstat_result": "done",
+    "performance_data": "done",
+    "accuracy_verify": "done"
   },
   "deadlines": {
     "thesis_submission": "2026-05-06",
@@ -46,5 +46,5 @@
     "_archive": 1
   },
   "library_total_files": 245,
-  "last_updated": "2026-05-06T00:02:08"
+  "last_updated": "2026-05-10T10:45:00"
 }

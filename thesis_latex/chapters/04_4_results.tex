@@ -102,7 +102,7 @@ The Davinci Pro A7-100T FPGA development board (Figure~\ref{fig:fpga_board}), fe
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig_fpga_board.jpg}
+\includegraphics[width=0.85\textwidth]{figures/fig4_1_fpga_board.jpg}
 \caption{Davinci Pro A7-100T FPGA development board used for E203 SoC and NICE CNN accelerator validation.}
 \label{fig:fpga_board}
 \end{figure}
@@ -165,7 +165,7 @@ probe1\_status & 0xd & sys\_rst\_n=1, mmcm\_locked=1 \\ \hline
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig4_1_ila_pc_trace.png}
+\includegraphics[width=0.85\textwidth]{figures/fig4_2_ila_pc_trace.png}
 \caption{ILA capture from the hello\_e203 board run. The PC remains in the ITCM code region while status and UART probes confirm reset release, MMCM lock, and serial output activity.}
 \label{fig:4_1}
 \end{figure}
@@ -240,7 +240,7 @@ probe5\_nice\_hs & 0x4 & NICE handshake idle \\ \hline
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig4_2_ila_nice_activity.png}
+\includegraphics[width=0.85\textwidth]{figures/fig4_3_ila_nice_activity.png}
 \caption{ILA capture from the CNN v1 board regression after the NICE rs2 fix. The CPU executes from the CNN firmware region with memory activity; the sampled NICE handshake window is stable at idle while UART output provides the pass/fail result.}
 \label{fig:4_2}
 \end{figure}
@@ -287,18 +287,36 @@ To validate the full inference pipeline, a complete LeNet-5 network (Conv1 5$\ti
 
 The 5$\times$5-to-4$\times$4 kernel tiling was verified through a CPU reference implementation. For each output pixel, the NICE accelerator computes the top-left 4$\times$4 sub-tile (16 multiply-accumulate operations in hardware), while the remaining 9 border products are accumulated in software. The equivalence between the NICE-accelerated path and the pure-CPU reference was confirmed via self-check routines embedded in the firmware.
 
-\subsubsection{FPGA Deployment Status}
+\subsubsection{FPGA Deployment: CNN v1 Regression}
 
 On the FPGA platform, ILA probe traces confirmed the NICE instruction execution sequence. The CPU executes CLEAR, four WLOADs, four DLOADs, COMP, and RSTAT before reaching program completion. The UART evidence in Figure~\ref{fig:uart_output} records the reduced CNN v1 board regression used for hardware/software equivalence and cycle-count measurement: a 3$\times$3 INT8 convolution over a 4$\times$4 INT8 input.
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.85\textwidth]{figures/fig_uart_output.png}
+\includegraphics[width=0.85\textwidth]{figures/fig4_4_uart_cnn_v1.png}
 \caption[UART terminal output from the CNN v1 board regression]{UART terminal output from the CNN v1 board regression running on the FPGA. The recorded serial log shows the CPU reference, NICE hardware output, and expected output all matching as 12, 23, 0, 19; the same log reports 287 accelerator cycles versus 1,516 CPU cycles, giving a measured 5.282$\times$ convolution speedup.}
 \label{fig:uart_output}
 \end{figure}
 
-The board evidence therefore supports two claims directly: the custom-instruction accelerator produces the same reduced-convolution result as the CPU reference, and the measured kernel execution is 5.282$\times$ faster than the software baseline. The LeNet-5 C implementation and INT8 quantization flow remain useful system-integration context, but the final board transcript used in this thesis is deliberately scoped to the reproducible CNN v1 convolution regression.
+\subsubsection{FPGA Deployment: LeNet-5 Inference}
+
+The complete LeNet-5 firmware (v8) was deployed on the FPGA board using the \texttt{cnn\_sysclk\_ila} build mode. Two issues were identified and resolved during iterative board testing:
+
+\begin{itemize}
+\item \textbf{Conv2 ReLU position (v6$\to$v8):} In version~v6, ReLU was applied per-channel inside the NICE-accelerated convolution function, i.e., after each of the 6 input channels for Conv2. The correct behavior applies ReLU only after the accumulated sum across all 6 channels. This caused information loss during multi-channel accumulation and limited accuracy to 7/10 on the 10-image test set.
+\item \textbf{UART baud-rate divisor (v6$\to$v8):} The UART divisor was initially set to 27 (16~MHz / 28 = 571,428~baud) instead of the correct value 138 (16~MHz / 139 $\approx$ 115,200~baud), causing intermittent serial corruption.
+\end{itemize}
+
+After these corrections, the v8 firmware produced the UART output shown in Figure~\ref{fig:4_7}. The LeNet-5 network classified all 10 MNIST test images correctly (10/10 = 100\%), with predictions matching the ground-truth labels for digits 7, 2, 1, 0, 4, 1, 4, 9, 5, and 9. This result confirms end-to-end correctness of the NICE-accelerated convolution pipeline on FPGA hardware.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width=0.85\textwidth]{figures/fig4_5_uart_lenet5.png}
+\caption[UART terminal output from the LeNet-5 FPGA inference]{UART terminal output from the LeNet-5 MNIST inference running on the FPGA (v8, row-packing fix). All 10 test images are classified correctly (Img 0--9: 7, 2, 1, 0, 4, 1, 4, 9, 5, 9), demonstrating end-to-end correctness of the NICE-accelerated convolution pipeline.}
+\label{fig:4_7}
+\end{figure}
+
+The board evidence therefore supports three claims: (1) the custom-instruction accelerator produces the correct convolution result matching the CPU reference; (2) the measured kernel execution is 5.282$\times$ faster than the software baseline; and (3) the end-to-end LeNet-5 inference pipeline operates correctly on FPGA hardware.
 
 \subsection{Performance Measurement}
 
@@ -312,7 +330,7 @@ The NICE-accelerated convolution was benchmarked against a pure software referen
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{figures/fig4_3_speedup_bar.png}
+\includegraphics[width=0.75\textwidth]{figures/fig4_6_speedup_bar.png}
 \caption{Measured convolution benchmark on the board demo: the NICE accelerator completes the test convolution in 287 cycles versus 1,516 cycles for the CPU reference, giving a 5.282$\times$ speedup.}
 \label{fig:4_3}
 \end{figure}
@@ -333,13 +351,13 @@ The FPGA resource utilization for the complete E203 SoC with the CNN NICE accele
 \begin{tabular}{lcccc}
 \hline
 Resource & Used & Available & Utilization (\%) \\ \hline\hline
-LUT & 13,187 & 63,400 & 20.8 \\ \hline
-LUTRAM & 2,843 & 19,200 & 14.8 \\ \hline
-FF & 12,807 & 126,800 & 10.1 \\ \hline
-BRAM & 36 & 135 & 26.7 \\ \hline
+LUT & 13,188 & 63,400 & 20.8 \\ \hline
+LUTRAM & 219 & 19,000 & 1.2 \\ \hline
+FF & 12,752 & 126,800 & 10.1 \\ \hline
+BRAM & 35.5 & 135 & 26.3 \\ \hline
 DSP & 0 & 240 & 0.0\tabularnewline
 \multicolumn{4}{l}{\footnotesize DSP mapped to LUTs: 8-bit multipliers more efficient in fabric.} \\ \hline
-BUFG & 4 & 32 & 12.5 \\ \hline
+BUFG & 5 & 32 & 15.6 \\ \hline
 \end{tabular}
 \end{table}
 
@@ -348,21 +366,21 @@ These figures demonstrate that the complete E203 SoC with CNN accelerator fits c
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.70\textwidth]{figures/fig4_4_resource_pie.png}
+\includegraphics[width=0.70\textwidth]{figures/fig4_7_resource_pie.png}
 \caption{FPGA resource-capacity fit for the complete E203 SoC with CNN NICE accelerator. Each horizontal bar is scaled against its own Vivado resource capacity, showing that the implementation fits comfortably in the A7-100T device.}
 \label{fig:4_4}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{figures/fig4_5_utilization.png}
+\includegraphics[width=0.75\textwidth]{figures/fig4_8_utilization_bar.png}
 \caption{FPGA utilization by resource type for the complete SoC. LUT, FF, BRAM, DSP, and clock-buffer usage leave headroom for future accelerator expansion.}
 \label{fig:4_5}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.80\textwidth]{figures/fig4_6_timing.png}
+\includegraphics[width=0.80\textwidth]{figures/fig4_9_timing.png}
 \caption{Timing closure summary across diagnostic and CNN board build configurations; all recorded builds meet setup and hold timing with positive slack.}
 \label{fig:4_6}
 \end{figure}

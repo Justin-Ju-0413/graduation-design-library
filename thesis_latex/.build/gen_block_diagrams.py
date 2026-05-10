@@ -94,21 +94,21 @@ def arrow(ax, xy1, xy2, color=LINE, lw=1.5, both=False, rad=0.0):
 
 
 def title(ax, main, sub):
-    ax.text(0.3, 8.55, main, fontsize=18, fontweight="bold", ha="left")
-    ax.text(0.3, 8.18, sub, fontsize=10.5, color=MUTED, ha="left")
+    return
 
 
 def fig3_1_soc_architecture():
     fig, ax = setup(figsize=(11.3, 6.2), xlim=(0, 16), ylim=(0, 9))
     title(ax, "E203 SoC with NICE CNN accelerator", "Custom instructions carry operands through NICE; memory and I/O stay on the system bus.")
 
-    # Top compute path.
-    box(ax, 0.7, 4.55, 3.0, 2.55, "E203 core", "RV32IMAC\nIFU / EXU / LSU", FILL_BLUE, BLUE, fs=12)
-    box(ax, 5.35, 4.55, 3.35, 2.55, "NICE CNN accelerator", "decoder + FSM\n4x4 INT8 PE array", FILL_GREEN, GREEN, fs=12)
-    arrow(ax, (3.76, 5.58), (5.30, 5.58), AMBER, lw=2.4, both=True)
+    # Top compute path. The bus is intentionally kept below this row so that
+    # peripheral drops cannot be mistaken for core-to-accelerator connections.
+    box(ax, 0.7, 5.30, 3.0, 2.25, "E203 core", "RV32IMAC\nIFU / EXU / LSU", FILL_BLUE, BLUE, fs=12)
+    box(ax, 5.35, 5.30, 3.35, 2.25, "NICE CNN accelerator", "decoder + FSM\n4x4 INT8 PE array", FILL_GREEN, GREEN, fs=12)
+    arrow(ax, (3.76, 6.32), (5.30, 6.32), AMBER, lw=2.4, both=True)
     ax.text(
         4.53,
-        6.12,
+        6.84,
         "NICE\nreq/resp",
         ha="center",
         va="center",
@@ -119,18 +119,26 @@ def fig3_1_soc_architecture():
         bbox=dict(facecolor="white", edgecolor="none", pad=1.2),
     )
 
-    # Memory and peripheral blocks.
-    box(ax, 10.0, 6.10, 3.4, 0.85, "ITCM", "128 KB, 0x8000_0000", FILL_VIOLET, VIOLET, fs=10.5)
-    box(ax, 10.0, 4.90, 3.4, 0.85, "DTCM", "64 KB, 0x9000_0000", FILL_VIOLET, VIOLET, fs=10.5)
-    box(ax, 10.0, 3.00, 3.4, 0.85, "UART0 + GPIO", "board evidence output", FILL_GRAY, LINE, fs=10.5)
-    box(ax, 5.3, 3.00, 2.6, 0.85, "Boot ROM", "0x0000_0000", FILL_GRAY, LINE, fs=10.5)
-    box(ax, 0.9, 3.00, 2.7, 0.85, "CLINT / PLIC", "interrupt subsystem", FILL_GRAY, LINE, fs=10.5)
+    # Memory blocks sit above the fabric and use separate short drops.
+    box(ax, 9.80, 6.18, 2.85, 1.04, "ITCM", "128 KB\n0x8000_0000", FILL_VIOLET, VIOLET, fs=10.1)
+    box(ax, 13.00, 6.18, 2.85, 1.04, "DTCM", "64 KB\n0x9000_0000", FILL_VIOLET, VIOLET, fs=10.1)
 
-    # Bus rail. All drops avoid text areas and are routed orthogonally.
-    bus_y = 1.55
-    box(ax, 0.7, bus_y, 12.7, 0.45, "AHB system bus fabric", fc="#D9E2EC", ec=LINE, fs=10)
-    for x, y0 in [(2.2, 4.55), (6.6, 4.55), (11.7, 6.10), (11.7, 4.90), (11.7, 3.00), (6.6, 3.00), (2.25, 3.00)]:
-        ax.plot([x, x], [bus_y + 0.45, y0], color=LINE, linewidth=1.15, zorder=0)
+    # Peripheral row is below the bus. This prevents the CLINT, boot ROM, and
+    # UART branches from visually overlapping the E203, NICE, and TCM paths.
+    box(ax, 0.9, 1.95, 2.7, 0.85, "CLINT / PLIC", "interrupt subsystem", FILL_GRAY, LINE, fs=10.5)
+    box(ax, 5.25, 1.95, 2.7, 0.85, "Boot ROM", "0x0000_0000", FILL_GRAY, LINE, fs=10.5)
+    box(ax, 10.0, 1.95, 3.4, 0.85, "UART0 + GPIO", "board evidence output", FILL_GRAY, LINE, fs=10.5)
+
+    # Central bus rail. Each branch is a distinct, non-overlapping orthogonal
+    # segment with clear white space between the module and the fabric.
+    bus_y = 3.55
+    box(ax, 0.7, bus_y, 15.15, 0.46, "AHB system bus fabric", fc="#D9E2EC", ec=LINE, fs=10)
+    bus_top = bus_y + 0.46
+    bus_bottom = bus_y
+    for x, y0 in [(2.20, 5.30), (11.22, 6.18), (14.42, 6.18)]:
+        ax.plot([x, x], [bus_top, y0], color=LINE, linewidth=1.15, zorder=0)
+    for x, y1 in [(2.25, 2.80), (6.60, 2.80), (11.70, 2.80)]:
+        ax.plot([x, x], [bus_bottom, y1], color=LINE, linewidth=1.15, zorder=0)
 
     ax.text(0.7, 0.62, "Design boundary: accelerator control uses NICE; firmware, memories, UART, and GPIO remain observable through the SoC bus.", fontsize=10.2, color=INK)
     save(fig, "fig3_1_soc_architecture.png")
@@ -165,7 +173,7 @@ def fig3_3_pe_microarchitecture():
 
 
 def fig3_4_pe_array():
-    fig, ax = setup(figsize=(10.4, 6.5), xlim=(0, 15), ylim=(0, 10))
+    fig, ax = setup(figsize=(10.4, 5.4), xlim=(0, 15), ylim=(0.55, 8.05))
     title(ax, "4x4 PE array datapath", "WLOAD broadcasts columns, DLOAD broadcasts rows, and COMP triggers parallel output-stationary MACs.")
 
     gx, gy = 4.0, 2.3
@@ -190,10 +198,10 @@ def fig3_4_pe_array():
         y = centers[(r, 0)][1]
         ax.text(2.68, y, f"D{r}", ha="center", va="center", fontsize=10, color=GREEN, fontweight="bold")
         arrow(ax, (3.05, y), (3.95, y), GREEN, lw=1.4)
-        ax.plot([3.95, 9.75], [y, y], color=GREEN, linewidth=0.9, alpha=0.45, zorder=0)
+        ax.plot([3.95, centers[(r, 3)][0]], [y, y], color=GREEN, linewidth=0.9, alpha=0.45, zorder=0)
 
-    box(ax, 0.85, 6.00, 2.10, 0.92, "WLOAD x4", "load columns", "#F8FBFF", BLUE, fs=10)
-    box(ax, 0.85, 0.92, 2.10, 0.92, "DLOAD x4", "load rows", "#FBFFFC", GREEN, fs=10)
+    box(ax, 0.40, 7.13, 2.10, 0.72, "WLOAD x4", "loads W0-W3", "#F8FBFF", BLUE, fs=9.2)
+    box(ax, 0.40, 3.81, 2.10, 0.86, "DLOAD x4", "loads D0-D3", "#FBFFFC", GREEN, fs=9.2)
 
     # Output routes are drawn below the array and collected at the right side,
     # so the readback wiring never crosses PE labels.
@@ -215,8 +223,7 @@ def fig3_4_pe_array():
 def main():
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     print("Generating clean architecture diagrams...")
-    fig3_1_soc_architecture()
-    fig3_3_pe_microarchitecture()
+    # Figures 3.1 and 3.3 are maintained from the author's SVG drawings.
     fig3_4_pe_array()
     print("Done.")
 

@@ -18,7 +18,7 @@ Hello World Board Validation: The hello\_e203 bare-metal program was successfull
 Systematic Root Cause Analysis: Four critical root causes preventing CPU boot were identified and resolved through a systematic ILA-based debugging methodology: simulation DFF transport delay, ITCM/DTCM hex format incompatibility, and macro visibility in Vivado synthesis. The simulation environment was demonstrated to exactly reproduce FPGA board behavior, enabling rapid diagnosis.
 
 
-NICE Accelerator Board Testing: Custom NICE test programs confirmed that the CNN accelerator instructions execute correctly on the FPGA, with ILA evidence documenting CPU execution and memory activity. The final CNN v1 board regression shows hardware/software agreement for a 3$\times$3 INT8 convolution and reports a measured 5.282$\times$ speedup over the CPU reference.
+NICE Accelerator Board Testing: Custom NICE test programs confirmed that the CNN accelerator instructions execute correctly on the FPGA, with ILA evidence documenting CPU execution and memory activity. The CNN v1 board regression shows hardware/software agreement for a 3$\times$3 INT8 convolution and reports a measured 5.282$\times$ speedup over the CPU reference. The LeNet-5 board run further classified all 10 sampled MNIST images correctly, giving a recorded 10/10 = 100\% result for the end-to-end inference demonstration.
 
 
 \section{Key Technical Findings}\label{sec:6_2}
@@ -43,7 +43,7 @@ Several directions for extending this work are identified:
 Hardware RSTAT Optimization: Optimize the multi-tile RSTAT readback path at the hardware level to reduce per-tile overhead, further improving convolution throughput for kernels larger than 4$\times$4.
 
 
-Accuracy Optimization: Complete a separately recorded full-network MNIST/LeNet-5 board validation flow, then explore quantization-aware training if the measured accuracy gap exceeds the project target.
+Accuracy Benchmarking: Extend the recorded LeNet-5 validation from the 10-image board demonstration to a larger MNIST test subset, then explore quantization-aware training if dataset-scale accuracy falls below the project target.
 
 
 FC Layer Acceleration: Extend hardware acceleration to the fully-connected layers, which currently dominate end-to-end inference latency in software (approximately 50,000 MAC operations per image at 16 MHz).

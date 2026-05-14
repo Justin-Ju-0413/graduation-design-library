@@ -1,0 +1,51 @@
+============================================================
+FINAL DEFENSE TIMING ANALYSIS
+============================================================
+Total slides: 18
+Total English words: 1293
+
+Suggested script timing (with pauses):
+  Minimum: 11:19 (679s)
+  Maximum: 11:34 (694s)
+
+Pure speaking time at different rates (no pauses):
+  120 WPM: 646s = 10m 46s
+  130 WPM: 597s = 9m 57s
+  140 WPM: 554s = 9m 14s
+  150 WPM: 517s = 8m 37s
+
+13-MINUTE FEASIBILITY CHECK:
+  Target: 13:00 (780s)
+  Script min: 679s (11.3m)
+  Script max: 694s (11.6m)
+  Buffer at max pace: +86s (1.4m) ✅
+  Buffer at min pace: +101s (1.7m) ✅
+
+Per-slide breakdown:
+Slide  Title                                         Words  Time      
+----------------------------------------------------------------------
+1      RISC-V Custom Instruction Based Lightweight   12     0:10      
+2      Presentation Outline                          61     0:30      
+3      Motivation and Objective (Chapter Divider)    13     0:08      
+4      Problem and Design Goal                       100    0:50      
+5      Project Scope and Deliverables                76     0:50      
+6      Architecture and Design (Chapter Divider)     10     0:08      
+7      System Architecture                           93     0:55      
+8      Accelerator Microarchitecture                 99     0:55      
+9      Verification Evidence and Results (Chapter D  12     0:08      
+10     Why These Design Choices?                     99     0:55      
+11     Implementation Flow                           88     0:45      
+12     FPGA Prototype Validation                     85     0:45      
+13     NICE Instruction Path Evidence                86     0:45      
+14     NICE Instruction Path Evidence: ILA Capture   77     0:35      
+15     Board Result: CNN Correctness and Speedup     102    0:55      
+16     Board Result: LeNet-5 Inference               97     0:45      
+17     Performance and Resource Summary              93     0:45      
+18     Brief Summary                                 90     0:35      
+
+RECOMMENDATIONS:
+  ✅ At suggested pace, you fit within 13 minutes.
+  → Practice with a timer. If consistently over, trim content from slides
+    that exceed 50s (Slides 4, 5, 7, 8, 10, 15).
+  → Keep transitions (Slides 3, 6, 9) very brief.
+  → Leave 30-60s buffer for questions and unexpected delays.

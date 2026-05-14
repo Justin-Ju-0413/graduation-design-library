@@ -73,7 +73,7 @@
 \newcommand{\studentname}{JU JIAXING}
 \newcommand{\homeuniversity}{City University of Hong Kong}
 \newcommand{\studentid}{2501026}
-\newcommand{\supervisor}{[Supervisor Name]}
+\newcommand{\supervisor}{Prof. Chak Chung Ray CHEUNG}
 \newcommand{\assessor}{[Assessor Name]}
 \newcommand{\major}{Computer Engineering}
 \newcommand{\programme}{BEng Computer Engineering}
@@ -128,10 +128,9 @@
 \end{titlepage}
 
 %===============================================================================
-% FRONT MATTER — lowercase roman page numbering
+% FRONT MATTER — uppercase Roman page numbering from Abstract
 %===============================================================================
-\pagenumbering{roman}
-\setcounter{page}{1}
+\pagenumbering{gobble}
 
 % --- Declaration ---
 \chapter*{Declaration}
@@ -140,6 +139,8 @@
 \newpage
 
 % --- Abstract ---
+\pagenumbering{Roman}
+\setcounter{page}{1}
 \chapter*{Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
 \input{chapters/00_abstract.tex}

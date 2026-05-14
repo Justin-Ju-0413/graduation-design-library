@@ -24,6 +24,14 @@
 !thesis_latex/figures/*.jpg
 !thesis_latex/figures/*.svg
 !DASHBOARD.html
+!14_final_submit/v2/**/*.pdf
+!14_final_submit/v2/**/*.pptx
+!14_final_submit/v2/**/*.docx
+!14_final_submit/v2/**/*.png
+!14_final_submit/v2/**/*.jpg
+!14_final_submit/v2/**/*.svg
+!05_Presentation/Final/*.pptx
+!05_Presentation/Final/previews/*.png
 
 # MNIST dataset (very large ~65MB)
 04_Experiments/mnist_data_20260506/

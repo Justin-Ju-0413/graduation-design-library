@@ -2,11 +2,17 @@
 
 This folder is the main workspace for the final graduation defense.
 
+The locked final defense baseline is stored in:
+
+- `../14_final_submit/v2/presentation/FYP_Final_Defense_English_Draft_REPORT_BASELINE.pptx`
+- `../14_final_submit/v2/presentation/Final_Defense_Bilingual_Script.docx`
+- `../14_final_submit/v2/presentation/Final_Defense_QA_Bilingual.docx`
+
 ## Defense Story
 
 The final defense should use one consistent story:
 
-I built and verified a lightweight CNN accelerator integrated with the RISC-V E203 soft-core through the NICE custom instruction interface. The RTL and full-SoC simulation paths are closed, and the remaining board-level work focuses on the Davinci Pro A7-100T soft-core debug path.
+I built and verified a lightweight CNN accelerator integrated with the RISC-V E203 soft-core through the NICE custom instruction interface. The RTL and full-SoC simulation paths are closed, and the final package preserves the board-level evidence and defense materials used for submission.
 
 ## Main Slide Structure
 

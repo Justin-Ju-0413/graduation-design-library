@@ -1,13 +1,17 @@
 # 06_References
 
-This directory stores reference materials for the graduation project: datasheets, academic papers, and tool manuals.
+This directory is the reference index area for the graduation project.
 
-## Structure
+The current bibliography lives in:
 
-- `Datasheets/` -- Hardware datasheets (FPGA, MCU, sensors, etc.)
-- `Papers/` -- Academic papers and related research publications
-- `Tools_And_Manuals/` -- Tool user guides, application notes, and software manuals
+- `../thesis_latex/references.bib`
+- final archived copy: `../14_final_submit/v2/thesis_latex_source/references.bib`
 
-## Usage
+Large reference PDFs and manuals are ignored by default unless they are part of an explicit final baseline. If a reference document must be preserved in Git, add a short note here explaining why and add the file deliberately.
 
-Place any reference PDF or document into the appropriate subdirectory. The thesis bibliography (`../09_Thesis_Writing/References/references.bib`) should cite these materials when used in the thesis text.
+Suggested local-only categories:
+
+- datasheets
+- academic papers
+- tool manuals
+- application notes

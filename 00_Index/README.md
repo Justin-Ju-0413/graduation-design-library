@@ -1,6 +1,6 @@
-# Graduation Design Library
+# Graduation Design Library Index
 
-This folder is the Windows-side master library for the graduation project.
+This folder is the navigation index for the Windows-side master library.
 
 ## Current Rule
 
@@ -14,22 +14,29 @@ This folder is the Windows-side master library for the graduation project.
   - `riscv_cnn_accelerator`: `f75e04a6969ecbfd0fa2eb2b4055670a6785bc50`
   - `e203_hbirdv2`: `3ea17fbbfba7f0ce600ea8c5500bdf7b7de418df`
 
+## Final Submission Baseline
+
+- Use `..\14_final_submit\v2` as the authoritative final hand-in package.
+- Complete archive tag: `fyp-final-v2-complete-archive-2026-05-14`.
+- Key files:
+  - Thesis DOCX: `..\14_final_submit\v2\thesis\FYP_Thesis_Final_v2_SUBMISSION_BASELINE.docx`
+  - Thesis PDF reference: `..\14_final_submit\v2\thesis\main_final_SUBMISSION_REFERENCE.pdf`
+  - Thesis LaTeX source archive: `..\14_final_submit\v2\thesis_latex_source`
+  - Final defense PPT: `..\14_final_submit\v2\presentation\FYP_Final_Defense_English_Draft_REPORT_BASELINE.pptx`
+  - Manifest: `..\14_final_submit\v2\BASELINE_MANIFEST.txt`
+
 ## Primary Entry Points
 
-- Current active task book:
-  - `..\08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan\TEN_DAY_CLOSURE_TASK_BOOK_2026_04_29.md`
-- Teacher-facing ten-day task book:
-  - `..\08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan\TEACHER_TASK_BOOK_10_DAY_CLOSURE_2026_04_29.md`
-- Five-day board bring-up subplan:
-  - `..\08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan\FIVE_DAY_BOARD_BRINGUP_PLAN_2026_04_29.md`
 - Repo baseline and current commits:
   - `..\02_Source_Repos\CURRENT_BASELINES.md`
 - Workspace policy:
   - `..\02_Source_Repos\WINDOWS_WORKSPACE_POLICY.md`
-- Roadmap to final defense:
-  - `..\08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan\MASTER_PLAN.md`
-- Final presentation files:
-  - `..\05_Presentation\README.txt`
+- Final submission package:
+  - `..\14_final_submit\v2\README.md`
+- Final defense preparation workspace:
+  - `..\10_Final_Defense\README.md`
+- Active thesis source:
+  - `..\thesis_latex`
 - Thesis process Word documents:
   - `..\03_Documents\Thesis_Materials\README.md`
 
@@ -68,7 +75,11 @@ This folder is the Windows-side master library for the graduation project.
   - Open issues and next steps
   - `2026-04-28_To_Final_Defense_Plan`
     - master roadmap from current progress to final defense
-- `09_Thesis_Writing`
-  - Thesis outline, chapter notes, references, figures, and drafts
 - `10_Final_Defense`
   - Final defense slides, scripts, QA, and evidence package
+- `13_thesis_bak`
+  - Historical thesis backup snapshot
+- `14_final_submit`
+  - Final submission packages and locked baselines
+- `thesis_latex`
+  - Active LaTeX thesis source tree

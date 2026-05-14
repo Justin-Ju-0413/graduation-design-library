@@ -21,20 +21,16 @@ This guide defines how to use the Windows library as the only long-term work cen
 
 ## Presentation Rule
 
-- Use final report materials only from `05_Presentation`.
-- Use these files by default:
-  - `Final\Tuesday_4Week_Report_Final_CN_Fixed.pptx`
-  - `Scripts\Tuesday_4Week_Report_Per_Page_Bilingual_Script_Final.docx`
-  - `Explanations\Tuesday_4Week_Report_Detailed_Explanation_CN.docx`
-  - `QA\Tuesday_4Week_Report_QA_Bilingual_Practical.docx`
-- Treat everything under `05_Presentation\Archive` as reference only.
+- Use `14_final_submit\v2\presentation` for the locked final defense baseline.
+- Use `10_Final_Defense` for editable defense preparation materials.
+- Treat `05_Presentation\Archive` as reference only.
 
 ## Thesis Rule
 
-- Use `09_Thesis_Writing` as the only thesis writing center.
-- Keep chapter notes, thesis figures, reference plans, and drafts there.
-- Build thesis claims from existing evidence in `04_Experiments` and `05_Presentation`.
-- Do not overstate board-level progress: soft-core software debug is still the current blocker.
+- Use `14_final_submit\v2\thesis` for the locked thesis submission baseline.
+- Use `thesis_latex` for the active LaTeX source tree.
+- Use `14_final_submit\v2\thesis_latex_source` as the archived source snapshot matching the final v2 package.
+- Build thesis claims from evidence in `04_Experiments` and final deliverables in `14_final_submit\v2`.
 
 ## Final Defense Rule
 
@@ -57,6 +53,12 @@ This guide defines how to use the Windows library as the only long-term work cen
 
 ## Maintenance Rule
 
-- Keep helper scripts under `C:\Users\16084\Documents\New project\$archive\tools`.
-- Do not store final slide decks or final scripts inside the repo working tree.
+- Keep repository maintenance helpers under `scripts` or `tools`.
+- Store locked final deliverables only under `14_final_submit\v2`.
 - If material is useful but no longer current, move it to `Archive` instead of deleting it.
+
+## GitHub Upload Rule
+
+- Run `powershell -ExecutionPolicy Bypass -File scripts/check_github_upload.ps1` before pushing.
+- Final deliverables in `14_final_submit\v2` are intentionally tracked even though large document formats are ignored elsewhere.
+- Do not rely on ordinary `git add .` for ignored file types; use the upload check script and explicit `git add -f` only for deliberate final artifacts.

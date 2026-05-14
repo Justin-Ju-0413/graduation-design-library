@@ -1,0 +1,12 @@
+
+Path                                                                                    Size SHA256                                                          
+----                                                                                    ---- ------                                                          
+14_final_submit\v2\presentation\Final_Defense_Bilingual_Script.docx                    44097 9FD2C9A2E63CEF884088BEA00C3871DF0EC1A86AEFE2ECD83300DE521D2550DC
+14_final_submit\v2\presentation\Final_Defense_QA_Bilingual.docx                        78012 1468AF3E0BB7C0155BFD971A09B663AB43157844654CEF9A039D15C5CDA43C37
+14_final_submit\v2\presentation\FYP_Final_Defense_English_Draft_REPORT_BASELINE.pptx 1101502 1B281C52FB47A27111F03DFC868BC25BEB2ED8DF7D330D7BE1D973D721EE3BA4
+14_final_submit\v2\README.md                                                            1331 968416E805D921A95B1417D1B6EDA8D63F1F63CC03DAAFEA0E72860D6A50520C
+14_final_submit\v2\thesis\FYP_Thesis_Final_v2_SUBMISSION_BASELINE.docx                927442 4856552DAF73923355A0225D42A15013206726C1158E9C44F980F7FEE1B664E0
+14_final_submit\v2\thesis\main_final_SUBMISSION_REFERENCE.pdf                        3158158 A48590787C9BCC4E6F31F9F37682734DFB3138211DC0B49A9949190F3E4676C2
+
+
+

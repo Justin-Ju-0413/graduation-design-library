@@ -24,6 +24,16 @@ Git tag for the complete archive:
 
 `fyp-final-v2-complete-archive-2026-05-14`
 
+## Traceability
+
+| Question | Start Here |
+| --- | --- |
+| How did the design evolve? | `00_Index/DESIGN_ITERATION_HISTORY.md` |
+| How are versions and baselines managed? | `00_Index/VERSION_MANAGEMENT.md` |
+| Which source-code commits are active? | `02_Source_Repos/CURRENT_BASELINES.md` |
+| Which evidence supports thesis/PPT claims? | `10_Final_Defense/Evidence_Package/EVIDENCE_INDEX.md` |
+| Which files are in the final package? | `14_final_submit/v2/BASELINE_MANIFEST.txt` |
+
 ## Folder Map
 
 | Folder | Role |

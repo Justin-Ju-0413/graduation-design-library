@@ -27,6 +27,10 @@ This folder is the navigation index for the Windows-side master library.
 
 ## Primary Entry Points
 
+- Design iteration history:
+  - `DESIGN_ITERATION_HISTORY.md`
+- Version management rules:
+  - `VERSION_MANAGEMENT.md`
 - Repo baseline and current commits:
   - `..\02_Source_Repos\CURRENT_BASELINES.md`
 - Workspace policy:
@@ -74,7 +78,7 @@ This folder is the navigation index for the Windows-side master library.
 - `08_Todo_And_Notes`
   - Open issues and next steps
   - `2026-04-28_To_Final_Defense_Plan`
-    - master roadmap from current progress to final defense
+    - historical roadmap used during final-defense closure
 - `10_Final_Defense`
   - Final defense slides, scripts, QA, and evidence package
 - `13_thesis_bak`

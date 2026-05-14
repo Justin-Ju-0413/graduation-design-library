@@ -18,6 +18,8 @@ This guide defines how to use the Windows library as the only long-term work cen
   - `riscv_cnn_accelerator`: `codex/a7-bringup-v2-main`
   - `e203_hbirdv2`: `codex/a7-bringup-v2-soc`
 - Do not use `main`, `master`, `bringup_v1`, or `cnn_bringup_v1` as the current work baseline.
+- Use `00_Index\DESIGN_ITERATION_HISTORY.md` for design evolution traceability.
+- Use `00_Index\VERSION_MANAGEMENT.md` before creating a new final baseline.
 
 ## Presentation Rule
 
@@ -46,8 +48,8 @@ This guide defines how to use the Windows library as the only long-term work cen
 
 ## Final Roadmap Rule
 
-- Use `08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan` as the master roadmap from the current engineering state to final defense.
-- Development, thesis writing, and final defense must follow the same evidence chain:
+- Treat `08_Todo_And_Notes\2026-04-28_To_Final_Defense_Plan` as a historical closure roadmap.
+- Current development, thesis writing, and final defense traceability must follow the same evidence chain:
   - `RTL_PASS -> full-SoC PASS -> hello_e203 board run -> cnn_accel_demo board evidence -> final defense`
 - If board evidence is missing, record the exact blocker instead of writing it as completed.
 

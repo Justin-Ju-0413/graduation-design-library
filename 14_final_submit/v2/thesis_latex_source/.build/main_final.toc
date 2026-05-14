@@ -1,0 +1,101 @@
+\contentsline {chapter}{Declaration}{i}{chapter*.1}%
+\contentsline {chapter}{Abstract}{ii}{chapter*.2}%
+\contentsline {chapter}{Acknowledgements}{iv}{chapter*.3}%
+\contentsline {chapter}{List of Figures}{x}{chapter*.5}%
+\contentsline {chapter}{List of Tables}{xi}{chapter*.6}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Background}{1}{section.1.1}%
+\contentsline {section}{\numberline {1.2}RISC-V and Custom Instruction Extensions}{1}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Problem Statement}{2}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Project Objectives}{2}{section.1.4}%
+\contentsline {section}{\numberline {1.5}Thesis Structure}{3}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Background}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}RISC-V ISA and Custom Instruction Extensions}{4}{section.2.1}%
+\contentsline {subsection}{\numberline {2.1.1}Overview of the RISC-V Architecture}{4}{subsection.2.1.1}%
+\contentsline {subsection}{\numberline {2.1.2}Instruction Encoding and Custom Instruction Spaces}{5}{subsection.2.1.2}%
+\contentsline {subsection}{\numberline {2.1.3}Motivations for Custom Instruction Extensions in Embedded Deep Learning}{5}{subsection.2.1.3}%
+\contentsline {section}{\numberline {2.2}E203 Hummingbird v2 Processor Architecture}{6}{section.2.2}%
+\contentsline {subsection}{\numberline {2.2.1}Overview}{6}{subsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.2.2}Two-Stage Pipeline Architecture}{6}{subsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.2.1}Stage 1: Instruction Fetch (IFU Stage)}{7}{subsubsection.2.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2.2}Stage 2: Execute (EXU Stage)}{8}{subsubsection.2.2.2.2}%
+\contentsline {subsection}{\numberline {2.2.3}Pipeline Flow and Handshake}{8}{subsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.2.4}Load/Store Unit and Memory Map}{9}{subsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.2.5}The NICE Co-Unit Interface}{9}{subsection.2.2.5}%
+\contentsline {section}{\numberline {2.3}Convolutional Neural Networks Fundamentals}{11}{section.2.3}%
+\contentsline {subsection}{\numberline {2.3.1}Convolution Operation}{11}{subsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.3.2}Convolution as Matrix Multiplication}{12}{subsection.2.3.2}%
+\contentsline {subsection}{\numberline {2.3.3}INT8 Quantization}{12}{subsection.2.3.3}%
+\contentsline {subsection}{\numberline {2.3.4}Systolic Arrays and Processing Element Arrays}{13}{subsection.2.3.4}%
+\contentsline {section}{\numberline {2.4}FPGA Prototyping Methodology}{14}{section.2.4}%
+\contentsline {subsection}{\numberline {2.4.1}Development Flow with Vivado}{14}{subsection.2.4.1}%
+\contentsline {subsection}{\numberline {2.4.2}Integrated Logic Analyzer (ILA)}{14}{subsection.2.4.2}%
+\contentsline {subsection}{\numberline {2.4.3}JTAG Debug and Board Bring-Up}{15}{subsection.2.4.3}%
+\contentsline {section}{\numberline {2.5}Related Work: CNN Accelerators}{16}{section.2.5}%
+\contentsline {chapter}{\numberline {3}Methodology}{18}{chapter.3}%
+\contentsline {section}{\numberline {3.1}System Architecture Overview}{18}{section.3.1}%
+\contentsline {section}{\numberline {3.2}NICE Custom Instruction Design}{19}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}The NICE Protocol}{19}{subsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.2.2}Instruction Encoding}{20}{subsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.2.3}Instruction Decode and Control Logic}{22}{subsection.3.2.3}%
+\contentsline {subsection}{\numberline {3.2.4}Software Programming Model}{23}{subsection.3.2.4}%
+\contentsline {section}{\numberline {3.3}PE Array Architecture}{24}{section.3.3}%
+\contentsline {subsection}{\numberline {3.3.1}Processing Element Microarchitecture}{24}{subsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.3.2}Systolic Array Organization}{25}{subsection.3.3.2}%
+\contentsline {subsection}{\numberline {3.3.3}Data Loading and Computation Schedule}{28}{subsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.3.4}Post-Processing: Optional ReLU}{29}{subsection.3.3.4}%
+\contentsline {subsection}{\numberline {3.3.5}Resource Estimation}{29}{subsection.3.3.5}%
+\contentsline {section}{\numberline {3.4}SoC Integration}{30}{section.3.4}%
+\contentsline {subsection}{\numberline {3.4.1}Integration Hierarchy}{30}{subsection.3.4.1}%
+\contentsline {subsection}{\numberline {3.4.2}NICE Signal Connections}{30}{subsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.4.3}Memory Subsystem}{32}{subsection.3.4.3}%
+\contentsline {subsection}{\numberline {3.4.4}Peripheral Connections}{32}{subsection.3.4.4}%
+\contentsline {section}{\numberline {3.5}FPGA Bring-up Methodology}{32}{section.3.5}%
+\contentsline {subsection}{\numberline {3.5.1}Build Flow}{32}{subsection.3.5.1}%
+\contentsline {subsection}{\numberline {3.5.2}ILA Probe Design}{33}{subsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.5.3}Verification Strategy: Simulation-to-Hardware}{34}{subsection.3.5.3}%
+\contentsline {subsection}{\numberline {3.5.4}Debugging Methodology}{35}{subsection.3.5.4}%
+\contentsline {chapter}{\numberline {4}Results}{36}{chapter.4}%
+\contentsline {section}{\numberline {4.1}RTL Simulation}{36}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}CNN Accelerator Unit Test}{36}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}Full-SoC Simulation}{36}{subsection.4.1.2}%
+\contentsline {section}{\numberline {4.2}FPGA Bitstream Construction}{37}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Build Flow}{37}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Timing Closure}{37}{subsection.4.2.2}%
+\contentsline {section}{\numberline {4.3}hello\_e203 Board Validation}{38}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Test Program}{39}{subsection.4.3.1}%
+\contentsline {subsection}{\numberline {4.3.2}UART Output}{39}{subsection.4.3.2}%
+\contentsline {subsection}{\numberline {4.3.3}ILA Evidence}{39}{subsection.4.3.3}%
+\contentsline {section}{\numberline {4.4}CPU Boot Debugging and Root Cause Analysis}{40}{section.4.4}%
+\contentsline {subsection}{\numberline {4.4.1}Initial Observation}{40}{subsection.4.4.1}%
+\contentsline {subsection}{\numberline {4.4.2}Root Cause Analysis}{40}{subsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.4.3}Simulation-Hardware Correlation}{41}{subsection.4.4.3}%
+\contentsline {section}{\numberline {4.5}NICE CNN Accelerator Board Testing}{41}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Test Program Design}{41}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}ILA Evidence}{42}{subsection.4.5.2}%
+\contentsline {subsection}{\numberline {4.5.3}NICE Operand Capture Debugging}{43}{subsection.4.5.3}%
+\contentsline {subsubsection}{\numberline {4.5.3.1}Root Cause Analysis}{43}{subsubsection.4.5.3.1}%
+\contentsline {subsubsection}{\numberline {4.5.3.2}Fix}{43}{subsubsection.4.5.3.2}%
+\contentsline {subsubsection}{\numberline {4.5.3.3}Verification}{44}{subsubsection.4.5.3.3}%
+\contentsline {subsection}{\numberline {4.5.4}CNN Software Verification}{44}{subsection.4.5.4}%
+\contentsline {subsubsection}{\numberline {4.5.4.1}Convolution Decomposition Verification}{44}{subsubsection.4.5.4.1}%
+\contentsline {subsubsection}{\numberline {4.5.4.2}FPGA Deployment: CNN v1 Regression}{45}{subsubsection.4.5.4.2}%
+\contentsline {subsubsection}{\numberline {4.5.4.3}FPGA Deployment: LeNet-5 Inference}{45}{subsubsection.4.5.4.3}%
+\contentsline {subsection}{\numberline {4.5.5}Performance Measurement}{46}{subsection.4.5.5}%
+\contentsline {section}{\numberline {4.6}Resource Utilization}{47}{section.4.6}%
+\contentsline {chapter}{\numberline {5}Discussion}{50}{chapter.5}%
+\contentsline {section}{\numberline {5.1}FPGA Bring-up Challenges and Resolution}{50}{section.5.1}%
+\contentsline {subsection}{\numberline {5.1.1}Simulation-to-Hardware Gap}{50}{subsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.1.2}ITCM/DTCM Initialization Complexity}{50}{subsection.5.1.2}%
+\contentsline {subsection}{\numberline {5.1.3}ILA Probe Design Strategy}{51}{subsection.5.1.3}%
+\contentsline {subsection}{\numberline {5.1.4}E203 NICE Decoder Integration Constraint}{51}{subsection.5.1.4}%
+\contentsline {section}{\numberline {5.2}NICE CNN Accelerator Validation Status}{52}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Comparison with Project Objectives}{53}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Engineering Lessons Learned}{53}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Limitations}{53}{section.5.5}%
+\contentsline {chapter}{\numberline {6}Conclusion}{55}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Summary of Contributions}{55}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Key Technical Findings}{56}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Future Work}{56}{section.6.3}%
+\contentsline {section}{\numberline {6.4}Closing Remarks}{57}{section.6.4}%
+\contentsline {chapter}{References}{58}{chapter*.39}%

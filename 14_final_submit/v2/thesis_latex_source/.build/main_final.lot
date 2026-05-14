@@ -1,0 +1,21 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {2.1}{\ignorespaces E203 Processor Core Parameters}}{7}{table.caption.7}%
+\contentsline {table}{\numberline {2.2}{\ignorespaces E203 Memory Map (Davinci A7-100T Configuration)}}{9}{table.caption.8}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces SoC address space map.}}{19}{table.caption.10}%
+\contentsline {table}{\numberline {3.2}{\ignorespaces NICE request and response channel signals.}}{20}{table.caption.11}%
+\contentsline {table}{\numberline {3.3}{\ignorespaces NICE custom instruction set used by the CNN accelerator firmware. WLOAD and DLOAD use rs2 as a vector-bank index, which is why the decoder-side rs2 capture fix is required for index 0.}}{21}{table.caption.13}%
+\contentsline {table}{\numberline {3.4}{\ignorespaces Computation schedule for one 4×4 matrix MAC operation.}}{29}{table.caption.17}%
+\contentsline {table}{\numberline {3.5}{\ignorespaces Estimated FPGA resource utilization for the 4x4 PE array on an Artix-7 device.}}{30}{table.caption.19}%
+\contentsline {table}{\numberline {3.6}{\ignorespaces ILA probe configuration.}}{33}{table.caption.21}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Summary of build configuration fixes for FPGA compatibility}}{37}{table.caption.23}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces FPGA build modes and their descriptions}}{37}{table.caption.24}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Timing closure results across FPGA build configurations}}{38}{table.caption.25}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces hello\_e203 ILA probe values}}{39}{table.caption.27}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces CNN accelerator ILA probe values (cnn\_sysclk\_ila build)}}{42}{table.caption.29}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces FPGA resource utilization for the complete SoC}}{48}{table.caption.34}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces Project objective status summary}}{53}{table.caption.38}%
+\addvspace {10\p@ }

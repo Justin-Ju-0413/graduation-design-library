@@ -12,6 +12,10 @@ This folder is the locked v2 baseline for final FYP submission and final defense
   - Purpose: PDF reference copy for the final LaTeX thesis output.
   - Source: `14_final_submit/main_final.pdf`.
 
+- `thesis_latex_source/`
+  - Purpose: archived LaTeX thesis source tree, including chapters, figures, bibliography, build scripts, generated DOCX, and build intermediates.
+  - Source: `thesis_latex/`.
+
 ## Final Defense Baseline
 
 - `presentation/FYP_Final_Defense_English_Draft_REPORT_BASELINE.pptx`

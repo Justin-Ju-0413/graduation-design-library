@@ -1,0 +1,1849 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{SZE_SURVEY}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=cbbe965642aa62eec9d6846f1693beb7}{%
+           family={Sze},
+           familyi={S\bibinitperiod},
+           given={Vivienne},
+           giveni={V\bibinitperiod}}}%
+        {{hash=226e2eb4b14e0b169bb783cf6b83c3ce}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yu-Hsin},
+           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=89115e522fc2b8d49a429918a3c45e0b}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Tien-Ju},
+           giveni={T\bibinithyphendelim J\bibinitperiod}}}%
+        {{hash=914e65be5d46573e29e4fd406d9f8f84}{%
+           family={Emer},
+           familyi={E\bibinitperiod},
+           given={Joel\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{adab3fa9cae0a85d8850e249d42db443}
+      \strng{fullhash}{d57594fa08e2fcf54bdec83de68f00a8}
+      \strng{fullhashraw}{d57594fa08e2fcf54bdec83de68f00a8}
+      \strng{bibnamehash}{d57594fa08e2fcf54bdec83de68f00a8}
+      \strng{authorbibnamehash}{d57594fa08e2fcf54bdec83de68f00a8}
+      \strng{authornamehash}{adab3fa9cae0a85d8850e249d42db443}
+      \strng{authorfullhash}{d57594fa08e2fcf54bdec83de68f00a8}
+      \strng{authorfullhashraw}{d57594fa08e2fcf54bdec83de68f00a8}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the IEEE}
+      \field{number}{12}
+      \field{title}{Efficient Processing of Deep Neural Networks: A Tutorial and Survey}
+      \field{volume}{105}
+      \field{year}{2017}
+      \field{pages}{2295\bibrangedash 2329}
+      \range{pages}{35}
+      \verb{doi}
+      \verb 10.1109/JPROC.2017.2761740
+      \endverb
+    \endentry
+    \entry{KUNG_SYSTOLIC}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=3c1496ede7e76d1e27dd06d6fec3806c}{%
+           family={Kung},
+           familyi={K\bibinitperiod},
+           given={H.\bibnamedelimi T.},
+           giveni={H\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \strng{namehash}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \strng{fullhash}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \strng{fullhashraw}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \strng{bibnamehash}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \strng{authorbibnamehash}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \strng{authornamehash}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \strng{authorfullhash}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \strng{authorfullhashraw}{3c1496ede7e76d1e27dd06d6fec3806c}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Computer}
+      \field{number}{1}
+      \field{title}{Why Systolic Architectures?}
+      \field{volume}{15}
+      \field{year}{1982}
+      \field{pages}{37\bibrangedash 46}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1109/MC.1982.1653825
+      \endverb
+    \endentry
+    \entry{RISCV_UNPRIV_SPEC}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=1cdbf6b1b2783ec44ba9770f07e6528f}{%
+           family={Waterman},
+           familyi={W\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=6e7da264d2a1b506dc85ba97a65f086a}{%
+           family={Asanović},
+           familyi={A\bibinitperiod},
+           given={Krste},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {RISC-V Foundation}%
+      }
+      \strng{namehash}{b899609096647af73814d09236da8633}
+      \strng{fullhash}{b899609096647af73814d09236da8633}
+      \strng{fullhashraw}{b899609096647af73814d09236da8633}
+      \strng{bibnamehash}{b899609096647af73814d09236da8633}
+      \strng{authorbibnamehash}{b899609096647af73814d09236da8633}
+      \strng{authornamehash}{b899609096647af73814d09236da8633}
+      \strng{authorfullhash}{b899609096647af73814d09236da8633}
+      \strng{authorfullhashraw}{b899609096647af73814d09236da8633}
+      \field{extraname}{1}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{number}{Document Version 20191213}
+      \field{title}{The {RISC-V} Instruction Set Manual, Volume {I}: Unprivileged Architecture}
+      \field{type}{techreport}
+      \field{year}{2019}
+      \verb{urlraw}
+      \verb https://riscv.org/technical/specifications/
+      \endverb
+      \verb{url}
+      \verb https://riscv.org/technical/specifications/
+      \endverb
+    \endentry
+    \entry{WATERMAN_PHD}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=1cdbf6b1b2783ec44ba9770f07e6528f}{%
+           family={Waterman},
+           familyi={W\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {University of California, Berkeley}%
+      }
+      \strng{namehash}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \strng{fullhash}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \strng{fullhashraw}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \strng{bibnamehash}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \strng{authorbibnamehash}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \strng{authornamehash}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \strng{authorfullhash}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \strng{authorfullhashraw}{1cdbf6b1b2783ec44ba9770f07e6528f}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Design of the {RISC-V} Instruction Set Architecture}
+      \field{type}{phdthesis}
+      \field{year}{2016}
+      \verb{urlraw}
+      \verb https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-1.html
+      \endverb
+      \verb{url}
+      \verb https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-1.html
+      \endverb
+    \endentry
+    \entry{RISCV_READER}{book}{}{}
+      \name{author}{2}{}{%
+        {{hash=64f58317379ddd1a24e0e6cba85ae78c}{%
+           family={Patterson},
+           familyi={P\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=1cdbf6b1b2783ec44ba9770f07e6528f}{%
+           family={Waterman},
+           familyi={W\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Strawberry Canyon}%
+      }
+      \strng{namehash}{772370af3de02627e4a8969da6d2d0e0}
+      \strng{fullhash}{772370af3de02627e4a8969da6d2d0e0}
+      \strng{fullhashraw}{772370af3de02627e4a8969da6d2d0e0}
+      \strng{bibnamehash}{772370af3de02627e4a8969da6d2d0e0}
+      \strng{authorbibnamehash}{772370af3de02627e4a8969da6d2d0e0}
+      \strng{authornamehash}{772370af3de02627e4a8969da6d2d0e0}
+      \strng{authorfullhash}{772370af3de02627e4a8969da6d2d0e0}
+      \strng{authorfullhashraw}{772370af3de02627e4a8969da6d2d0e0}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The {RISC-V} Reader: An Open Architecture Atlas}
+      \field{year}{2017}
+    \endentry
+    \entry{NUCLEI_E203}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=4e0efbc69dc6fb354a8775cb6cb87d1c}{%
+           family={{Nuclei System Technology}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{bibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorbibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authornamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \field{extraname}{1}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Nuclei} Hummingbird {E203} Processor User Manual}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://github.com/riscv-mcu/e203_hbirdv2
+      \endverb
+      \verb{url}
+      \verb https://github.com/riscv-mcu/e203_hbirdv2
+      \endverb
+    \endentry
+    \entry{NUCLEI_NICE}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=4e0efbc69dc6fb354a8775cb6cb87d1c}{%
+           family={{Nuclei System Technology}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{bibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorbibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authornamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \field{extraname}{2}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Nuclei} Instruction Co-extension ({NICE}) Interface Specification}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://doc.nucleisys.com/hbirdv2/
+      \endverb
+      \verb{url}
+      \verb https://doc.nucleisys.com/hbirdv2/
+      \endverb
+    \endentry
+    \entry{RISCV_PRIV_SPEC}{report}{}{}
+      \name{author}{2}{}{%
+        {{hash=1cdbf6b1b2783ec44ba9770f07e6528f}{%
+           family={Waterman},
+           familyi={W\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=6e7da264d2a1b506dc85ba97a65f086a}{%
+           family={Asanović},
+           familyi={A\bibinitperiod},
+           given={Krste},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {RISC-V Foundation}%
+      }
+      \strng{namehash}{b899609096647af73814d09236da8633}
+      \strng{fullhash}{b899609096647af73814d09236da8633}
+      \strng{fullhashraw}{b899609096647af73814d09236da8633}
+      \strng{bibnamehash}{b899609096647af73814d09236da8633}
+      \strng{authorbibnamehash}{b899609096647af73814d09236da8633}
+      \strng{authornamehash}{b899609096647af73814d09236da8633}
+      \strng{authorfullhash}{b899609096647af73814d09236da8633}
+      \strng{authorfullhashraw}{b899609096647af73814d09236da8633}
+      \field{extraname}{2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The {RISC-V} Instruction Set Manual, Volume {II}: Privileged Architecture}
+      \field{type}{techreport}
+      \field{year}{2021}
+      \verb{urlraw}
+      \verb https://riscv.org/technical/specifications/
+      \endverb
+      \verb{url}
+      \verb https://riscv.org/technical/specifications/
+      \endverb
+    \endentry
+    \entry{ASANOVIC_HOTCHIPS}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=6e7da264d2a1b506dc85ba97a65f086a}{%
+           family={Asanović},
+           familyi={A\bibinitperiod},
+           given={Krste},
+           giveni={K\bibinitperiod}}}%
+        {{hash=95486d328725c1c6a933929c9442fe2a}{%
+           family={Patterson},
+           familyi={P\bibinitperiod},
+           given={David\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{825f351a0bea31e44e96cfa34a19e36c}
+      \strng{fullhash}{825f351a0bea31e44e96cfa34a19e36c}
+      \strng{fullhashraw}{825f351a0bea31e44e96cfa34a19e36c}
+      \strng{bibnamehash}{825f351a0bea31e44e96cfa34a19e36c}
+      \strng{authorbibnamehash}{825f351a0bea31e44e96cfa34a19e36c}
+      \strng{authornamehash}{825f351a0bea31e44e96cfa34a19e36c}
+      \strng{authorfullhash}{825f351a0bea31e44e96cfa34a19e36c}
+      \strng{authorfullhashraw}{825f351a0bea31e44e96cfa34a19e36c}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2014 {IEEE} Hot Chips 26 Symposium ({HCS})}
+      \field{note}{Presentation at Hot Chips 26}
+      \field{title}{The {RISC-V} Instruction Set Architecture}
+      \field{year}{2014}
+    \endentry
+    \entry{LENET}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=6a1aa6b7eab12b931ca7c7e3f927231d}{%
+           family={LeCun},
+           familyi={L\bibinitperiod},
+           given={Yann},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=ac762f2592005edf6bad58f566967c6c}{%
+           family={Bottou},
+           familyi={B\bibinitperiod},
+           given={Léon},
+           giveni={L\bibinitperiod}}}%
+        {{hash=40a8e4774982146adc2688546f54efb2}{%
+           family={Bengio},
+           familyi={B\bibinitperiod},
+           given={Yoshua},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=844e183692f08a63f99285330fcf90cc}{%
+           family={Haffner},
+           familyi={H\bibinitperiod},
+           given={Patrick},
+           giveni={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{9e4c6012409dc8dd9b2aa198a2059804}
+      \strng{fullhash}{c397b2e6efe8e5c6ca906410fc9e0ff9}
+      \strng{fullhashraw}{c397b2e6efe8e5c6ca906410fc9e0ff9}
+      \strng{bibnamehash}{c397b2e6efe8e5c6ca906410fc9e0ff9}
+      \strng{authorbibnamehash}{c397b2e6efe8e5c6ca906410fc9e0ff9}
+      \strng{authornamehash}{9e4c6012409dc8dd9b2aa198a2059804}
+      \strng{authorfullhash}{c397b2e6efe8e5c6ca906410fc9e0ff9}
+      \strng{authorfullhashraw}{c397b2e6efe8e5c6ca906410fc9e0ff9}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the IEEE}
+      \field{number}{11}
+      \field{title}{Gradient-Based Learning Applied to Document Recognition}
+      \field{volume}{86}
+      \field{year}{1998}
+      \field{pages}{2278\bibrangedash 2324}
+      \range{pages}{47}
+      \verb{doi}
+      \verb 10.1109/5.726791
+      \endverb
+    \endentry
+    \entry{ALEXNET}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=c5e3a676e2ac1164b3afcd539c131fc9}{%
+           family={Krizhevsky},
+           familyi={K\bibinitperiod},
+           given={Alex},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8d569d1d5b8b5a7836017a98b430f959}{%
+           family={Sutskever},
+           familyi={S\bibinitperiod},
+           given={Ilya},
+           giveni={I\bibinitperiod}}}%
+        {{hash=813bd95fe553e6079cd53a567b238287}{%
+           family={Hinton},
+           familyi={H\bibinitperiod},
+           given={Geoffrey\bibnamedelima E.},
+           giveni={G\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+      }
+      \strng{namehash}{dd291871bfa8ee64447232f1cca429aa}
+      \strng{fullhash}{1a23c09aa65b3c2ade45ed18d8127375}
+      \strng{fullhashraw}{1a23c09aa65b3c2ade45ed18d8127375}
+      \strng{bibnamehash}{1a23c09aa65b3c2ade45ed18d8127375}
+      \strng{authorbibnamehash}{1a23c09aa65b3c2ade45ed18d8127375}
+      \strng{authornamehash}{dd291871bfa8ee64447232f1cca429aa}
+      \strng{authorfullhash}{1a23c09aa65b3c2ade45ed18d8127375}
+      \strng{authorfullhashraw}{1a23c09aa65b3c2ade45ed18d8127375}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Advances in Neural Information Processing Systems 25 ({NIPS})}
+      \field{title}{{ImageNet} Classification with Deep Convolutional Neural Networks}
+      \field{year}{2012}
+      \verb{doi}
+      \verb 10.1145/3065386
+      \endverb
+    \endentry
+    \entry{JACOB_QUANT}{article}{}{}
+      \name{author}{8}{}{%
+        {{hash=73f11c7544252601f7e8c5f614c660f2}{%
+           family={Jacob},
+           familyi={J\bibinitperiod},
+           given={Benoit},
+           giveni={B\bibinitperiod}}}%
+        {{hash=aa58f2ae95227046f2fbba114f0fb625}{%
+           family={Kligys},
+           familyi={K\bibinitperiod},
+           given={Skirmantas},
+           giveni={S\bibinitperiod}}}%
+        {{hash=31960f03389184b7f052f5b197cc9fdf}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Bo},
+           giveni={B\bibinitperiod}}}%
+        {{hash=d767e8e4d733bcf728bcdf2c193462f7}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Menglong},
+           giveni={M\bibinitperiod}}}%
+        {{hash=436cfd289182e9d6b0a46d79b8e91b6e}{%
+           family={Tang},
+           familyi={T\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod}}}%
+        {{hash=315c4166fc1f7cb66324a7f0d82827cd}{%
+           family={Howard},
+           familyi={H\bibinitperiod},
+           given={Andrew},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c707ec5b5997dc408a14a34a8380166c}{%
+           family={Adam},
+           familyi={A\bibinitperiod},
+           given={Hartwig},
+           giveni={H\bibinitperiod}}}%
+        {{hash=6cbb997a11c6922af719c32863261918}{%
+           family={Kalenichenko},
+           familyi={K\bibinitperiod},
+           given={Dmitry},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{be1e8607db7344f1c8e395537c88d55a}
+      \strng{fullhash}{3ad38e526037fc692f33aef3160b0293}
+      \strng{fullhashraw}{3ad38e526037fc692f33aef3160b0293}
+      \strng{bibnamehash}{be1e8607db7344f1c8e395537c88d55a}
+      \strng{authorbibnamehash}{be1e8607db7344f1c8e395537c88d55a}
+      \strng{authornamehash}{be1e8607db7344f1c8e395537c88d55a}
+      \strng{authorfullhash}{3ad38e526037fc692f33aef3160b0293}
+      \strng{authorfullhashraw}{3ad38e526037fc692f33aef3160b0293}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{IEEE/CVF Conference on Computer Vision and Pattern Recognition ({CVPR})}
+      \field{title}{Quantization and Training of Neural Networks for Efficient Integer-Arithmetic-Only Inference}
+      \field{year}{2018}
+      \field{pages}{2704\bibrangedash 2713}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1109/CVPR.2018.00286
+      \endverb
+    \endentry
+    \entry{KRISHNAMOORTHI_QUANT}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=4a691df37485846988162c4f0639d2f0}{%
+           family={Krishnamoorthi},
+           familyi={K\bibinitperiod},
+           given={Raghuraman},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{4a691df37485846988162c4f0639d2f0}
+      \strng{fullhash}{4a691df37485846988162c4f0639d2f0}
+      \strng{fullhashraw}{4a691df37485846988162c4f0639d2f0}
+      \strng{bibnamehash}{4a691df37485846988162c4f0639d2f0}
+      \strng{authorbibnamehash}{4a691df37485846988162c4f0639d2f0}
+      \strng{authornamehash}{4a691df37485846988162c4f0639d2f0}
+      \strng{authorfullhash}{4a691df37485846988162c4f0639d2f0}
+      \strng{authorfullhashraw}{4a691df37485846988162c4f0639d2f0}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{arXiv:1806.08342}
+      \field{title}{Quantizing Deep Convolutional Neural Networks: A Tutorial and Survey}
+      \field{year}{2018}
+      \verb{eprint}
+      \verb 1806.08342
+      \endverb
+    \endentry
+    \entry{HAN_DEEPCOMPRESS}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=873e4e07ff73d563d2651d20ffaf99e0}{%
+           family={Han},
+           familyi={H\bibinitperiod},
+           given={Song},
+           giveni={S\bibinitperiod}}}%
+        {{hash=1341c7c7f8d6acc2c0c244d6526ff658}{%
+           family={Mao},
+           familyi={M\bibinitperiod},
+           given={Huizi},
+           giveni={H\bibinitperiod}}}%
+        {{hash=c4a8df92e1f8e22aa2062da8bcfd402d}{%
+           family={Dally},
+           familyi={D\bibinitperiod},
+           given={William\bibnamedelima J.},
+           giveni={W\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{679f17a3dd7dd4d334b350329c3674bb}
+      \strng{fullhash}{84bcde7dcf518d77e606ada9b3016020}
+      \strng{fullhashraw}{84bcde7dcf518d77e606ada9b3016020}
+      \strng{bibnamehash}{84bcde7dcf518d77e606ada9b3016020}
+      \strng{authorbibnamehash}{84bcde7dcf518d77e606ada9b3016020}
+      \strng{authornamehash}{679f17a3dd7dd4d334b350329c3674bb}
+      \strng{authorfullhash}{84bcde7dcf518d77e606ada9b3016020}
+      \strng{authorfullhashraw}{84bcde7dcf518d77e606ada9b3016020}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Learning Representations ({ICLR})}
+      \field{title}{Deep Compression: Compressing Deep Neural Networks with Pruning, Trained Quantization and {Huffman} Coding}
+      \field{year}{2016}
+    \endentry
+    \entry{XILINX_UG901}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=3b08f6c4d66b14684e6713b90b9f8dc7}{%
+           family={{AMD Xilinx}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{fullhash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{fullhashraw}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{bibnamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorbibnamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authornamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorfullhash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorfullhashraw}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Vivado Design Suite User Guide: Synthesis ({UG901})}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://docs.amd.com/r/en-US/ug901-vivado-synthesis
+      \endverb
+      \verb{url}
+      \verb https://docs.amd.com/r/en-US/ug901-vivado-synthesis
+      \endverb
+    \endentry
+    \entry{XILINX_UG904}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=3b08f6c4d66b14684e6713b90b9f8dc7}{%
+           family={{AMD Xilinx}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{fullhash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{fullhashraw}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{bibnamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorbibnamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authornamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorfullhash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorfullhashraw}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \field{extraname}{2}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Vivado Design Suite User Guide: Implementation ({UG904})}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://docs.amd.com/r/en-US/ug904-vivado-implementation
+      \endverb
+      \verb{url}
+      \verb https://docs.amd.com/r/en-US/ug904-vivado-implementation
+      \endverb
+    \endentry
+    \entry{XILINX_UG908}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=3b08f6c4d66b14684e6713b90b9f8dc7}{%
+           family={{AMD Xilinx}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{fullhash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{fullhashraw}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{bibnamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorbibnamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authornamehash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorfullhash}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \strng{authorfullhashraw}{3b08f6c4d66b14684e6713b90b9f8dc7}
+      \field{extraname}{3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Vivado Design Suite User Guide: Programming and Debugging ({UG908})}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging
+      \endverb
+      \verb{url}
+      \verb https://docs.amd.com/r/en-US/ug908-vivado-programming-debugging
+      \endverb
+    \endentry
+    \entry{zhou2017cnn}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=e973b1b44bae174386ac85b1ba691803}{%
+           family={周飞燕},
+           familyi={周\bibinitperiod}}}%
+        {{hash=a19ffc03620384ecc92f57d6825d5197}{%
+           family={金林鹏},
+           familyi={金\bibinitperiod}}}%
+        {{hash=b0a2c56294470903b4cfce16dd9956bd}{%
+           family={董军},
+           familyi={董\bibinitperiod}}}%
+      }
+      \strng{namehash}{8670d16bd3938444cb18c5554bfce1db}
+      \strng{fullhash}{f552ac06264aaea31deca1f53701e7c8}
+      \strng{fullhashraw}{f552ac06264aaea31deca1f53701e7c8}
+      \strng{bibnamehash}{f552ac06264aaea31deca1f53701e7c8}
+      \strng{authorbibnamehash}{f552ac06264aaea31deca1f53701e7c8}
+      \strng{authornamehash}{8670d16bd3938444cb18c5554bfce1db}
+      \strng{authorfullhash}{f552ac06264aaea31deca1f53701e7c8}
+      \strng{authorfullhashraw}{f552ac06264aaea31deca1f53701e7c8}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{计算机学报}
+      \field{number}{6}
+      \field{title}{卷积神经网络研究综述}
+      \field{volume}{40}
+      \field{year}{2017}
+      \field{pages}{1229\bibrangedash 1251}
+      \range{pages}{23}
+      \verb{urlraw}
+      \verb https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2017&filename=JSJX201706001
+      \endverb
+      \verb{url}
+      \verb https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2017&filename=JSJX201706001
+      \endverb
+    \endentry
+    \entry{DIANNAO}{inproceedings}{}{}
+      \name{author}{7}{}{%
+        {{hash=07ebcf1dcee64752ca6dff43efc8dc67}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Tianshi},
+           giveni={T\bibinitperiod}}}%
+        {{hash=91724d1b1a2710ade58d33266310ad3c}{%
+           family={Du},
+           familyi={D\bibinitperiod},
+           given={Zidong},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=65d66c2cabd830e47daf671b3878a518}{%
+           family={Sun},
+           familyi={S\bibinitperiod},
+           given={Ninghui},
+           giveni={N\bibinitperiod}}}%
+        {{hash=e453927e646e355f3edb61c5518de1d1}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Jia},
+           giveni={J\bibinitperiod}}}%
+        {{hash=0df17ee7ebebe50f0b711cbd26102605}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Chengyong},
+           giveni={C\bibinitperiod}}}%
+        {{hash=4c292d30bee8609dcb1af7d2d37b8457}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yunji},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=d9ff79867ff8e573205244b2b0f8e531}{%
+           family={Temam},
+           familyi={T\bibinitperiod},
+           given={Olivier},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{0750b5c4e29d8cda350dac59adde5049}
+      \strng{fullhash}{38612da6533df09b10f3316be24f98f7}
+      \strng{fullhashraw}{38612da6533df09b10f3316be24f98f7}
+      \strng{bibnamehash}{0750b5c4e29d8cda350dac59adde5049}
+      \strng{authorbibnamehash}{0750b5c4e29d8cda350dac59adde5049}
+      \strng{authornamehash}{0750b5c4e29d8cda350dac59adde5049}
+      \strng{authorfullhash}{38612da6533df09b10f3316be24f98f7}
+      \strng{authorfullhashraw}{38612da6533df09b10f3316be24f98f7}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 19th International Conference on Architectural Support for Programming Languages and Operating Systems ({ASPLOS})}
+      \field{title}{{DianNao}: A Small-Footprint High-Throughput Accelerator for Ubiquitous Machine-Learning}
+      \field{year}{2014}
+      \field{pages}{269\bibrangedash 284}
+      \range{pages}{16}
+      \verb{doi}
+      \verb 10.1145/2541940.2541967
+      \endverb
+    \endentry
+    \entry{diannao2016}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=4c292d30bee8609dcb1af7d2d37b8457}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yunji},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=07ebcf1dcee64752ca6dff43efc8dc67}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Tianshi},
+           giveni={T\bibinitperiod}}}%
+        {{hash=62b6be7d1cb1fe8fa9bb3c3b79f32e5f}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Zhiwei},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=65d66c2cabd830e47daf671b3878a518}{%
+           family={Sun},
+           familyi={S\bibinitperiod},
+           given={Ninghui},
+           giveni={N\bibinitperiod}}}%
+        {{hash=d9ff79867ff8e573205244b2b0f8e531}{%
+           family={Temam},
+           familyi={T\bibinitperiod},
+           given={Olivier},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{50e23a36a2cf96880430d1e4d119522b}
+      \strng{fullhash}{75bffca12c4c19f9420441cfb0e6461a}
+      \strng{fullhashraw}{75bffca12c4c19f9420441cfb0e6461a}
+      \strng{bibnamehash}{75bffca12c4c19f9420441cfb0e6461a}
+      \strng{authorbibnamehash}{75bffca12c4c19f9420441cfb0e6461a}
+      \strng{authornamehash}{50e23a36a2cf96880430d1e4d119522b}
+      \strng{authorfullhash}{75bffca12c4c19f9420441cfb0e6461a}
+      \strng{authorfullhashraw}{75bffca12c4c19f9420441cfb0e6461a}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Commun. ACM}
+      \field{number}{11}
+      \field{title}{DianNao family: energy-efficient hardware accelerators for machine learning}
+      \field{volume}{59}
+      \field{year}{2016}
+      \field{pages}{105\bibrangedash 112}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1145/2996864
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/10.1145/2996864
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/10.1145/2996864
+      \endverb
+    \endentry
+    \entry{EYERISS}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=226e2eb4b14e0b169bb783cf6b83c3ce}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Yu-Hsin},
+           giveni={Y\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=e1ce26b15a886cbd409e6a8c2254dd49}{%
+           family={Krishna},
+           familyi={K\bibinitperiod},
+           given={Tushar},
+           giveni={T\bibinitperiod}}}%
+        {{hash=914e65be5d46573e29e4fd406d9f8f84}{%
+           family={Emer},
+           familyi={E\bibinitperiod},
+           given={Joel\bibnamedelima S.},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=cbbe965642aa62eec9d6846f1693beb7}{%
+           family={Sze},
+           familyi={S\bibinitperiod},
+           given={Vivienne},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{6d5de088a24cb0368ba40a4b06cb232a}
+      \strng{fullhash}{c5c91dbaaae450fa0bfde574bdbe0127}
+      \strng{fullhashraw}{c5c91dbaaae450fa0bfde574bdbe0127}
+      \strng{bibnamehash}{c5c91dbaaae450fa0bfde574bdbe0127}
+      \strng{authorbibnamehash}{c5c91dbaaae450fa0bfde574bdbe0127}
+      \strng{authornamehash}{6d5de088a24cb0368ba40a4b06cb232a}
+      \strng{authorfullhash}{c5c91dbaaae450fa0bfde574bdbe0127}
+      \strng{authorfullhashraw}{c5c91dbaaae450fa0bfde574bdbe0127}
+      \field{extraname}{3}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Journal of Solid-State Circuits}
+      \field{number}{1}
+      \field{title}{{Eyeriss}: An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks}
+      \field{volume}{52}
+      \field{year}{2017}
+      \field{pages}{127\bibrangedash 138}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1109/JSSC.2016.2616357
+      \endverb
+    \endentry
+    \entry{TPU}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=b1e691fb22f06afee78c3d52bf0c68f4}{%
+           family={Jouppi},
+           familyi={J\bibinitperiod},
+           given={Norman\bibnamedelima P.},
+           giveni={N\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=2b3412c48bab46f41faab78455fce0e1}{%
+           family={Young},
+           familyi={Y\bibinitperiod},
+           given={Cliff},
+           giveni={C\bibinitperiod}}}%
+        {{hash=98e48fd2ef83c15cb4e696e6243eef05}{%
+           family={Patil},
+           familyi={P\bibinitperiod},
+           given={Nishant},
+           giveni={N\bibinitperiod}}}%
+        {{hash=95486d328725c1c6a933929c9442fe2a}{%
+           family={Patterson},
+           familyi={P\bibinitperiod},
+           given={David\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \strng{namehash}{861372c55b71e7688d63b889756999ce}
+      \strng{fullhash}{890202874dacca05888f809719239a98}
+      \strng{fullhashraw}{890202874dacca05888f809719239a98}
+      \strng{bibnamehash}{890202874dacca05888f809719239a98}
+      \strng{authorbibnamehash}{890202874dacca05888f809719239a98}
+      \strng{authornamehash}{861372c55b71e7688d63b889756999ce}
+      \strng{authorfullhash}{890202874dacca05888f809719239a98}
+      \strng{authorfullhashraw}{890202874dacca05888f809719239a98}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 44th Annual International Symposium on Computer Architecture ({ISCA})}
+      \field{title}{In-Datacenter Performance Analysis of a Tensor Processing Unit}
+      \field{year}{2017}
+      \field{pages}{1\bibrangedash 12}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1145/3079856.3080246
+      \endverb
+    \endentry
+    \entry{GEMMINI}{misc}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=96d7c835304d4e6de60152763f605c5f}{%
+           family={Genc},
+           familyi={G\bibinitperiod},
+           given={Hasan},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \strng{fullhash}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \strng{fullhashraw}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \strng{bibnamehash}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \strng{authorbibnamehash}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \strng{authornamehash}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \strng{authorfullhash}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \strng{authorfullhashraw}{ebd6ccd31f1dcd5f99e23a82a94223dc}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Gemmini: An Agile Systolic Array Generator Enabling Systematic Evaluations of Deep-Learning Accelerators}
+      \field{year}{2020}
+      \verb{doi}
+      \verb 10.1109/DAC18072.2020.9218590
+      \endverb
+    \endentry
+    \entry{ROCKETCHIP}{report}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{hash=6e7da264d2a1b506dc85ba97a65f086a}{%
+           family={Asanović},
+           familyi={A\bibinitperiod},
+           given={Krste},
+           giveni={K\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {University of California, Berkeley}%
+      }
+      \strng{namehash}{5d491a3615d723a9736e86411aab4359}
+      \strng{fullhash}{5d491a3615d723a9736e86411aab4359}
+      \strng{fullhashraw}{5d491a3615d723a9736e86411aab4359}
+      \strng{bibnamehash}{5d491a3615d723a9736e86411aab4359}
+      \strng{authorbibnamehash}{5d491a3615d723a9736e86411aab4359}
+      \strng{authornamehash}{5d491a3615d723a9736e86411aab4359}
+      \strng{authorfullhash}{5d491a3615d723a9736e86411aab4359}
+      \strng{authorfullhashraw}{5d491a3615d723a9736e86411aab4359}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Rocket Chip Generator}
+      \field{type}{techreport}
+      \field{year}{2016}
+      \verb{urlraw}
+      \verb https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-17.html
+      \endverb
+      \verb{url}
+      \verb https://www2.eecs.berkeley.edu/Pubs/TechRpts/2016/EECS-2016-17.html
+      \endverb
+    \endentry
+    \entry{liu2021riscv}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=ae585984a0c07b1171fb10fe0c4db7c3}{%
+           family={刘畅},
+           familyi={刘\bibinitperiod}}}%
+        {{hash=845fc495416d055487ef281902bfef6f}{%
+           family={武延军},
+           familyi={武\bibinitperiod}}}%
+        {{hash=9360b75c9f9f773ebbdda642b3c59e37}{%
+           family={吴敬征},
+           familyi={吴\bibinitperiod}}}%
+        {{hash=6377d4cbbe066d733ada8a1b99196b31}{%
+           family={赵琛},
+           familyi={赵\bibinitperiod}}}%
+      }
+      \strng{namehash}{d247cef79bd80527f793abfb9cbaf7c3}
+      \strng{fullhash}{0fac87fab4ab4b55cd94295fafa479b2}
+      \strng{fullhashraw}{0fac87fab4ab4b55cd94295fafa479b2}
+      \strng{bibnamehash}{0fac87fab4ab4b55cd94295fafa479b2}
+      \strng{authorbibnamehash}{0fac87fab4ab4b55cd94295fafa479b2}
+      \strng{authornamehash}{d247cef79bd80527f793abfb9cbaf7c3}
+      \strng{authorfullhash}{0fac87fab4ab4b55cd94295fafa479b2}
+      \strng{authorfullhashraw}{0fac87fab4ab4b55cd94295fafa479b2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{软件学报}
+      \field{number}{12}
+      \field{title}{RISC-V指令集架构研究综述}
+      \field{volume}{32}
+      \field{year}{2021}
+      \field{pages}{3992\bibrangedash 4024}
+      \range{pages}{33}
+      \verb{doi}
+      \verb 10.13328/j.cnki.jos.006490
+      \endverb
+      \verb{urlraw}
+      \verb https://link.cnki.net/doi/10.13328/j.cnki.jos.006490
+      \endverb
+      \verb{url}
+      \verb https://link.cnki.net/doi/10.13328/j.cnki.jos.006490
+      \endverb
+    \endentry
+    \entry{wang2023xiangshan}{article}{}{}
+      \name{author}{31}{}{%
+        {{hash=299f7d968864ac50535df77a23ac74bf}{%
+           family={王凯帆},
+           familyi={王\bibinitperiod}}}%
+        {{hash=b01038891689685e1f1b2811eeffb218}{%
+           family={徐易难},
+           familyi={徐\bibinitperiod}}}%
+        {{hash=c237f1938e95ba4540184109f0ac2cf1}{%
+           family={余子濠},
+           familyi={余\bibinitperiod}}}%
+        {{hash=6189be1f9b31906f9a38fe8328c9703e}{%
+           family={唐丹},
+           familyi={唐\bibinitperiod}}}%
+        {{hash=e86671d0a18954934f796c68e8032f59}{%
+           family={陈国凯},
+           familyi={陈\bibinitperiod}}}%
+        {{hash=200e65d6045ed8ae59e114de2726ed75}{%
+           family={陈熙},
+           familyi={陈\bibinitperiod}}}%
+        {{hash=f2141fa6310a3f4ebae111cccac26472}{%
+           family={勾凌睿},
+           familyi={勾\bibinitperiod}}}%
+        {{hash=fd2d74d20972587f5d5723f94d04f12d}{%
+           family={胡轩},
+           familyi={胡\bibinitperiod}}}%
+        {{hash=97804f0fbf95851955096a0b8a163282}{%
+           family={金越},
+           familyi={金\bibinitperiod}}}%
+        {{hash=251b550a25ecedf36cbb8778c70d3338}{%
+           family={李乾若},
+           familyi={李\bibinitperiod}}}%
+        {{hash=ca25928481def355d72313ef93fd9d36}{%
+           family={李昕},
+           familyi={李\bibinitperiod}}}%
+        {{hash=51626b4fe3673344183c04654a87904e}{%
+           family={蔺嘉炜},
+           familyi={蔺\bibinitperiod}}}%
+        {{hash=f9bc82051dabf35f26faeb53a2d33584}{%
+           family={刘彤},
+           familyi={刘\bibinitperiod}}}%
+        {{hash=21f6c8372aeb3e8f0164ab40922f487e}{%
+           family={刘志刚},
+           familyi={刘\bibinitperiod}}}%
+        {{hash=6356aa6ce5e94bc3c57a41532e3e4edd}{%
+           family={王华强},
+           familyi={王\bibinitperiod}}}%
+        {{hash=9ee4e5668975172032378698eb502bfb}{%
+           family={王诲喆},
+           familyi={王\bibinitperiod}}}%
+        {{hash=f20707b86552a6baa05a3a1a0c23a486}{%
+           family={张传奇},
+           familyi={张\bibinitperiod}}}%
+        {{hash=2998263f2f5ffe0d954412780ad13a06}{%
+           family={张发旺},
+           familyi={张\bibinitperiod}}}%
+        {{hash=b2313a8b62db5042371fb868f2b2fb17}{%
+           family={张林隽},
+           familyi={张\bibinitperiod}}}%
+        {{hash=bf28470b9781197fd5cbe43885833b6f}{%
+           family={张紫飞},
+           familyi={张\bibinitperiod}}}%
+        {{hash=3e72b26b8c8578578bcbcdcc0ba55e4f}{%
+           family={张梓悦},
+           familyi={张\bibinitperiod}}}%
+        {{hash=04638f495bb4f8e95c428e96ea22f68b}{%
+           family={赵阳洋},
+           familyi={赵\bibinitperiod}}}%
+        {{hash=a6c8949c486742f6f62212f24c1195c9}{%
+           family={周耀阳},
+           familyi={周\bibinitperiod}}}%
+        {{hash=fd584ad422fbf43f665620ebdd827b40}{%
+           family={邹江瑞},
+           familyi={邹\bibinitperiod}}}%
+        {{hash=68f1e959672c1e6ee42046572558e040}{%
+           family={蔡晔},
+           familyi={蔡\bibinitperiod}}}%
+        {{hash=58780da10848a1885a26f6e7c9451b24}{%
+           family={郇丹丹},
+           familyi={郇\bibinitperiod}}}%
+        {{hash=e572e9928b016b94e494e3bfa577560b}{%
+           family={李祖松},
+           familyi={李\bibinitperiod}}}%
+        {{hash=eef2e9f588c9f05de06579ba7c0bc094}{%
+           family={赵继业},
+           familyi={赵\bibinitperiod}}}%
+        {{hash=482136b1a5bbbec79c7e6a02e0f9a617}{%
+           family={何伟},
+           familyi={何\bibinitperiod}}}%
+        {{hash=58004b7036ed8cffceb608b23a2cd66b}{%
+           family={孙凝晖},
+           familyi={孙\bibinitperiod}}}%
+        {{hash=051ec5f08e0043e828e9bdaaaa4f8f9e}{%
+           family={包云岗},
+           familyi={包\bibinitperiod}}}%
+      }
+      \strng{namehash}{f2e14b799e775ce9da3252512de4ff5c}
+      \strng{fullhash}{fabbd4ef2502c815f92014b1aaf659b0}
+      \strng{fullhashraw}{fabbd4ef2502c815f92014b1aaf659b0}
+      \strng{bibnamehash}{f2e14b799e775ce9da3252512de4ff5c}
+      \strng{authorbibnamehash}{f2e14b799e775ce9da3252512de4ff5c}
+      \strng{authornamehash}{f2e14b799e775ce9da3252512de4ff5c}
+      \strng{authorfullhash}{fabbd4ef2502c815f92014b1aaf659b0}
+      \strng{authorfullhashraw}{fabbd4ef2502c815f92014b1aaf659b0}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{计算机研究与发展}
+      \field{number}{3}
+      \field{title}{香山开源高性能RISC-V处理器设计与实现}
+      \field{volume}{60}
+      \field{year}{2023}
+      \field{pages}{476\bibrangedash 493}
+      \range{pages}{18}
+      \verb{urlraw}
+      \verb https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2023&filename=JFYZ202303014
+      \endverb
+      \verb{url}
+      \verb https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2023&filename=JFYZ202303014
+      \endverb
+    \endentry
+    \entry{wang2024riscvcnn}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=fbbd28d46cc566728a024764b01aefb2}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Shihang},
+           giveni={S\bibinitperiod}}}%
+        {{hash=a9354127ab18085ab7d7f3acf5e037ac}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Xingbo},
+           giveni={X\bibinitperiod}}}%
+        {{hash=453e92f4a74ed82766c6354f1cda71ec}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Zhiyuan},
+           giveni={Z\bibinitperiod}}}%
+        {{hash=3cadb9c98b0f71deb161ed031cdc1167}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Bingzhen},
+           giveni={B\bibinitperiod}}}%
+        {{hash=54943237111f9dc1dc5e0a568734d32e}{%
+           family={Feng},
+           familyi={F\bibinitperiod},
+           given={Chenxi},
+           giveni={C\bibinitperiod}}}%
+        {{hash=2ff53b99cb226c6384ebd0abb3e330b1}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Qi},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=6fc2f44edb80da80eced3dbbcdfee74b}{%
+           family={Ye},
+           familyi={Y\bibinitperiod},
+           given={Terry\bibnamedelima Tao},
+           giveni={T\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \strng{namehash}{4b85d1939f927e39e920f16f5d5bb3bc}
+      \strng{fullhash}{271fe5858ba46e3ba3714d78da4c0c2b}
+      \strng{fullhashraw}{271fe5858ba46e3ba3714d78da4c0c2b}
+      \strng{bibnamehash}{4b85d1939f927e39e920f16f5d5bb3bc}
+      \strng{authorbibnamehash}{4b85d1939f927e39e920f16f5d5bb3bc}
+      \strng{authornamehash}{4b85d1939f927e39e920f16f5d5bb3bc}
+      \strng{authorfullhash}{271fe5858ba46e3ba3714d78da4c0c2b}
+      \strng{authorfullhashraw}{271fe5858ba46e3ba3714d78da4c0c2b}
+      \field{extraname}{1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Computers}
+      \field{number}{5}
+      \field{title}{Optimizing CNN Computation Using RISC-V Custom Instruction Sets for Edge Platforms}
+      \field{volume}{73}
+      \field{year}{2024}
+      \field{pages}{1371\bibrangedash 1384}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1109/TC.2024.3362060
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/10420491/
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/10420491/
+      \endverb
+    \endentry
+    \entry{wang2021winograd}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=fbbd28d46cc566728a024764b01aefb2}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Shihang},
+           giveni={S\bibinitperiod}}}%
+        {{hash=432901867d4fc8a9f8631206bb10ba93}{%
+           family={Zhu},
+           familyi={Z\bibinitperiod},
+           given={Jianghan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=2ff53b99cb226c6384ebd0abb3e330b1}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Qi},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=b985ffbf03adccd7dc99a7679180c412}{%
+           family={He},
+           familyi={H\bibinitperiod},
+           given={Can},
+           giveni={C\bibinitperiod}}}%
+        {{hash=6fc2f44edb80da80eced3dbbcdfee74b}{%
+           family={Ye},
+           familyi={Y\bibinitperiod},
+           given={Terry\bibnamedelima Tao},
+           giveni={T\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+      }
+      \strng{namehash}{4b85d1939f927e39e920f16f5d5bb3bc}
+      \strng{fullhash}{335f2b977cd6f0f5c477dc120c362ad7}
+      \strng{fullhashraw}{335f2b977cd6f0f5c477dc120c362ad7}
+      \strng{bibnamehash}{335f2b977cd6f0f5c477dc120c362ad7}
+      \strng{authorbibnamehash}{335f2b977cd6f0f5c477dc120c362ad7}
+      \strng{authornamehash}{4b85d1939f927e39e920f16f5d5bb3bc}
+      \strng{authorfullhash}{335f2b977cd6f0f5c477dc120c362ad7}
+      \strng{authorfullhashraw}{335f2b977cd6f0f5c477dc120c362ad7}
+      \field{extraname}{2}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Customized Instruction on RISC-V for Winograd-Based Convolution Acceleration}
+      \field{year}{2021}
+      \field{pages}{65\bibrangedash 68}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1109/ASAP52443.2021.00018
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/9516614/
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/9516614/
+      \endverb
+    \endentry
+    \entry{chen2024fnt}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=3cadb9c98b0f71deb161ed031cdc1167}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Bingzhen},
+           giveni={B\bibinitperiod}}}%
+        {{hash=a9354127ab18085ab7d7f3acf5e037ac}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Xingbo},
+           giveni={X\bibinitperiod}}}%
+        {{hash=55454201009c0c500a6bec46446cdcbf}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Yucong},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=453e92f4a74ed82766c6354f1cda71ec}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Zhiyuan},
+           giveni={Z\bibinitperiod}}}%
+      }
+      \strng{namehash}{8096c9542f6760cb0f22b71586aba0e1}
+      \strng{fullhash}{05b98b9bb04135f7aa14885042d7f5cd}
+      \strng{fullhashraw}{05b98b9bb04135f7aa14885042d7f5cd}
+      \strng{bibnamehash}{05b98b9bb04135f7aa14885042d7f5cd}
+      \strng{authorbibnamehash}{05b98b9bb04135f7aa14885042d7f5cd}
+      \strng{authornamehash}{8096c9542f6760cb0f22b71586aba0e1}
+      \strng{authorfullhash}{05b98b9bb04135f7aa14885042d7f5cd}
+      \strng{authorfullhashraw}{05b98b9bb04135f7aa14885042d7f5cd}
+      \field{extraname}{4}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{RISCV-FNT: A Fast FNT-based RISC-V Processor for CNN Acceleration}
+      \field{year}{2024}
+      \field{pages}{292\bibrangedash 296}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1109/AICAS59952.2024.10595907
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/10595907/
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/10595907/
+      \endverb
+    \endentry
+    \entry{jigalur2025sparse}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=1930ccc847d00b4f011a3460d62a68d2}{%
+           family={Jigalur},
+           familyi={J\bibinitperiod},
+           given={Shabirahmed\bibnamedelima Badashasab},
+           giveni={S\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=53b252733b556421dfeae4a7478df4d6}{%
+           family={Tsai},
+           familyi={T\bibinitperiod},
+           given={Chang-Ling},
+           giveni={C\bibinithyphendelim L\bibinitperiod}}}%
+        {{hash=1156b2b1c620c919ba6abb727db6dc19}{%
+           family={Shih},
+           familyi={S\bibinitperiod},
+           given={Yu-Chi},
+           giveni={Y\bibinithyphendelim C\bibinitperiod}}}%
+        {{hash=2d7ae281170535ea2cdc29cf9da3e8e9}{%
+           family={Kuan},
+           familyi={K\bibinitperiod},
+           given={Yen-Cheng},
+           giveni={Y\bibinithyphendelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{a1594bbdc62b3119f496a635c45dfb4f}
+      \strng{fullhash}{c075cee6ac9c2d59d94903bca3e482a8}
+      \strng{fullhashraw}{c075cee6ac9c2d59d94903bca3e482a8}
+      \strng{bibnamehash}{c075cee6ac9c2d59d94903bca3e482a8}
+      \strng{authorbibnamehash}{c075cee6ac9c2d59d94903bca3e482a8}
+      \strng{authornamehash}{a1594bbdc62b3119f496a635c45dfb4f}
+      \strng{authorfullhash}{c075cee6ac9c2d59d94903bca3e482a8}
+      \strng{authorfullhashraw}{c075cee6ac9c2d59d94903bca3e482a8}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Embedded Systems Letters}
+      \field{number}{4}
+      \field{title}{A RISC-V-Based High-Throughput Accelerator for Sparse Winograd CNN Inference on FPGA}
+      \field{volume}{17}
+      \field{year}{2025}
+      \field{pages}{256\bibrangedash 259}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1109/LES.2025.3531251
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/10845145/
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/10845145/
+      \endverb
+    \endentry
+    \entry{fu2020processor}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=c5de452d4a56f6b92c7405be3e329056}{%
+           family={傅思扬},
+           familyi={傅\bibinitperiod}}}%
+        {{hash=5a52f145ef6a89e15c93d206b6edf690}{%
+           family={陈华},
+           familyi={陈\bibinitperiod}}}%
+        {{hash=8d7b18a7b3a59c6ca2d2f2493cc01856}{%
+           family={郁发新},
+           familyi={郁\bibinitperiod}}}%
+      }
+      \strng{namehash}{b8767fb5af2d3101279be99836b984eb}
+      \strng{fullhash}{b1209ee73b47a79b0a8c6e7eb7d86aa1}
+      \strng{fullhashraw}{b1209ee73b47a79b0a8c6e7eb7d86aa1}
+      \strng{bibnamehash}{b1209ee73b47a79b0a8c6e7eb7d86aa1}
+      \strng{authorbibnamehash}{b1209ee73b47a79b0a8c6e7eb7d86aa1}
+      \strng{authornamehash}{b8767fb5af2d3101279be99836b984eb}
+      \strng{authorfullhash}{b1209ee73b47a79b0a8c6e7eb7d86aa1}
+      \strng{authorfullhashraw}{b1209ee73b47a79b0a8c6e7eb7d86aa1}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{微电子学与计算机}
+      \field{number}{4}
+      \field{title}{基于RISC-V的卷积神经网络处理器设计与实现}
+      \field{volume}{37}
+      \field{year}{2020}
+      \field{pages}{49\bibrangedash 54}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.19304/j.cnki.issn1000-7180.2020.04.009
+      \endverb
+      \verb{urlraw}
+      \verb https://link.cnki.net/doi/10.19304/j.cnki.issn1000-7180.2020.04.009
+      \endverb
+      \verb{url}
+      \verb https://link.cnki.net/doi/10.19304/j.cnki.issn1000-7180.2020.04.009
+      \endverb
+    \endentry
+    \entry{zhang2021soc}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=4aacce2a903e70664bff6ab624ec48d4}{%
+           family={张坤宁},
+           familyi={张\bibinitperiod}}}%
+        {{hash=bc51810b6bc8388f9e78a4e9d4e182e0}{%
+           family={赵烁},
+           familyi={赵\bibinitperiod}}}%
+        {{hash=44bfe2ed151eeb1afd4cc92a355300a7}{%
+           family={何虎},
+           familyi={何\bibinitperiod}}}%
+        {{hash=98b688d9c38eedcd6ea39d0e30c6fb9f}{%
+           family={邓宁},
+           familyi={邓\bibinitperiod}}}%
+        {{hash=203d6526c1daadef78006b1bc0daa189}{%
+           family={杨旭},
+           familyi={杨\bibinitperiod}}}%
+      }
+      \strng{namehash}{b98a304fa1511a1868aa9e30e90110b9}
+      \strng{fullhash}{e370bed2e1c186a0f3102f149c7dff71}
+      \strng{fullhashraw}{e370bed2e1c186a0f3102f149c7dff71}
+      \strng{bibnamehash}{e370bed2e1c186a0f3102f149c7dff71}
+      \strng{authorbibnamehash}{e370bed2e1c186a0f3102f149c7dff71}
+      \strng{authornamehash}{b98a304fa1511a1868aa9e30e90110b9}
+      \strng{authorfullhash}{e370bed2e1c186a0f3102f149c7dff71}
+      \strng{authorfullhashraw}{e370bed2e1c186a0f3102f149c7dff71}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{计算机工程}
+      \field{number}{4}
+      \field{title}{基于RISC-V处理器的卷积加速SoC系统设计}
+      \field{volume}{47}
+      \field{year}{2021}
+      \field{pages}{153\bibrangedash 157}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.19678/j.issn.1000-3428.0057835
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.19678/j.issn.1000-3428.0057835
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.19678/j.issn.1000-3428.0057835
+      \endverb
+    \endentry
+    \entry{liao2021isa}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=0e7f1e11c81d4147ad29497805431795}{%
+           family={廖汉松},
+           familyi={廖\bibinitperiod}}}%
+        {{hash=516c07aea64fa3456701234a25275e8a}{%
+           family={吴朝晖},
+           familyi={吴\bibinitperiod}}}%
+        {{hash=b3812324821f55d57498ba3752c58aa3}{%
+           family={李斌},
+           familyi={李\bibinitperiod}}}%
+      }
+      \strng{namehash}{ef40d1b1213befd7fef097f069d2d504}
+      \strng{fullhash}{110ac9e1ed4486a7c3012f060e28a1db}
+      \strng{fullhashraw}{110ac9e1ed4486a7c3012f060e28a1db}
+      \strng{bibnamehash}{110ac9e1ed4486a7c3012f060e28a1db}
+      \strng{authorbibnamehash}{110ac9e1ed4486a7c3012f060e28a1db}
+      \strng{authornamehash}{ef40d1b1213befd7fef097f069d2d504}
+      \strng{authorfullhash}{110ac9e1ed4486a7c3012f060e28a1db}
+      \strng{authorfullhashraw}{110ac9e1ed4486a7c3012f060e28a1db}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{计算机工程}
+      \field{number}{7}
+      \field{title}{基于RISC-V的卷积神经网络专用指令集处理器}
+      \field{volume}{47}
+      \field{year}{2021}
+      \field{pages}{196\bibrangedash 204}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.19678/j.issn.1000-3428.0058371
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.19678/j.issn.1000-3428.0058371
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.19678/j.issn.1000-3428.0058371
+      \endverb
+    \endentry
+    \entry{cao2024cnn}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=a82c31c526c0723e8ab9cc7062e1bfd3}{%
+           family={曹希彧},
+           familyi={曹\bibinitperiod}}}%
+        {{hash=44657f5ce94562394af855b09158da84}{%
+           family={陈鑫},
+           familyi={陈\bibinitperiod}}}%
+        {{hash=54aa3f6b7fd23348bc22f1aa080e398c}{%
+           family={魏同权},
+           familyi={魏\bibinitperiod}}}%
+      }
+      \strng{namehash}{d894aeec023a471fca171ab4b5a55f4b}
+      \strng{fullhash}{2426e6559229df7f8929f760c5b94334}
+      \strng{fullhashraw}{2426e6559229df7f8929f760c5b94334}
+      \strng{bibnamehash}{2426e6559229df7f8929f760c5b94334}
+      \strng{authorbibnamehash}{2426e6559229df7f8929f760c5b94334}
+      \strng{authornamehash}{d894aeec023a471fca171ab4b5a55f4b}
+      \strng{authorfullhash}{2426e6559229df7f8929f760c5b94334}
+      \strng{authorfullhashraw}{2426e6559229df7f8929f760c5b94334}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{计算机学报}
+      \field{number}{11}
+      \field{title}{基于RISC-Ⅴ的深度可分离卷积神经网络加速器}
+      \field{volume}{47}
+      \field{year}{2024}
+      \field{pages}{2536\bibrangedash 2551}
+      \range{pages}{16}
+      \verb{urlraw}
+      \verb https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2024&filename=JSJX202411003
+      \endverb
+      \verb{url}
+      \verb https://kns.cnki.net/KCMS/detail/detail.aspx?dbcode=CJFQ&dbname=CJFDLAST2024&filename=JSJX202411003
+      \endverb
+    \endentry
+    \entry{gong2023multimode}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=07fbd47cb5df382fcb0e8a1b6c03c638}{%
+           family={Gong},
+           familyi={G\bibinitperiod},
+           given={Wenqiang},
+           giveni={W\bibinitperiod}}}%
+        {{hash=0f05f89e4a5d4516d86d3d8dcf8664ca}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Fang},
+           giveni={F\bibinitperiod}}}%
+        {{hash=1bda7a0959f3b6e10b2947a6af227ccc}{%
+           family={Ge},
+           familyi={G\bibinitperiod},
+           given={Fen},
+           giveni={F\bibinitperiod}}}%
+      }
+      \strng{namehash}{9690b4214e2df8922c9c21737b99d09a}
+      \strng{fullhash}{9af2f31e34eff8235a079288a45def24}
+      \strng{fullhashraw}{9af2f31e34eff8235a079288a45def24}
+      \strng{bibnamehash}{9af2f31e34eff8235a079288a45def24}
+      \strng{authorbibnamehash}{9af2f31e34eff8235a079288a45def24}
+      \strng{authornamehash}{9690b4214e2df8922c9c21737b99d09a}
+      \strng{authorfullhash}{9af2f31e34eff8235a079288a45def24}
+      \strng{authorfullhashraw}{9af2f31e34eff8235a079288a45def24}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{A Multi-mode Convolution Coprocessor Based on RISC-V Instruction Set Architecture}
+      \field{year}{2023}
+      \field{pages}{1\bibrangedash 5}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1109/ASICON58565.2023.10396531
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/10396531/
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/10396531/
+      \endverb
+    \endentry
+    \entry{jin2026fpga}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=ac9755996ed1788df381d22e564c6dd0}{%
+           family={金华},
+           familyi={金\bibinitperiod}}}%
+        {{hash=ac8fa990400197647bc7df4ea783ee80}{%
+           family={蔡新颖},
+           familyi={蔡\bibinitperiod}}}%
+        {{hash=67c56d5dbe6c39b6628c36ba0800e954}{%
+           family={刘玖金},
+           familyi={刘\bibinitperiod}}}%
+        {{hash=af8f96aceecbcde5b8686f71bc9c30bf}{%
+           family={宋雪桦},
+           familyi={宋\bibinitperiod}}}%
+        {{hash=b692af8e16723b9b3518e7acc4ead8be}{%
+           family={王昌达},
+           familyi={王\bibinitperiod}}}%
+      }
+      \strng{namehash}{d4af01af54c47198e231085c8fc84963}
+      \strng{fullhash}{47048b0f521fd341bff97fc4c9feb282}
+      \strng{fullhashraw}{47048b0f521fd341bff97fc4c9feb282}
+      \strng{bibnamehash}{47048b0f521fd341bff97fc4c9feb282}
+      \strng{authorbibnamehash}{47048b0f521fd341bff97fc4c9feb282}
+      \strng{authornamehash}{d4af01af54c47198e231085c8fc84963}
+      \strng{authorfullhash}{47048b0f521fd341bff97fc4c9feb282}
+      \strng{authorfullhashraw}{47048b0f521fd341bff97fc4c9feb282}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{微电子学与计算机}
+      \field{number}{2}
+      \field{title}{基于FPGA的灵活量化卷积器}
+      \field{volume}{43}
+      \field{year}{2026}
+      \field{pages}{57\bibrangedash 71}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.19304/J.ISSN1000-7180.2024.0889
+      \endverb
+      \verb{urlraw}
+      \verb https://mc.spacejournal.cn/cn/article/doi/10.19304/J.ISSN1000-7180.2024.0889
+      \endverb
+      \verb{url}
+      \verb https://mc.spacejournal.cn/cn/article/doi/10.19304/J.ISSN1000-7180.2024.0889
+      \endverb
+    \endentry
+    \entry{wu2022domestic}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=5e6cba02ae69b82b374db6a057f84555}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Hailong},
+           giveni={H\bibinitperiod}}}%
+        {{hash=29b624056db44c33b135db61ddf5bc10}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Jindong},
+           giveni={J\bibinitperiod}}}%
+        {{hash=0c475071538366636655ccf385c755e7}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Xiang},
+           giveni={X\bibinitperiod}}}%
+      }
+      \strng{namehash}{3784fd2306c9ead7c091654334d06fef}
+      \strng{fullhash}{5424ba2ad48aabc5da0ec44d24a2f072}
+      \strng{fullhashraw}{5424ba2ad48aabc5da0ec44d24a2f072}
+      \strng{bibnamehash}{5424ba2ad48aabc5da0ec44d24a2f072}
+      \strng{authorbibnamehash}{5424ba2ad48aabc5da0ec44d24a2f072}
+      \strng{authornamehash}{3784fd2306c9ead7c091654334d06fef}
+      \strng{authorfullhash}{5424ba2ad48aabc5da0ec44d24a2f072}
+      \strng{authorfullhashraw}{5424ba2ad48aabc5da0ec44d24a2f072}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Implementation of CNN Heterogeneous Scheme Based on Domestic FPGA with RISC-V Soft Core CPU}
+      \field{year}{2022}
+      \field{pages}{158\bibrangedash 159}
+      \range{pages}{2}
+      \verb{doi}
+      \verb 10.1109/ICTA56932.2022.9963056
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/9963056/
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/9963056/
+      \endverb
+    \endentry
+    \entry{feng2019lenet5}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{hash=2578999f7ccb1b4c161e1d736ef27811}{%
+           family={Feng},
+           familyi={F\bibinitperiod},
+           given={Shanggong},
+           giveni={S\bibinitperiod}}}%
+        {{hash=bb259d76844b9a6552fa7c5980b60c3f}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Junning},
+           giveni={J\bibinitperiod}}}%
+        {{hash=65466a7151e82d1b9793919f067c0a1c}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Shengang},
+           giveni={S\bibinitperiod}}}%
+        {{hash=55812bea220c464a92c02830f0485d8c}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Renwei},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{4310f598e1e38ef4b0b8eddeaa1736a2}
+      \strng{fullhash}{6008737601b6080b7d35a0a8b941c313}
+      \strng{fullhashraw}{6008737601b6080b7d35a0a8b941c313}
+      \strng{bibnamehash}{6008737601b6080b7d35a0a8b941c313}
+      \strng{authorbibnamehash}{6008737601b6080b7d35a0a8b941c313}
+      \strng{authornamehash}{4310f598e1e38ef4b0b8eddeaa1736a2}
+      \strng{authorfullhash}{6008737601b6080b7d35a0a8b941c313}
+      \strng{authorfullhashraw}{6008737601b6080b7d35a0a8b941c313}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{The Implementation of LeNet-5 with NVDLA on RISC-V SoC}
+      \field{year}{2019}
+      \field{pages}{39\bibrangedash 42}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1109/ICSESS47205.2019.9040769
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/document/9040769/
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/document/9040769/
+      \endverb
+    \endentry
+    \entry{KUON_FPGA_GAP}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=818d8d95d75e6a15ecbc88d436714d92}{%
+           family={Kuon},
+           familyi={K\bibinitperiod},
+           given={Ian},
+           giveni={I\bibinitperiod}}}%
+        {{hash=b5be2f6e35dc02228f1b34eafc4d566a}{%
+           family={Rose},
+           familyi={R\bibinitperiod},
+           given={Jonathan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{449881fd3611ab5213728f75f9017919}
+      \strng{fullhash}{449881fd3611ab5213728f75f9017919}
+      \strng{fullhashraw}{449881fd3611ab5213728f75f9017919}
+      \strng{bibnamehash}{449881fd3611ab5213728f75f9017919}
+      \strng{authorbibnamehash}{449881fd3611ab5213728f75f9017919}
+      \strng{authornamehash}{449881fd3611ab5213728f75f9017919}
+      \strng{authorfullhash}{449881fd3611ab5213728f75f9017919}
+      \strng{authorfullhashraw}{449881fd3611ab5213728f75f9017919}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems}
+      \field{number}{2}
+      \field{title}{Measuring the Gap Between {FPGAs} and {ASICs}}
+      \field{volume}{26}
+      \field{year}{2007}
+      \field{pages}{203\bibrangedash 215}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1109/TCAD.2007.891375
+      \endverb
+    \endentry
+    \entry{NUCLEI_SDK}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=4e0efbc69dc6fb354a8775cb6cb87d1c}{%
+           family={{Nuclei System Technology}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{bibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorbibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authornamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \field{extraname}{3}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Nuclei} {SDK} Documentation}
+      \field{year}{2020}
+      \verb{urlraw}
+      \verb https://github.com/riscv-mcu/nuclei-sdk
+      \endverb
+      \verb{url}
+      \verb https://github.com/riscv-mcu/nuclei-sdk
+      \endverb
+    \endentry
+    \entry{NUCLEI_E203_DEBUG}{report}{}{}
+      \name{author}{1}{}{%
+        {{hash=4e0efbc69dc6fb354a8775cb6cb87d1c}{%
+           family={{Nuclei System Technology}},
+           familyi={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{fullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{bibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorbibnamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authornamehash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhash}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \strng{authorfullhashraw}{4e0efbc69dc6fb354a8775cb6cb87d1c}
+      \field{extraname}{4}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{Nuclei} {E203} Debug Subsystem Technical Report}
+      \field{type}{techreport}
+      \field{year}{2021}
+      \verb{urlraw}
+      \verb https://doc.nucleisys.com/hbirdv2/
+      \endverb
+      \verb{url}
+      \verb https://doc.nucleisys.com/hbirdv2/
+      \endverb
+    \endentry
+    \entry{GDB_MANUAL}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=e97c557ff9f4750f82a530c3e8c5e6b9}{%
+           family={{GDB Contributors}},
+           familyi={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \strng{fullhash}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \strng{fullhashraw}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \strng{bibnamehash}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \strng{authorbibnamehash}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \strng{authornamehash}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \strng{authorfullhash}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \strng{authorfullhashraw}{e97c557ff9f4750f82a530c3e8c5e6b9}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Debugging with {GDB}}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://sourceware.org/gdb/documentation/
+      \endverb
+      \verb{url}
+      \verb https://sourceware.org/gdb/documentation/
+      \endverb
+    \endentry
+    \entry{OPENOCD_MANUAL}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=cb3de711fbf19a08ff5118cdafa66dfa}{%
+           family={{OpenOCD Contributors}},
+           familyi={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \strng{fullhash}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \strng{fullhashraw}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \strng{bibnamehash}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \strng{authorbibnamehash}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \strng{authornamehash}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \strng{authorfullhash}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \strng{authorfullhashraw}{cb3de711fbf19a08ff5118cdafa66dfa}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{{OpenOCD} User's Guide}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://openocd.org/doc/html/index.html
+      \endverb
+      \verb{url}
+      \verb https://openocd.org/doc/html/index.html
+      \endverb
+    \endentry
+    \entry{ALIENTEK_DAVINCI}{manual}{}{}
+      \name{author}{1}{}{%
+        {{hash=37bcb2e03f5d49846d8b1930642e42b5}{%
+           family={{ALIENTEK}},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{37bcb2e03f5d49846d8b1930642e42b5}
+      \strng{fullhash}{37bcb2e03f5d49846d8b1930642e42b5}
+      \strng{fullhashraw}{37bcb2e03f5d49846d8b1930642e42b5}
+      \strng{bibnamehash}{37bcb2e03f5d49846d8b1930642e42b5}
+      \strng{authorbibnamehash}{37bcb2e03f5d49846d8b1930642e42b5}
+      \strng{authornamehash}{37bcb2e03f5d49846d8b1930642e42b5}
+      \strng{authorfullhash}{37bcb2e03f5d49846d8b1930642e42b5}
+      \strng{authorfullhashraw}{37bcb2e03f5d49846d8b1930642e42b5}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Davinci {Pro} {FPGA} Development Board User Manual}
+      \field{year}{2022}
+      \verb{urlraw}
+      \verb http://www.openedv.com/docs/boards/fpga/
+      \endverb
+      \verb{url}
+      \verb http://www.openedv.com/docs/boards/fpga/
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

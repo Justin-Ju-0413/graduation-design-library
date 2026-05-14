@@ -1,0 +1,23 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces System architecture of the E203 SoC with the CNN NICE accelerator, showing the register-based NICE path and the standard AHB memory/peripheral path.}}{18}{figure.caption.9}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces RISC-V custom0 instruction format used by the accelerator; bits [14:12] carry the NICE xd/xs1/xs2 flags and funct7 selects the accelerator operation.}}{21}{figure.caption.12}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces NICE custom instruction set for the CNN accelerator.}}{21}{figure.caption.14}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Processing element microarchitecture: each PE performs one signed INT8 multiply and accumulates into an INT32 output register.}}{24}{figure.caption.15}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces 4x4 PE array organization. WLOAD broadcasts weight columns, DLOAD broadcasts activation rows, and COMP triggers parallel output-stationary accumulation.}}{25}{figure.caption.16}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Packed INT8 data format within a 32-bit register for WLOAD and DLOAD.}}{29}{figure.caption.18}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Reproducible FPGA build pipeline from firmware image generation through Vivado implementation, board programming, and UART/ILA evidence capture.}}{33}{figure.caption.20}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces Verification chain used for the thesis and defense: RTL simulation, full-SoC simulation, hello\_e203 board validation, CNN board demo, and the NICE rs2 fix regression.}}{34}{figure.caption.22}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Davinci Pro A7-100T FPGA development board used for E203 SoC and NICE CNN accelerator validation.}}{38}{figure.caption.26}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces ILA capture from the hello\_e203 board run. The PC remains in the ITCM code region while status and UART probes confirm reset release, MMCM lock, and serial output activity.}}{40}{figure.caption.28}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces ILA capture from the CNN v1 board regression after the NICE rs2 fix. The CPU executes from the CNN firmware region with memory activity; the sampled NICE handshake window is stable at idle while UART output provides the pass/fail result.}}{42}{figure.caption.30}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces UART terminal output from the CNN v1 board regression}}{45}{figure.caption.31}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces UART terminal output from the LeNet-5 FPGA inference}}{46}{figure.caption.32}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Measured convolution benchmark on the board demo: the NICE accelerator completes the test convolution in 287 cycles versus 1,516 cycles for the CPU reference, giving a 5.282$\times $ speedup.}}{47}{figure.caption.33}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces FPGA resource-capacity fit for the complete E203 SoC with CNN NICE accelerator. Each horizontal bar is scaled against its own Vivado resource capacity, showing that the implementation fits comfortably in the A7-100T device.}}{48}{figure.caption.35}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces FPGA utilization by resource type for the complete SoC. LUT, FF, BRAM, DSP, and clock-buffer usage leave headroom for future accelerator expansion.}}{48}{figure.caption.36}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Timing closure summary across diagnostic and CNN board build configurations; all recorded builds meet setup and hold timing with positive slack.}}{49}{figure.caption.37}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
